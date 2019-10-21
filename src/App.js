@@ -1,13 +1,14 @@
 import React from 'react';
-
-import {Route} from "react-router-dom"
-
-import {WorldPage} from "./Components"
+import AppRouter from '../src/AppRouter';
 
 function App() {
   return (
     <div className="App">
-      <Route path="/game-world" component={WorldPage}/>
+      <header className="App-header">
+      <AppRouter />
+        <div className='register'>
+        </div>
+      </header>
     </div>
   );
 }
