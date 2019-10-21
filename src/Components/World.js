@@ -1,22 +1,18 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from "styled-components"
 
-const Title = styled.h1`
-
+export const GameArea = styled.div`
+    background: white;
+    grid-column: 2 / 9;
+    grid-row: 2 / 9;
 `
 
-
-class World extends React.Component {
-
-
-
-    render() {
-        return(
-            <Title>
-                World
-            </Title>
-        )
-    }
+const World = () => {
+    return ( 
+        <GameArea >
+            Super basic game area
+        </GameArea>
+     );
 }
-
-export default World
+ 
+export default World;
