@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Login from './Components/Login';
 import Register from './Components/Register';
-import {WorldPage} from "./Components";
+import WorldPage from "./Components/WorldPage";
 
 
 export default function AppRouter() {

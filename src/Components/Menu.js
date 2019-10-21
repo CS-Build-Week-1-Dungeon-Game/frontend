@@ -1,7 +1,14 @@
 import React, {useState} from 'react'
 import { Menu as MUIMenu, MenuItem, IconButton} from '@material-ui/core';
 import { Menu as MenuIcon} from '@material-ui/icons';
-import {StyledMenu, StyledIconButton} from "./styles"
+import { styled } from '@material-ui/styles';
+
+export const StyledIconButton = styled(IconButton)({
+    position: 'absolute',
+    right: 0,
+    color: 'white',
+    'z-index': 999
+});
 
 const Menu = () => {
  
