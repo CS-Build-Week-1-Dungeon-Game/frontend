@@ -54,34 +54,31 @@ const WorldPage = () => {
             }
         }
         recRoom(roomDict[Object.keys(roomDict)[0]], roomDict)
-        
-        return roomDict
+        const roomArr = []
+        for (let key in roomDict) {
+            roomArr.push(roomDict[key])
+        }
+        return roomArr
     }
     const [rooms, setRooms] = useState(null)
     // for now I am just setting the first room to the first room we were sent, but it should be the room we initialize the character in
     const [currentRoom, setCurrentRoom] = useState(null)
-    const [roomDict, setRoomDict] = useState(null)
     useEffect(() => {
         axios.get('https://lambda-mud-test.herokuapp.com/api/adv/rooms/')
         .then(res => {
-            const roomDict = positionRooms(JSON.parse(res.data.rooms))
-            setRoomDict(roomDict)
-            const rooms = []
-            for (let key in roomDict) {
-                rooms.push(roomDict[key])
-            }
+            const rooms = positionRooms(JSON.parse(res.data.rooms))
             setCurrentRoom(rooms[0])
             setRooms(rooms)
         })
         .catch(err => console.log(err))
     }, [])
-    const moveRooms = (e) => {
-        setCurrentRoom(roomDict[Number(e.target.id)])
+    const moveRooms = (e, room) => {
+        setCurrentRoom(room)
     }
     return (
         <StyledMain>
             <Menu></Menu>
-            <World rooms={rooms} currentRoom={currentRoom} roomDict={roomDict} moveRooms={moveRooms} dimension={dimension}/>
+            <World rooms={rooms} currentRoom={currentRoom} moveRooms={moveRooms} dimension={dimension}/>
             <Sidebar></Sidebar>
         </StyledMain>
     )

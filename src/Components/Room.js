@@ -17,11 +17,11 @@ const StyledRoom = styled.div`
 
 
 const Room = ({room, moveRooms, dimension}) => {
-    const handleClick = (e) => {
-        moveRooms(e)
+    const handleClick = (e, room) => {
+        moveRooms(e, room)
     }
     return ( 
-        <StyledRoom onClick={handleClick} x={room.x} y={room.y} dimension={dimension} id={room.pk}>
+        <StyledRoom onClick={(e) =>handleClick(e, room)} x={room.x} y={room.y} dimension={dimension} id={room.pk}>
             <p>{room.title}</p>
         </StyledRoom>
      );
