@@ -25,52 +25,15 @@ display: inline-block;
 `
 
 const Room = ({room, playerRoom, dimension}) => {
-    // console.log(room)
+    // console.log(room, playerRoom)
     return ( 
         <StyledRoom  x={room.x} y={room.y} dimension={dimension} id={room.pk}>
             <p>{room.title}</p>
                 {
-                    playerRoom && room && playerRoom.id === room.id && <Player></Player>
+                    (playerRoom && room && playerRoom.title === room.title) && <Player></Player>
                 }
         </StyledRoom>
      );
 }
- 
-// export default Room;
-// import React from 'react'
-// import styled from 'styled-components'
-
-// const RoomStyle = styled.div`
-
-// `
-
-// const Player = styled.div`
-// width: 15px;
-// height: 15px;
-// border-radius: 50%;
-// background: red;
-// display: inline-block;
-// `
-
-// class Room extends React.Component {
-
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             hasPlayer: false,
-//         }
-//     }
-
-
-//     render() {
-//         return(
-//             <RoomStyle>
-                
-//                 
-
-//             </RoomStyle>
-//         )
-//     }
-// }
 
 export default Room

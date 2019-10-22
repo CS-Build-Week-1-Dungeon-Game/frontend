@@ -28,6 +28,7 @@ class WorldPage extends React.Component {
             currentRoomTitle: "",
             currentDesc: "",
             rooms: null,
+            roomDict: null
         }
     }
     componentDidMount() {
@@ -36,7 +37,11 @@ class WorldPage extends React.Component {
             .get(`https://lambda-mud-test.herokuapp.com/api/adv/rooms/`)
             .then(res => {
                 const rooms = positionRooms(JSON.parse(res.data.rooms), this.dimension)
-                this.setState({...this.state, rooms:rooms
+                const roomDict = {}
+                for (let i = 0; i < rooms.length; i++) {
+                    roomDict[rooms[i].title] = rooms[i]
+                }
+                this.setState({...this.state, rooms:rooms, roomDict:roomDict
                 })})
             .catch(err => console.log(err))
         
@@ -68,7 +73,6 @@ class WorldPage extends React.Component {
     };
 
     move = (direction) => {
-        console.log('here', this.state)
         const directions={'n':'n_to', 's':'s_to', 'e':'e_to', 'w':'w_to'}
         const token = localStorage.getItem('token'); 
         axios({
@@ -82,23 +86,11 @@ class WorldPage extends React.Component {
             }
         })
             .then(res => {
-                // console.log(this.state)
-                // console.log(this.state.rooms.find(room => room.title === res.data.title))
-                // console.log({currentRoom}, res.data.title)
                 this.setState({
                     currentRoomTitle: res.data.title,
                     currentDesc: res.data.description,
-                    playerRoom: this.state.rooms.find(room => room.title === res.data.title)
+                    playerRoom: this.state.roomDict[res.data.title]
                 })
-                let formattedDirection = directions[direction]
-                let nextRoomId = this.state.playerRoom[formattedDirection]
-                if( nextRoomId !== 0) {
-
-                    let nextRoom = this.state.rooms.find(room => room.id === nextRoomId)
-                    this.setState({...this.state, playerRoom: nextRoom})
-
-                }
-
             })
             .catch(err => {
                 console.log('errors', err.response)

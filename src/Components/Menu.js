@@ -15,7 +15,6 @@ const Menu = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = event => {
-        console.log('click')
         setAnchorEl(event.currentTarget);
     };
 
