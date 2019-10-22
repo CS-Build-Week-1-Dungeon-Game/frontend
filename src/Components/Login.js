@@ -52,7 +52,7 @@ export default function Login(props) {
       
     function submitHandler(event) {
         event.preventDefault();
-        axios.post(`https://lambda-mud-test.herokuapp.com/api/login/`, user)
+        axios.post(`https://mud-cs22.herokuapp.com/api/login/`, user)
           .then(res => {
             if (res.status === 200 && res.data) {
               const token = res.data.key

@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import styled from "styled-components"
-import axios from 'axios';
-import Sidebar from './SideBar';
 import compass from './compass.svg';
 
 import Room from "./Room"
@@ -13,14 +11,6 @@ export const StyledRooms = styled.div`
     top: ${props => props.top && `${props.top}px` };
     transition: left 0.2s, top 0.2s;
 `
-
-// export const GameArea = styled.div`
-    
-//     grid-column: 2 / 9;
-//     grid-row: 2 / 9;
-//     position:relative;
-    
-// `
 
 const Container = styled.div`
 max-width: 960px;
