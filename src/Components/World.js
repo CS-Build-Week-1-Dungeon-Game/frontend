@@ -27,7 +27,7 @@ font-size: 39px;
 color: white;
 `
 
-const World = styled.div`
+const WorldNav = styled.div`
 display: flex;
 `
 
@@ -77,7 +77,7 @@ const MapInfo = styled.div`
 `
 
 
-class Rooms extends React.Component {
+class World extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -171,7 +171,7 @@ class Rooms extends React.Component {
         return(
            <Container>
                     <GameArea ></GameArea>
-               <World>
+               <WorldNav>
                
                     <MapInfo>
                         
@@ -191,7 +191,7 @@ class Rooms extends React.Component {
 
                         <Button type="button" onClick={() => this.move('s')}>South</Button>
                     </CompassBox>
-                </World> 
+                </WorldNav> 
 
             </Container>
         )
@@ -199,4 +199,4 @@ class Rooms extends React.Component {
     }
 };
 
-export default Rooms;
+export default World;
