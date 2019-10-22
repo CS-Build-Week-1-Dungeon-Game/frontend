@@ -74,7 +74,13 @@ outline: none;
 
 const MapInfo = styled.div`
 
+
+export const GameArea = styled.div`
+    background: white;
+    grid-column: 2 / 9;
+    grid-row: 2 / 9;
 `
+
 
 
 class World extends React.Component {
@@ -200,3 +206,4 @@ class World extends React.Component {
 };
 
 export default World;
+

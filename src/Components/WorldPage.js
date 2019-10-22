@@ -1,6 +1,8 @@
 import React from "react"
+
 import axios from "axios"
 import styled from "styled-components"
+
 import Menu from './Menu'
 import Sidebar from "./SideBar"
 import World from "./World"
@@ -9,6 +11,7 @@ export const StyledMain = styled.main`
     margin: 0;
     min-height: 100vh;
     display: grid;
+
     background: black;
 `
 
@@ -99,6 +102,7 @@ class WorldPage extends React.Component {
             });
     };
     render(){
+
     return (
         <StyledMain>
             <Menu></Menu>
@@ -106,6 +110,8 @@ class WorldPage extends React.Component {
             <Sidebar></Sidebar>
         </StyledMain>
     )
+
 }}
+
 
 export default WorldPage
