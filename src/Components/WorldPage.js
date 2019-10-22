@@ -8,80 +8,114 @@ import Menu from './Menu'
 import Sidebar from "./SideBar"
 import World from "./World"
 
+import {positionRooms} from "../utils"
+
 export const StyledMain = styled.main`
     margin: 0;
     min-height: 100vh;
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(12, 1fr);
+
     background: black;
     position: relative;
 `
 
-const WorldPage = () => {
-    // the width/height of each room
-    const dimension = 100
-    const positionRooms = (rooms) => {
-        const roomDict = {}
-        // load our array of rooms into a much more usable dictionary
-        for (let i = 0; i < rooms.length; i++) {
-            roomDict[rooms[i].pk] = {...rooms[i].fields, pk: rooms[i].pk, x:0, y:0, isSet: false}
+class WorldPage extends React.Component {
+    dimension = 100
+    constructor() {
+        super();
+        this.state = {
+            playerRoom: null,
+            currentRoomTitle: "",
+            currentDesc: "",
+            rooms: null,
         }
-        const recRoom = (room, roomDict) => {
-            if (room.isSet) {
-                return
-            }
-            room.isSet = true
-            if (room.n_to) {
-                roomDict[room.n_to].x = room.x
-                roomDict[room.n_to].y = room.y - dimension
-                recRoom(roomDict[room.n_to], roomDict)
-            }
-            if (room.s_to) {
-                roomDict[room.s_to].x = room.x
-                roomDict[room.s_to].y = room.y + dimension
-                recRoom(roomDict[room.s_to], roomDict)
-            }
-            if (room.e_to) {
-                roomDict[room.e_to].y = room.y
-                roomDict[room.e_to].x = room.x + dimension
-                recRoom(roomDict[room.e_to], roomDict)
-            }
-            if (room.w_to) {
-                roomDict[room.w_to].y = room.y
-                roomDict[room.w_to].x = room.x - dimension
-                recRoom(roomDict[room.w_to], roomDict)
-            }
-        }
-        recRoom(roomDict[Object.keys(roomDict)[0]], roomDict)
-        const roomArr = []
-        for (let key in roomDict) {
-            roomArr.push(roomDict[key])
-        }
-        return roomArr
     }
-    const [rooms, setRooms] = useState(null)
-    // for now I am just setting the first room to the first room we were sent, but it should be the room we initialize the character in
-    const [currentRoom, setCurrentRoom] = useState(null)
-    useEffect(() => {
-        axios.get('https://lambda-mud-test.herokuapp.com/api/adv/rooms/')
-        .then(res => {
-            const rooms = positionRooms(JSON.parse(res.data.rooms))
-            setCurrentRoom(rooms[0])
-            setRooms(rooms)
+    componentDidMount() {
+        this.start();
+        axios
+            .get(`https://lambda-mud-test.herokuapp.com/api/adv/rooms/`)
+            .then(res => {
+                const rooms = positionRooms(JSON.parse(res.data.rooms), this.dimension)
+                this.setState({...this.state, rooms:rooms
+                })})
+            .catch(err => console.log(err))
+        
+        
+    }
+
+    start = () => {
+        const token = localStorage.getItem('token'); 
+        axios({
+            url: `https://lambda-mud-test.herokuapp.com/api/adv/init/`,
+            method: "GET",
+            headers: {
+                Authorization: token
+            }
         })
-        .catch(err => console.log(err))
-    }, [])
-    const moveRooms = (e, room) => {
-        setCurrentRoom(room)
-    }
+            .then(res => {
+                let currentRoom = this.state.rooms.find(room => room.title === res.data.title)
+                this.setState({ 
+                    currentRoomTitle: res.data.title,
+                    userID: res.data.uuid,
+                    currentDesc: res.data.description,
+                    playerRoom: currentRoom
+                }); 
+
+            })
+            .catch(err => {
+                console.log('errors', err.response)
+            });        
+    };
+
+    move = (direction) => {
+        console.log('here', this.state)
+        const directions={'n':'n_to', 's':'s_to', 'e':'e_to', 'w':'w_to'}
+        const token = localStorage.getItem('token'); 
+        axios({
+            url: `https://lambda-mud-test.herokuapp.com/api/adv/move`,
+            method: "POST",
+            headers: {
+                Authorization: token
+            },
+            data: {
+                direction: direction
+            }
+        })
+            .then(res => {
+                // console.log(this.state)
+                // console.log(this.state.rooms.find(room => room.title === res.data.title))
+                // console.log({currentRoom}, res.data.title)
+                this.setState({
+                    currentRoomTitle: res.data.title,
+                    currentDesc: res.data.description,
+                    playerRoom: this.state.rooms.find(room => room.title === res.data.title)
+                })
+                let formattedDirection = directions[direction]
+                let nextRoomId = this.state.playerRoom[formattedDirection]
+                if( nextRoomId !== 0) {
+
+                    let nextRoom = this.state.rooms.find(room => room.id === nextRoomId)
+                    this.setState({...this.state, playerRoom: nextRoom})
+
+                }
+
+            })
+            .catch(err => {
+                console.log('errors', err.response)
+            });
+    };
+    render(){
+
     return (
         <StyledMain>
             <Menu></Menu>
-            <World rooms={rooms} currentRoom={currentRoom} moveRooms={moveRooms} dimension={dimension}/>
+            {(this.state.rooms && this.state.currentRoomTitle) && <World rooms={this.state.rooms} playerRoom={this.state.playerRoom} move={this.move} dimension={this.dimension} currentRoomTitle={this.state.currentRoomTitle}
+            currentDesc={this.state.currentDesc}/>}
             <Sidebar></Sidebar>
         </StyledMain>
     )
-}
+
+}}
+
 
 export default WorldPage
