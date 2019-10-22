@@ -10,7 +10,7 @@ max-width: 960px;
 `
 
 const GameArea = styled.div`
-background: white;
+background: black;
 grid-column: 2 / 9;
 grid-row: 2 / 9;
 width: 65rem;
@@ -18,6 +18,7 @@ height: 30rem;
 margin-top: 1rem;
 margin-left: 1rem;
 border-radius: 25px;
+border: 2px solid orange;
 `
 
 const Title = styled.h1`
@@ -40,7 +41,7 @@ color: white;
 
 const Compass = styled.img`
 height: 4rem;
-margin: 1rem;
+margin: 10px;
 `
 
 const CompassBox = styled.div`
@@ -49,8 +50,8 @@ height: 14rem;
 display: flex;
 flex-direction: column;
 align-items: center;
-margin-top: 1rem;
-margin-left: -3rem;
+margin-top: 2rem;
+margin-left: 0rem;
 `
 
 const MiddleRow = styled.div`
@@ -60,6 +61,8 @@ align-items: center;
 `
 
 const Button = styled.button`
+width: 30px;
+height: 30px;
 background: black;
 color: red;
 border-radius: 25px;
@@ -73,13 +76,9 @@ outline: none;
 `
 
 const MapInfo = styled.div`
-
-
-export const GameArea = styled.div`
-    background: white;
-    grid-column: 2 / 9;
-    grid-row: 2 / 9;
 `
+
+
 
 
 
@@ -186,16 +185,16 @@ class World extends React.Component {
                     </MapInfo> 
 
                     <CompassBox>
-                        <Button type="button" onClick={() => this.move('n')}>North</Button>
+                        <Button type="button" onClick={() => this.move('n')}>N</Button>
 
                         <MiddleRow>
-                            <Button type="button" onClick={() => this.move('w')}>West</Button>
+                            <Button type="button" onClick={() => this.move('w')}>W</Button>
                             <Compass src={compass} alt="compass" />
-                            <Button type="button" onClick={() => this.move('e')}>East</Button>
+                            <Button type="button" onClick={() => this.move('e')}>E</Button>
                         </MiddleRow>
 
 
-                        <Button type="button" onClick={() => this.move('s')}>South</Button>
+                        <Button type="button" onClick={() => this.move('s')}>S</Button>
                     </CompassBox>
                 </WorldNav> 
 
