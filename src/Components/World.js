@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import styled from "styled-components"
 import compass from './compass.svg';
 
@@ -7,8 +7,8 @@ import Room from "./Room"
 export const StyledRooms = styled.div`
     background: transparent;
     position: relative;
-    left: ${props => props.left && `${props.left}px` };
-    top: ${props => props.top && `${props.top}px` };
+    left: ${props => props.left && `${props.left}px`};
+    top: ${props => props.top && `${props.top}px`};
     transition: left 0.2s, top 0.2s;
 `
 
@@ -88,16 +88,16 @@ class World extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            center: {x: null, y: null},
+            center: { x: null, y: null },
+        }
     }
-}
-    
+
     componentDidMount() {
         const gameArea = document.querySelector('#game-area')
         let height = gameArea.offsetHeight;
         let width = gameArea.offsetWidth;
         if (this.props.playerRoom) {
-            this.setState({center: {x: (width / 2) - (this.props.playerRoom.x + this.props.dimension / 2), y: (height / 2) - this.props.playerRoom.y - this.props.dimension / 2}})
+            this.setState({ center: { x: (width / 2) - (this.props.playerRoom.x + this.props.dimension / 2), y: (height / 2) - this.props.playerRoom.y - this.props.dimension / 2 } })
         }
     }
     componentDidUpdate(prevProps) {
@@ -105,23 +105,23 @@ class World extends React.Component {
         let height = gameArea.offsetHeight;
         let width = gameArea.offsetWidth;
         if (this.props.playerRoom && prevProps.playerRoom.title !== this.props.playerRoom.title) {
-            this.setState({center: {x: (width / 2) - (this.props.playerRoom.x + this.props.dimension / 2), y: (height / 2) - this.props.playerRoom.y - this.props.dimension / 2}})
+            this.setState({ center: { x: (width / 2) - (this.props.playerRoom.x + this.props.dimension / 2), y: (height / 2) - this.props.playerRoom.y - this.props.dimension / 2 } })
         }
     }
 
-    render(){
-        return(
-           <Container>
-                    <GameArea id="game-area">
-                        <StyledRooms left={this.state.center.x} top={this.state.center.y}>
-                            {this.props.rooms && this.props.rooms.map(room => <Room room={room} key={room.pk}  dimension={this.props.dimension} playerRoom={this.props.playerRoom}/>)}
-                        </StyledRooms>
-                    </GameArea>
-               <WorldNav>
+    render() {
+        return (
+            <Container>
+                <GameArea id="game-area">
+                    <StyledRooms left={this.state.center.x} top={this.state.center.y}>
+                        {this.props.rooms && this.props.rooms.map(room => <Room room={room} key={room.pk} dimension={this.props.dimension} playerRoom={this.props.playerRoom} />)}
+                    </StyledRooms>
+                </GameArea>
+                <WorldNav>
                     <MapInfo>
-                        <Title> You are at the {this.props.currentRoomTitle}</Title>     
-                        <Desc>{this.props.currentDesc}</Desc>                        
-                    </MapInfo> 
+                        <Title> You are at the {this.props.currentRoomTitle}</Title>
+                        <Desc>{this.props.currentDesc}</Desc>
+                    </MapInfo>
 
                     <CompassBox>
                         <Button type="button" onClick={() => this.props.move('n')}>North</Button>
@@ -134,11 +134,11 @@ class World extends React.Component {
 
                         <Button type="button" onClick={() => this.props.move('s')}>South</Button>
                     </CompassBox>
-                </WorldNav> 
+                </WorldNav>
 
             </Container>
         )
-        
+
     }
 };
 

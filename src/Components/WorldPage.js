@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react"
+import React from "react"
 
 import axios from "axios"
 
@@ -7,8 +7,9 @@ import styled from "styled-components"
 import Menu from './Menu'
 import Sidebar from "./SideBar"
 import World from "./World"
+import FullPageLoader from "./FullPageLoader"
 
-import {positionRooms} from "../utils"
+import { positionRooms } from "../utils"
 
 export const StyledMain = styled.main`
     margin: 0;
@@ -33,23 +34,26 @@ class WorldPage extends React.Component {
     }
     componentDidMount() {
         this.start();
+    }
+
+    start = () => {
+        // Get and parse the rooms
         axios
             .get(`https://mud-cs22.herokuapp.com/api/adv/rooms/`)
             .then(res => {
-                const rooms = positionRooms(JSON.parse(res.data.rooms), this.dimension)
+                const rooms = positionRooms(JSON.parse(res.data), this.dimension)
                 const roomDict = {}
                 for (let i = 0; i < rooms.length; i++) {
                     roomDict[rooms[i].title] = rooms[i]
                 }
-                this.setState({...this.state, rooms:rooms, roomDict:roomDict
-                })})
+                this.setState({
+                    ...this.state, rooms: rooms, roomDict: roomDict
+                })
+            })
             .catch(err => console.log(err))
-        
-        
-    }
 
-    start = () => {
-        const token = localStorage.getItem('token'); 
+        // initialize the player
+        const token = localStorage.getItem('token');
         axios({
             url: `https://mud-cs22.herokuapp.com/api/adv/init/`,
             method: "GET",
@@ -58,23 +62,23 @@ class WorldPage extends React.Component {
             }
         })
             .then(res => {
-                let currentRoom = this.state.rooms.find(room => room.title === res.data.title)
-                this.setState({ 
+                let currentRoom = this.state.roomDict[res.data.title]
+                this.setState({
                     currentRoomTitle: res.data.title,
                     userID: res.data.uuid,
                     currentDesc: res.data.description,
                     playerRoom: currentRoom
-                }); 
+                });
 
             })
             .catch(err => {
-                console.log('errors', err.response)
-            });        
+                console.log(err)
+            });
     };
 
     move = (direction) => {
-        const directions={'n':'n_to', 's':'s_to', 'e':'e_to', 'w':'w_to'}
-        const token = localStorage.getItem('token'); 
+        const directions = { 'n': 'n_to', 's': 's_to', 'e': 'e_to', 'w': 'w_to' }
+        const token = localStorage.getItem('token');
         axios({
             url: `https://mud-cs22.herokuapp.com/api/adv/move`,
             method: "POST",
@@ -96,18 +100,21 @@ class WorldPage extends React.Component {
                 console.log('errors', err.response)
             });
     };
-    render(){
-
-    return (
-        <StyledMain>
-            <Menu></Menu>
-            {(this.state.rooms && this.state.currentRoomTitle) && <World rooms={this.state.rooms} playerRoom={this.state.playerRoom} move={this.move} dimension={this.dimension} currentRoomTitle={this.state.currentRoomTitle}
-            currentDesc={this.state.currentDesc}/>}
+    render() {
+        if (!this.state.rooms || !this.state.currentRoomTitle) {
+            return <FullPageLoader />
+        }
+        return (
+            <StyledMain>
+                <Menu></Menu>
+                <World rooms={this.state.rooms} playerRoom={this.state.playerRoom} move={this.move} dimension={this.dimension} currentRoomTitle={this.state.currentRoomTitle}
+                    currentDesc={this.state.currentDesc} />}
             <Sidebar></Sidebar>
-        </StyledMain>
-    )
+            </StyledMain>
+        )
 
-}}
+    }
+}
 
 
 export default WorldPage
