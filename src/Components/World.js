@@ -1,16 +1,33 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react'
+import styled from "styled-components"
 import axios from 'axios';
-import styled from 'styled-components';
 import Sidebar from './SideBar';
 import compass from './compass.svg';
 
+import Room from "./Room"
+
+export const StyledRooms = styled.div`
+    background: transparent;
+    position: relative;
+    left: ${props => props.left && `${props.left}px` };
+    top: ${props => props.top && `${props.top}px` };
+    transition: left 0.2s, top 0.2s;
+`
+
+// export const GameArea = styled.div`
+    
+//     grid-column: 2 / 9;
+//     grid-row: 2 / 9;
+//     position:relative;
+    
+// `
 
 const Container = styled.div`
 max-width: 960px;
 `
 
 const GameArea = styled.div`
-background: white;
+background: grey;
 grid-column: 2 / 9;
 grid-row: 2 / 9;
 width: 65rem;
@@ -18,6 +35,7 @@ height: 30rem;
 margin-top: 1rem;
 margin-left: 1rem;
 border-radius: 25px;
+overflow: hidden;
 `
 
 const Title = styled.h1`
@@ -75,119 +93,56 @@ outline: none;
 const MapInfo = styled.div`
 `
 
+
 class World extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            playerRoom: null,
-            currentRoomTitle: "",
-            currentDesc: "",
-            rooms: null,
+            center: {x: null, y: null},
     }
 }
     
     componentDidMount() {
-
-        this.start();
-        this.move('s')
-
-        axios
-            .get(`https://lambda-mud-test.herokuapp.com/api/rooms/`)
-            .then(res => this.setState({...this.state, rooms:res.data, playerRoom:res.data[100]}))
-            .catch(err => console.log(err))
-        
-        
+        const gameArea = document.querySelector('#game-area')
+        let height = gameArea.offsetHeight;
+        let width = gameArea.offsetWidth;
+        if (this.props.playerRoom) {
+            this.setState({center: {x: (width / 2) - (this.props.playerRoom.x + this.props.dimension / 2), y: (height / 2) - this.props.playerRoom.y - this.props.dimension / 2}})
+        }
+    }
+    componentDidUpdate(prevProps) {
+        const gameArea = document.querySelector('#game-area')
+        let height = gameArea.offsetHeight;
+        let width = gameArea.offsetWidth;
+        if (this.props.playerRoom && prevProps.playerRoom.title !== this.props.playerRoom.title) {
+            this.setState({center: {x: (width / 2) - (this.props.playerRoom.x + this.props.dimension / 2), y: (height / 2) - this.props.playerRoom.y - this.props.dimension / 2}})
+        }
     }
 
-    start = () => {
-        const token = localStorage.getItem('token'); 
-        axios({
-            url: `https://lambda-mud-test.herokuapp.com/api/adv/init/`,
-            
-            method: "GET",
-            headers: {
-                Authorization: token
-            }
-        })
-            .then(res => {
-                this.setState({ 
-                    currentRoomTitle: res.data.title,
-                    userID: res.data.uuid,
-                    currentDesc: res.data.description,
-                    
-                }); 
-
-            })
-            .catch(err => {
-                console.log('errors', err.response)
-            });        
-    };
-
-    move = (direction) => {
-
-        const directions={'n':'n_to', 's':'s_to', 'e':'e_to', 'w':'w_to'}
-
-        const token = localStorage.getItem('token'); 
-        axios({
-            url: `https://lambda-mud-test.herokuapp.com/api/adv/move`,
-            method: "POST",
-            headers: {
-                Authorization: token
-            },
-            data: {
-                direction: direction
-            }
-        })
-            .then(res => {
-                this.setState({
-                    currentRoomTitle: res.data.title,
-                    currentDesc: res.data.description,
-                })
-                console.log(this.state.playerRoom)
-                let formattedDirection = directions[direction]
-                console.log(formattedDirection)
-                console.log(": ", this.state.playerRoom[formattedDirection])
-                let nextRoomId = this.state.playerRoom[formattedDirection]
-                if( nextRoomId !== 0) {
-
-                    let nextRoom = this.state.rooms.find(room => room.id === nextRoomId)
-                    console.log(nextRoom)
-                    this.setState({...this.state, playerRoom: nextRoom})
-
-                }
-
-            })
-            .catch(err => {
-                console.log('errors', err.response)
-            });
-    };
-
     render(){
-
-        
-       
         return(
            <Container>
-                    <GameArea ></GameArea>
+                    <GameArea id="game-area">
+                        <StyledRooms left={this.state.center.x} top={this.state.center.y}>
+                            {this.props.rooms && this.props.rooms.map(room => <Room room={room} key={room.pk}  dimension={this.props.dimension} playerRoom={this.props.playerRoom}/>)}
+                        </StyledRooms>
+                    </GameArea>
                <WorldNav>
-               
                     <MapInfo>
-                        
-                        <Title> You are at the {this.state.currentRoomTitle}</Title>     
-                        <Desc>{this.state.currentDesc}</Desc>                        
+                        <Title> You are at the {this.props.currentRoomTitle}</Title>     
+                        <Desc>{this.props.currentDesc}</Desc>                        
                     </MapInfo> 
 
                     <CompassBox>
-                        <Button type="button" onClick={() => this.move('n')}>North</Button>
+                        <Button type="button" onClick={() => this.props.move('n')}>North</Button>
 
                         <MiddleRow>
-                            <Button type="button" onClick={() => this.move('w')}>West</Button>
+                            <Button type="button" onClick={() => this.props.move('w')}>West</Button>
                             <Compass src={compass} alt="compass" />
-                            <Button type="button" onClick={() => this.move('e')}>East</Button>
+                            <Button type="button" onClick={() => this.props.move('e')}>East</Button>
                         </MiddleRow>
 
-
-                        <Button type="button" onClick={() => this.move('s')}>South</Button>
+                        <Button type="button" onClick={() => this.props.move('s')}>South</Button>
                     </CompassBox>
                 </WorldNav> 
 

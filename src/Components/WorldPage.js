@@ -1,11 +1,14 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
 
 import axios from "axios"
+
 import styled from "styled-components"
 
 import Menu from './Menu'
 import Sidebar from "./SideBar"
 import World from "./World"
+
+import {positionRooms} from "../utils"
 
 export const StyledMain = styled.main`
     margin: 0;
@@ -13,9 +16,11 @@ export const StyledMain = styled.main`
     display: grid;
 
     background: black;
+    position: relative;
 `
 
 class WorldPage extends React.Component {
+    dimension = 100
     constructor() {
         super();
         this.state = {
@@ -23,17 +28,21 @@ class WorldPage extends React.Component {
             currentRoomTitle: "",
             currentDesc: "",
             rooms: null,
+            roomDict: null
+        }
     }
-}
-    
     componentDidMount() {
-
         this.start();
-        this.move('s')
-
         axios
-            .get(`https://lambda-mud-test.herokuapp.com/api/rooms/`)
-            .then(res => this.setState({...this.state, rooms:res.data, playerRoom:res.data[100]}))
+            .get(`https://lambda-mud-test.herokuapp.com/api/adv/rooms/`)
+            .then(res => {
+                const rooms = positionRooms(JSON.parse(res.data.rooms), this.dimension)
+                const roomDict = {}
+                for (let i = 0; i < rooms.length; i++) {
+                    roomDict[rooms[i].title] = rooms[i]
+                }
+                this.setState({...this.state, rooms:rooms, roomDict:roomDict
+                })})
             .catch(err => console.log(err))
         
         
@@ -43,18 +52,18 @@ class WorldPage extends React.Component {
         const token = localStorage.getItem('token'); 
         axios({
             url: `https://lambda-mud-test.herokuapp.com/api/adv/init/`,
-            
             method: "GET",
             headers: {
                 Authorization: token
             }
         })
             .then(res => {
+                let currentRoom = this.state.rooms.find(room => room.title === res.data.title)
                 this.setState({ 
                     currentRoomTitle: res.data.title,
                     userID: res.data.uuid,
                     currentDesc: res.data.description,
-                    
+                    playerRoom: currentRoom
                 }); 
 
             })
@@ -64,9 +73,7 @@ class WorldPage extends React.Component {
     };
 
     move = (direction) => {
-
         const directions={'n':'n_to', 's':'s_to', 'e':'e_to', 'w':'w_to'}
-
         const token = localStorage.getItem('token'); 
         axios({
             url: `https://lambda-mud-test.herokuapp.com/api/adv/move`,
@@ -82,20 +89,8 @@ class WorldPage extends React.Component {
                 this.setState({
                     currentRoomTitle: res.data.title,
                     currentDesc: res.data.description,
+                    playerRoom: this.state.roomDict[res.data.title]
                 })
-                console.log(this.state.playerRoom)
-                let formattedDirection = directions[direction]
-                console.log(formattedDirection)
-                console.log(": ", this.state.playerRoom[formattedDirection])
-                let nextRoomId = this.state.playerRoom[formattedDirection]
-                if( nextRoomId !== 0) {
-
-                    let nextRoom = this.state.rooms.find(room => room.id === nextRoomId)
-                    console.log(nextRoom)
-                    this.setState({...this.state, playerRoom: nextRoom})
-
-                }
-
             })
             .catch(err => {
                 console.log('errors', err.response)
@@ -106,7 +101,8 @@ class WorldPage extends React.Component {
     return (
         <StyledMain>
             <Menu></Menu>
-            <World />
+            {(this.state.rooms && this.state.currentRoomTitle) && <World rooms={this.state.rooms} playerRoom={this.state.playerRoom} move={this.move} dimension={this.dimension} currentRoomTitle={this.state.currentRoomTitle}
+            currentDesc={this.state.currentDesc}/>}
             <Sidebar></Sidebar>
         </StyledMain>
     )
