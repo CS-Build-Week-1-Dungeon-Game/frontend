@@ -18,8 +18,6 @@ max-width: 960px;
 
 const GameArea = styled.div`
 background: grey;
-grid-column: 2 / 9;
-grid-row: 2 / 9;
 width: 65rem;
 height: 30rem;
 margin-top: 1rem;
