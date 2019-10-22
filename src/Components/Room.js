@@ -3,23 +3,30 @@ import styled from "styled-components"
 
 const StyledRoom = styled.div`
     background: green;
-    height: ${props => props.dimension && `${props.dimension}rem` };
-    width: ${props => props.dimension && `${props.dimension}rem` };
+    height: ${props => props.dimension && `${props.dimension}px` };
+    width: ${props => props.dimension && `${props.dimension}px` };
     position: absolute;
     border: 1px solid black;
-    left: ${props => props.x && `${props.x}rem` };
-    top: ${props => props.y && `${props.y}rem` };
+    left: ${props => props.x && `${props.x}px` };
+    top: ${props => props.y && `${props.y}px` };
+    & * {
+        pointer-events: none;
+    }
 `
 
 
 
-const Room = ({room, position}) => {
-    const dimension = 5
+const Room = ({room, moveRooms, dimension}) => {
+    
     useEffect(() => {
 
     }, []) 
+    const handleClick = (e) => {
+        console.dir(e.target)
+        moveRooms(e)
+    }
     return ( 
-        <StyledRoom x={room.x * dimension} y={room.y * dimension} dimension={dimension}>
+        <StyledRoom onClick={handleClick} x={room.x} y={room.y} dimension={dimension} id={room.pk}>
             <p>{room.title}</p>
         </StyledRoom>
      );

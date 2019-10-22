@@ -1,31 +1,43 @@
 import React, {useEffect, useState} from 'react'
 import styled from "styled-components"
-import Rooms from "./Rooms"
+
+import Room from "./Room"
+
+export const StyledRooms = styled.div`
+    background: blue;
+    position: relative;
+    left: ${props => props.left && `${props.left}px` };
+    top: ${props => props.top && `${props.top}px` };
+    transition: left 0.2s, top 0.2s;
+`
 
 export const GameArea = styled.div`
     background: white;
     grid-column: 2 / 9;
     grid-row: 2 / 9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position:relative;
-    // overflow: scroll;
+    overflow: hidden;
 `
 
-const World = ({rooms}) => {
+const World = ({rooms, currentRoom, moveRooms, dimension}) => {
     const [center, setCenter] = useState({x:0, y:0})
+    
     useEffect(() => {
         const gameArea = document.querySelector('#game-area')
-        console.dir(gameArea)
         let height = gameArea.offsetHeight;
         let width = gameArea.offsetWidth;
-        setCenter({x: width / 2, y: height / 2})
-    }, [])
-    console.log(center)
+        if (currentRoom) {
+            console.log(currentRoom.x,( currentRoom.x + dimension / 2))
+            setCenter({x: (width / 2) - (currentRoom.x + dimension / 2), y: (height / 2) - currentRoom.y - dimension / 2})
+        }
+        console.log(center, currentRoom)
+    }, [currentRoom])
+    
     return ( 
         <GameArea id="game-area">
-            <Rooms rooms={rooms}/>
+            <StyledRooms left={center.x} top={center.y}>
+            {rooms && rooms.map(room => <Room room={room} key={room.pk} moveRooms={moveRooms} dimension={dimension}/>)}
+            </StyledRooms>
         </GameArea>
      );
 }
