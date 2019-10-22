@@ -4,7 +4,7 @@ import styled from "styled-components"
 import Room from "./Room"
 
 export const StyledRooms = styled.div`
-    background: blue;
+    background: transparent;
     position: relative;
     left: ${props => props.left && `${props.left}px` };
     top: ${props => props.top && `${props.top}px` };
@@ -12,7 +12,7 @@ export const StyledRooms = styled.div`
 `
 
 export const GameArea = styled.div`
-    background: white;
+    background: grey;
     grid-column: 2 / 9;
     grid-row: 2 / 9;
     position:relative;
@@ -27,11 +27,9 @@ const World = ({rooms, currentRoom, moveRooms, dimension}) => {
         let height = gameArea.offsetHeight;
         let width = gameArea.offsetWidth;
         if (currentRoom) {
-            console.log(currentRoom.x,( currentRoom.x + dimension / 2))
             setCenter({x: (width / 2) - (currentRoom.x + dimension / 2), y: (height / 2) - currentRoom.y - dimension / 2})
         }
-        console.log(center, currentRoom)
-    }, [currentRoom])
+    }, [currentRoom, dimension])
     
     return ( 
         <GameArea id="game-area">

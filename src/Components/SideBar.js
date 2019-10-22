@@ -1,5 +1,4 @@
-import React, {useState} from 'react'
-import {Slide} from "@material-ui/core"
+import React from 'react'
 import styled from "styled-components"
 
 const StyledAside = styled.aside`
@@ -9,17 +8,10 @@ const StyledAside = styled.aside`
    grid-row: 1 / span 12;
 `
 const Sidebar = () => {
-    const [visible, setVisible] = useState(true)
     return (
-        <>
-        {/* Sorry for the mess here, I was toying with making this a slide for on mobile devices, but I thought I would try to figure out the game area first */}
-        {/* <button style={{'position': 'absolute'}} onClick={() => setVisible(!visible)}></button>
-        <Slide direction="left" in={visible}> */}
             <StyledAside>
                 <p>some text</p>
             </StyledAside>
-        {/* </Slide> */}
-        </>
         )
 }
 export default Sidebar

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import styled from "styled-components"
 
 const StyledRoom = styled.div`
@@ -17,12 +17,7 @@ const StyledRoom = styled.div`
 
 
 const Room = ({room, moveRooms, dimension}) => {
-    
-    useEffect(() => {
-
-    }, []) 
     const handleClick = (e) => {
-        console.dir(e.target)
         moveRooms(e)
     }
     return ( 
