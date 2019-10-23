@@ -15,12 +15,14 @@ export const StyledMain = styled.main`
     margin: 0;
     min-height: 100vh;
     display: grid;
-    background: black;
+    background: #212121;
     position: relative;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(12, 1fr);
 `
 
 class WorldPage extends React.Component {
-    dimension = 100
+    dimension = 150
     constructor() {
         super();
         this.state = {
@@ -28,7 +30,8 @@ class WorldPage extends React.Component {
             currentRoomTitle: "",
             currentDesc: "",
             rooms: null,
-            roomDict: null
+            roomDict: null,
+            user: null
         }
     }
     componentDidMount() {
@@ -66,7 +69,8 @@ class WorldPage extends React.Component {
                     currentRoomTitle: res.data.title,
                     userID: res.data.uuid,
                     currentDesc: res.data.description,
-                    playerRoom: currentRoom
+                    playerRoom: currentRoom,
+                    user: res.data.name
                 });
 
             })
@@ -107,7 +111,7 @@ class WorldPage extends React.Component {
             <StyledMain>
                 <Menu></Menu>
                 <World rooms={this.state.rooms} playerRoom={this.state.playerRoom} move={this.move} dimension={this.dimension} currentRoomTitle={this.state.currentRoomTitle}
-                    currentDesc={this.state.currentDesc} />}
+                    currentDesc={this.state.currentDesc} user={this.state.user}/>}
             <Sidebar></Sidebar>
             </StyledMain>
         )
