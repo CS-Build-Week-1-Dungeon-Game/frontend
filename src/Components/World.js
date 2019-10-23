@@ -13,15 +13,15 @@ export const StyledRooms = styled.div`
 `
 
 const Container = styled.div`
-max-width: 960px;
+    grid-column: 1/ 10;
+    grid-row: 1 / 12;
 `
 
 const GameArea = styled.div`
 background: grey;
-width: 65rem;
+width: 90%;
 height: 30rem;
-margin-top: 1rem;
-margin-left: 1rem;
+margin: 2rem auto;
 border-radius: 25px;
 overflow: hidden;
 `
@@ -35,10 +35,11 @@ color: white;
 
 const WorldNav = styled.div`
 display: flex;
+width: 90%;
+margin: auto;
 `
 
 const Desc = styled.header`
-width: 55rem;
 margin-left: 2rem;
 font-size: 19px;
 color: white;
@@ -55,8 +56,8 @@ height: 14rem;
 display: flex;
 flex-direction: column;
 align-items: center;
-margin-top: 1rem;
-margin-left: -3rem;
+margin-top: 2rem;
+margin-left: 1rem;
 `
 
 const MiddleRow = styled.div`
@@ -79,6 +80,7 @@ outline: none;
 `
 
 const MapInfo = styled.div`
+width: 75%;
 `
 
 

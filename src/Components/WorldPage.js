@@ -17,6 +17,8 @@ export const StyledMain = styled.main`
     display: grid;
     background: black;
     position: relative;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(12, 1fr);
 `
 
 class WorldPage extends React.Component {
