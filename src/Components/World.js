@@ -135,15 +135,15 @@ class World extends React.Component {
 
                     <CompassBox>
 
-                        <Button type="button" onClick={() => this.props.move('n')}>North</Button>
+                        <Button type="button" onClick={() => this.props.move('n')}>N</Button>
 
                         <MiddleRow>
-                            <Button type="button" onClick={() => this.props.move('w')}>West</Button>
+                            <Button type="button" onClick={() => this.props.move('w')}>W</Button>
                             <Compass src={compass} alt="compass" />
-                            <Button type="button" onClick={() => this.props.move('e')}>East</Button>
+                            <Button type="button" onClick={() => this.props.move('e')}>E</Button>
                         </MiddleRow>
 
-                        <Button type="button" onClick={() => this.props.move('s')}>South</Button>
+                        <Button type="button" onClick={() => this.props.move('s')}>S</Button>
 
                     </CompassBox>
                 </WorldNav>
