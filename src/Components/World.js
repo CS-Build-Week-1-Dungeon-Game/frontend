@@ -17,13 +17,19 @@ max-width: 960px;
 `
 
 const GameArea = styled.div`
-background: grey;
+
+background: black;
+grid-column: 2 / 9;
+grid-row: 2 / 9;
 width: 65rem;
 height: 30rem;
 margin-top: 1rem;
 margin-left: 1rem;
 border-radius: 25px;
+
 overflow: hidden;
+border: 2px solid orange;
+
 `
 
 const Title = styled.h1`
@@ -46,7 +52,7 @@ color: white;
 
 const Compass = styled.img`
 height: 4rem;
-margin: 1rem;
+margin: 10px;
 `
 
 const CompassBox = styled.div`
@@ -55,8 +61,8 @@ height: 14rem;
 display: flex;
 flex-direction: column;
 align-items: center;
-margin-top: 1rem;
-margin-left: -3rem;
+margin-top: 2rem;
+margin-left: 0rem;
 `
 
 const MiddleRow = styled.div`
@@ -66,6 +72,8 @@ align-items: center;
 `
 
 const Button = styled.button`
+width: 30px;
+height: 30px;
 background: black;
 color: red;
 border-radius: 25px;
@@ -80,6 +88,7 @@ outline: none;
 
 const MapInfo = styled.div`
 `
+
 
 
 class World extends React.Component {
@@ -122,6 +131,7 @@ class World extends React.Component {
                     </MapInfo>
 
                     <CompassBox>
+
                         <Button type="button" onClick={() => this.props.move('n')}>North</Button>
 
                         <MiddleRow>
@@ -131,6 +141,7 @@ class World extends React.Component {
                         </MiddleRow>
 
                         <Button type="button" onClick={() => this.props.move('s')}>South</Button>
+
                     </CompassBox>
                 </WorldNav>
 
