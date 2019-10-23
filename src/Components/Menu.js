@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { Menu as MUIMenu, MenuItem, IconButton} from '@material-ui/core';
 import { Menu as MenuIcon} from '@material-ui/icons';
 import { styled } from '@material-ui/styles';
@@ -15,7 +15,6 @@ const Menu = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = event => {
-        console.log('click')
         setAnchorEl(event.currentTarget);
     };
 

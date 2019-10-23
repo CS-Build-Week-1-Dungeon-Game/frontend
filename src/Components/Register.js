@@ -1,48 +1,56 @@
 import React, { useState }from 'react';
-import styled from 'styled-components';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 
-const Form = styled.form`
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import CodeIcon from '@material-ui/icons/Code';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
 
-`
-const Title = styled.h1`
-`
 
-const Button = styled.button`
+const useStyles = makeStyles(theme => ({
+  root: {
+    height: '100vh',
+  },
+  image: {
+    backgroundImage: 'url(https://images.unsplash.com/photo-1509198397868-475647b2a1e5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=598&q=80)',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
+  paper: {
+    margin: theme.spacing(8, 4),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.primary.main,
+  },
+  form: {
+    width: '100%', 
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
-`
-const Input = styled.div`
-`
-
-const Username = styled.input`
-
-`
-
-const Password = styled.input`
-
-`
-
-const Password2 = styled.input`
-
-`
-
-const Container = styled.div`
-
-`
-
-const SignUp = styled.div`
-
-`
-
-const Register = (props) => {
-
+export default function Register(props) {
+    const classes = useStyles();
     const [inputs, setInputs] = useState({ password1:'', password2:'', username: ''});
 
     const registerUser = (newUser) => {
-        axios.post(`https://lambda-mud-test.herokuapp.com/api/registration/`, newUser)
+        axios.post(`https://mud-cs22.herokuapp.com/api/registration/`, newUser)
         .then(res => {
-          console.log('response', res)
           const token = res.data.key
           localStorage.setItem('token', `Token ${token}`)
           props.history.push('/')
@@ -53,7 +61,6 @@ const Register = (props) => {
       }
 
     const handleSubmit = (event) => {
-        console.log('UserState: ', inputs)
         if (event) {
             event.preventDefault();
          registerUser(inputs);     
@@ -65,53 +72,78 @@ const Register = (props) => {
         event.persist();
         setInputs(inputs => ({...inputs, [event.target.name] : event.target.value }))
     }
-
-      
-    return (
-        <Container>
-        <Form onSubmit = {handleSubmit}>
-            <Title>Create an Account</Title>
-            
-           <div>
-   
-            <Input>
-                <Username 
-                placeholder="Username"
-                type = 'username' 
-                name = 'username' 
-                onChange = {handleChange} 
-                value = {inputs.username} required
-                />
-            </Input>
-
-            <Input>
-                <Password                   
-                placeholder="password"
-                type = 'password1' 
-                name = 'password1' 
-                onChange = {handleChange} 
-                value = {inputs.password1} required
-                />
-            </Input>
-            <Input>
-
-                <Password2                   
-                placeholder="confirm password"
-                type = 'password2' 
-                name = 'password2' 
-                onChange = {handleChange} 
-                value = {inputs.password2} required
-                />
-            </Input>
-
-            </div>
-            <Button type = 'submit' >Sign Up</Button>
-        </Form>
-
-
-        <SignUp>Already Sign Up? <Link to = '/'>Login Here</Link></SignUp>
-        </Container>
-    )
+  return (
+    <Grid container component="main" className={classes.root}>
+      <CssBaseline />
+      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <CodeIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form className={classes.form} onSubmit={handleSubmit}noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              value={inputs.username}
+              onChange={handleChange}
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password1"
+              label="Password"
+              type="password"
+              id="password"
+              value={inputs.password1}
+              onChange={handleChange}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password2"
+              label="Confirm Password"
+              type="password"
+              id="password2"
+              value={inputs.password2}
+              onChange={handleChange}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign Up
+            </Button>
+            <Grid container>
+              <Grid item>
+                <Link to="/">
+                  {"Already have an account? Sign In"}
+                </Link>
+              </Grid>
+            </Grid>
+            <Box mt={5}>
+            </Box>
+          </form>
+        </div>
+      </Grid>
+    </Grid>
+  );
 }
 
-export default Register;

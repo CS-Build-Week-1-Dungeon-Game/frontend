@@ -1,21 +1,26 @@
 import React from "react"
 
 import axios from "axios"
+
 import styled from "styled-components"
 
 import Menu from './Menu'
 import Sidebar from "./SideBar"
 import World from "./World"
+import FullPageLoader from "./FullPageLoader"
+
+import { positionRooms } from "../utils"
 
 export const StyledMain = styled.main`
     margin: 0;
     min-height: 100vh;
     display: grid;
-
     background: black;
+    position: relative;
 `
 
 class WorldPage extends React.Component {
+    dimension = 100
     constructor() {
         super();
         this.state = {
@@ -23,53 +28,58 @@ class WorldPage extends React.Component {
             currentRoomTitle: "",
             currentDesc: "",
             rooms: null,
+            roomDict: null
+        }
     }
-}
-    
     componentDidMount() {
-
         this.start();
-        this.move('s')
-
-        axios
-            .get(`https://lambda-mud-test.herokuapp.com/api/rooms/`)
-            .then(res => this.setState({...this.state, rooms:res.data, playerRoom:res.data[100]}))
-            .catch(err => console.log(err))
-        
-        
     }
 
     start = () => {
-        const token = localStorage.getItem('token'); 
+        // Get and parse the rooms
+        axios
+            .get(`https://mud-cs22.herokuapp.com/api/adv/rooms/`)
+            .then(res => {
+                const rooms = positionRooms(JSON.parse(res.data), this.dimension)
+                const roomDict = {}
+                for (let i = 0; i < rooms.length; i++) {
+                    roomDict[rooms[i].title] = rooms[i]
+                }
+                this.setState({
+                    ...this.state, rooms: rooms, roomDict: roomDict
+                })
+            })
+            .catch(err => console.log(err))
+
+        // initialize the player
+        const token = localStorage.getItem('token');
         axios({
-            url: `https://lambda-mud-test.herokuapp.com/api/adv/init/`,
-            
+            url: `https://mud-cs22.herokuapp.com/api/adv/init/`,
             method: "GET",
             headers: {
                 Authorization: token
             }
         })
             .then(res => {
-                this.setState({ 
+                let currentRoom = this.state.roomDict[res.data.title]
+                this.setState({
                     currentRoomTitle: res.data.title,
                     userID: res.data.uuid,
                     currentDesc: res.data.description,
-                    
-                }); 
+                    playerRoom: currentRoom
+                });
 
             })
             .catch(err => {
-                console.log('errors', err.response)
-            });        
+                console.log(err)
+            });
     };
 
     move = (direction) => {
-
-        const directions={'n':'n_to', 's':'s_to', 'e':'e_to', 'w':'w_to'}
-
-        const token = localStorage.getItem('token'); 
+        const directions = { 'n': 'n_to', 's': 's_to', 'e': 'e_to', 'w': 'w_to' }
+        const token = localStorage.getItem('token');
         axios({
-            url: `https://lambda-mud-test.herokuapp.com/api/adv/move`,
+            url: `https://mud-cs22.herokuapp.com/api/adv/move`,
             method: "POST",
             headers: {
                 Authorization: token
@@ -82,36 +92,28 @@ class WorldPage extends React.Component {
                 this.setState({
                     currentRoomTitle: res.data.title,
                     currentDesc: res.data.description,
+                    playerRoom: this.state.roomDict[res.data.title]
                 })
-                console.log(this.state.playerRoom)
-                let formattedDirection = directions[direction]
-                console.log(formattedDirection)
-                console.log(": ", this.state.playerRoom[formattedDirection])
-                let nextRoomId = this.state.playerRoom[formattedDirection]
-                if( nextRoomId !== 0) {
-
-                    let nextRoom = this.state.rooms.find(room => room.id === nextRoomId)
-                    console.log(nextRoom)
-                    this.setState({...this.state, playerRoom: nextRoom})
-
-                }
-
             })
             .catch(err => {
                 console.log('errors', err.response)
             });
     };
-    render(){
-
-    return (
-        <StyledMain>
-            <Menu></Menu>
-            <World />
+    render() {
+        if (!this.state.rooms || !this.state.currentRoomTitle) {
+            return <FullPageLoader />
+        }
+        return (
+            <StyledMain>
+                <Menu></Menu>
+                <World rooms={this.state.rooms} playerRoom={this.state.playerRoom} move={this.move} dimension={this.dimension} currentRoomTitle={this.state.currentRoomTitle}
+                    currentDesc={this.state.currentDesc} />}
             <Sidebar></Sidebar>
-        </StyledMain>
-    )
+            </StyledMain>
+        )
 
-}}
+    }
+}
 
 
 export default WorldPage
