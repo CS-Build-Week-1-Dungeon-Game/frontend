@@ -3,28 +3,27 @@ import styled from "styled-components"
 import compass from './compass.svg';
 
 import Room from "./Room"
+import Player from "./Player"
 
 export const StyledRooms = styled.div`
     background: transparent;
     position: relative;
     left: ${props => props.left && `${props.left}px`};
     top: ${props => props.top && `${props.top}px`};
-    transition: left 0.2s, top 0.2s;
+    transition: left 0.3s, top 0.3s;
+    transition-delay: 0.5s;
 `
 
 const Container = styled.div`
-max-width: 960px;
+    grid-column: 1/ 10;
+    grid-row: 1 / 12;
 `
 
 const GameArea = styled.div`
-
 background: black;
-grid-column: 2 / 9;
-grid-row: 2 / 9;
-width: 65rem;
+width: 90%;
 height: 30rem;
-margin-top: 1rem;
-margin-left: 1rem;
+margin: 2rem auto;
 border-radius: 25px;
 
 overflow: hidden;
@@ -41,10 +40,11 @@ color: white;
 
 const WorldNav = styled.div`
 display: flex;
+width: 90%;
+margin: auto;
 `
 
 const Desc = styled.header`
-width: 55rem;
 margin-left: 2rem;
 font-size: 19px;
 color: white;
@@ -62,7 +62,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 margin-top: 2rem;
-margin-left: 0rem;
+margin-left: 1rem;
 `
 
 const MiddleRow = styled.div`
@@ -87,6 +87,7 @@ outline: none;
 `
 
 const MapInfo = styled.div`
+width: 75%;
 `
 
 
@@ -120,7 +121,9 @@ class World extends React.Component {
         return (
             <Container>
                 <GameArea id="game-area">
+                    
                     <StyledRooms left={this.state.center.x} top={this.state.center.y}>
+                    <Player  dimension={this.props.dimension} playerRoom={this.props.playerRoom} user={this.props.user}/>
                         {this.props.rooms && this.props.rooms.map(room => <Room room={room} key={room.pk} dimension={this.props.dimension} playerRoom={this.props.playerRoom} />)}
                     </StyledRooms>
                 </GameArea>
@@ -132,15 +135,15 @@ class World extends React.Component {
 
                     <CompassBox>
 
-                        <Button type="button" onClick={() => this.props.move('n')}>North</Button>
+                        <Button type="button" onClick={() => this.props.move('n')}>N</Button>
 
                         <MiddleRow>
-                            <Button type="button" onClick={() => this.props.move('w')}>West</Button>
+                            <Button type="button" onClick={() => this.props.move('w')}>W</Button>
                             <Compass src={compass} alt="compass" />
-                            <Button type="button" onClick={() => this.props.move('e')}>East</Button>
+                            <Button type="button" onClick={() => this.props.move('e')}>E</Button>
                         </MiddleRow>
 
-                        <Button type="button" onClick={() => this.props.move('s')}>South</Button>
+                        <Button type="button" onClick={() => this.props.move('s')}>S</Button>
 
                     </CompassBox>
                 </WorldNav>

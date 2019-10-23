@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 
 const StyledAside = styled.aside`
-background: black;
+background: #212121;
 border-left: 2px solid white;
 grid-column: 10 / span 3;
 grid-row: 1 / span 12;
