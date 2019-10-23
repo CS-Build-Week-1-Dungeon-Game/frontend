@@ -15,7 +15,6 @@ export const StyledMain = styled.main`
     margin: 0;
     min-height: 100vh;
     display: grid;
-
     background: black;
     position: relative;
 `

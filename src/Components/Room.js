@@ -28,7 +28,6 @@ const Room = ({room, playerRoom, dimension}) => {
     // console.log(room, playerRoom)
     return ( 
         <StyledRoom  x={room.x} y={room.y} dimension={dimension} id={room.pk}>
-            <p>{room.title}</p>
                 {
                     (playerRoom && room && playerRoom.title === room.title) && <Player></Player>
                 }
