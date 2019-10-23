@@ -20,7 +20,7 @@ const Container = styled.div`
 `
 
 const GameArea = styled.div`
-background: grey;
+background: black;
 width: 90%;
 height: 30rem;
 margin: 2rem auto;

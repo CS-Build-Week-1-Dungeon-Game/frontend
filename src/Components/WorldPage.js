@@ -15,7 +15,7 @@ export const StyledMain = styled.main`
     margin: 0;
     min-height: 100vh;
     display: grid;
-    background: black;
+    background: #212121;
     position: relative;
     grid-template-columns: repeat(12, 1fr);
     grid-template-columns: repeat(12, 1fr);
