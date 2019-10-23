@@ -12,7 +12,7 @@ grid-row: 1 / span 12;
 const MiniMap = styled.div`
 width: 18rem;
 height: 14rem;
-background: blue;
+background: green;
 border-radius: 25px;
 `
 const PlayerInfo = styled.div`
@@ -36,27 +36,32 @@ color: white;
 
 const Inventory = styled.h1`
 color: white;
-
+margin-top: -20px;
+margin-bottom: 40px;
 `
 
 const Chat = styled.div`
 width: 18rem;
 height: 14rem;
-background: white;
-
+background: grey;
+border-radius: 10px;
 `
 
 const ChatInput = styled.div`
 width: 18rem;
 height: 2rem;
-background: white;
+background: darkgrey;
+border-radius: 10px;
 border-top: 1px solid black;
 color: black;
+padding: 5px;
+margin-top: 5px;
 `
 
 const Message = styled.h1`
 color: black;
 font-size: 16px;
+margin-left: 1rem;
 
 `
 

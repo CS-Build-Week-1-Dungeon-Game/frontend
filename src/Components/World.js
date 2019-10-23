@@ -25,7 +25,10 @@ width: 90%;
 height: 30rem;
 margin: 2rem auto;
 border-radius: 25px;
+
 overflow: hidden;
+border: 2px solid orange;
+
 `
 
 const Title = styled.h1`
@@ -49,7 +52,7 @@ color: white;
 
 const Compass = styled.img`
 height: 4rem;
-margin: 1rem;
+margin: 10px;
 `
 
 const CompassBox = styled.div`
@@ -69,6 +72,8 @@ align-items: center;
 `
 
 const Button = styled.button`
+width: 30px;
+height: 30px;
 background: black;
 color: red;
 border-radius: 25px;
@@ -84,6 +89,7 @@ outline: none;
 const MapInfo = styled.div`
 width: 75%;
 `
+
 
 
 class World extends React.Component {
@@ -128,6 +134,7 @@ class World extends React.Component {
                     </MapInfo>
 
                     <CompassBox>
+
                         <Button type="button" onClick={() => this.props.move('n')}>North</Button>
 
                         <MiddleRow>
@@ -137,6 +144,7 @@ class World extends React.Component {
                         </MiddleRow>
 
                         <Button type="button" onClick={() => this.props.move('s')}>South</Button>
+
                     </CompassBox>
                 </WorldNav>
 
