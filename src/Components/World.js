@@ -3,13 +3,15 @@ import styled from "styled-components"
 import compass from './compass.svg';
 
 import Room from "./Room"
+import Player from "./Player"
 
 export const StyledRooms = styled.div`
     background: transparent;
     position: relative;
     left: ${props => props.left && `${props.left}px`};
     top: ${props => props.top && `${props.top}px`};
-    transition: left 0.2s, top 0.2s;
+    transition: left 0.3s, top 0.3s;
+    transition-delay: 0.5s;
 `
 
 const Container = styled.div`
@@ -113,7 +115,9 @@ class World extends React.Component {
         return (
             <Container>
                 <GameArea id="game-area">
+                    
                     <StyledRooms left={this.state.center.x} top={this.state.center.y}>
+                    <Player  dimension={this.props.dimension} playerRoom={this.props.playerRoom} user={this.props.user}/>
                         {this.props.rooms && this.props.rooms.map(room => <Room room={room} key={room.pk} dimension={this.props.dimension} playerRoom={this.props.playerRoom} />)}
                     </StyledRooms>
                 </GameArea>

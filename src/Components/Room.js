@@ -2,9 +2,6 @@ import React from 'react';
 import styled from "styled-components"
 
 const StyledRoom = styled.div`
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
     border: 1px solid yellow;
     background: green;
     height: ${props => props.dimension && `${props.dimension}px` };
@@ -31,7 +28,7 @@ const Door = styled.div`
     top: ${props => props.top && `${props.top}px`}
     width: ${props => props.dimension && `${props.width}px` };
     height: ${props => props.dimension && `${props.width}px` };
-    z-index: 999;
+    z-index: 998;
 `
 
 const Room = ({room, playerRoom, dimension}) => {
@@ -43,9 +40,9 @@ const Room = ({room, playerRoom, dimension}) => {
         {!!room.w_to && <Door left={room.x - doorWidth / 2 - 1} top={room.y + (dimension / 2 - doorWidth / 2)} dimension={dimension} width={doorWidth}/>}
         <StyledRoom  x={room.x} y={room.y} dimension={dimension} id={room.pk}>
                 
-                {
+                {/* {
                     (playerRoom && room && playerRoom.title === room.title) && <Player></Player>
-                }
+                } */}
         </StyledRoom>
         </>
      );
