@@ -3,14 +3,14 @@ import React from 'react'
 import axios from 'axios'
 
 import styled from 'styled-components'
-import {toast, ToastContainer} from "react-toastify"
+import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 import Menu from './Menu'
 import Sidebar from './SideBar'
 import World from './World'
 import FullPageLoader from './FullPageLoader'
-import LinkToast from "./LinkToast"
+import LinkToast from './LinkToast'
 
 import { positionRooms } from '../utils'
 
@@ -24,14 +24,13 @@ export const StyledMain = styled.main`
   grid-template-columns: repeat(12, 1fr);
 `
 toast.configure({
-    autoClose: 10000,
-    draggable: false,
-    closeOnClick: false
+  autoClose: 10000,
+  draggable: false,
+  closeOnClick: false,
 })
 
-
 class WorldPage extends React.Component {
-  dimension = 280
+  dimension = 300
   constructor() {
     super()
     this.state = {
@@ -43,6 +42,8 @@ class WorldPage extends React.Component {
       user: null,
       rawRooms: [],
       playerColor: null,
+      playerInventory: null,
+      roomItems: null,
     }
   }
   componentDidMount() {
@@ -83,9 +84,9 @@ class WorldPage extends React.Component {
         })
       })
       .catch(err => {
-          toast.info(({ closeToast }) => <LinkToast />)
-          console.log(err)
-        })
+        toast.info(({ closeToast }) => <LinkToast />)
+        console.log(err)
+      })
   }
   start = () => {
     // initialize the player
@@ -98,6 +99,7 @@ class WorldPage extends React.Component {
       },
     })
       .then(res => {
+        console.log(res.data)
         let currentRoom = this.state.roomDict[res.data.title]
         this.setState({
           currentRoomTitle: res.data.title,
@@ -105,6 +107,8 @@ class WorldPage extends React.Component {
           currentDesc: res.data.description,
           playerRoom: currentRoom,
           user: res.data.name,
+          playerInventory: res.data.inventory,
+          roomItems: res.data.room_items,
         })
       })
       .catch(err => {
@@ -127,9 +131,55 @@ class WorldPage extends React.Component {
     })
       .then(res => {
         this.setState({
+          // playerInventory: res.data.inventory,
           currentRoomTitle: res.data.title,
           currentDesc: res.data.description,
           playerRoom: this.state.roomDict[res.data.title],
+        })
+      })
+      .catch(err => {
+        console.log('errors', err.response)
+      })
+    this.start()
+  }
+  pickup = e => {
+    const token = localStorage.getItem('token')
+    axios({
+      url: `https://mud-cs22.herokuapp.com/api/adv/take`,
+      method: 'POST',
+      headers: {
+        Authorization: token,
+      },
+      data: {
+        item: e.target.innerText,
+      },
+    })
+      .then(res => {
+        this.setState({
+          playerInventory: res.data.inventory,
+          roomItems: res.data.room_items,
+        })
+      })
+      .catch(err => {
+        console.log('errors', err.response)
+      })
+  }
+  drop = e => {
+    const token = localStorage.getItem('token')
+    axios({
+      url: `https://mud-cs22.herokuapp.com/api/adv/drop`,
+      method: 'POST',
+      headers: {
+        Authorization: token,
+      },
+      data: {
+        item: e.target.innerText,
+      },
+    })
+      .then(res => {
+        this.setState({
+          playerInventory: res.data.inventory,
+          roomItems: res.data.room_items,
         })
       })
       .catch(err => {
@@ -139,16 +189,16 @@ class WorldPage extends React.Component {
   render() {
     if (!this.state.rooms || !this.state.currentRoomTitle) {
       return (
-      <>
-      <ToastContainer />
-      <FullPageLoader />
-      </>
+        <>
+          <ToastContainer />
+          <FullPageLoader />
+        </>
       )
     }
     return (
       <StyledMain>
         <Menu></Menu>
-        <ToastContainer/>
+        <ToastContainer />
         {/* <LinkToast /> */}
         <World
           rooms={this.state.rooms}
@@ -159,6 +209,8 @@ class WorldPage extends React.Component {
           playerColor={this.state.playerColor}
           currentDesc={this.state.currentDesc}
           user={this.state.user}
+          roomItems={this.state.roomItems}
+          clickHandler={this.pickup}
         />
         }
         <Sidebar
@@ -171,6 +223,8 @@ class WorldPage extends React.Component {
           currentDesc={this.state.currentDesc}
           user={this.state.user}
           rawRooms={this.state.rawRooms}
+          playerInventory={this.state.playerInventory}
+          clickHandler={this.drop}
         ></Sidebar>
       </StyledMain>
     )

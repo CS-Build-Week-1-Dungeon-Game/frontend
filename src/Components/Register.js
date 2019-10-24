@@ -12,15 +12,14 @@ import Grid from '@material-ui/core/Grid'
 import CodeIcon from '@material-ui/icons/Code'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
-import {toast} from "react-toastify"
+import { toast } from 'react-toastify'
 
 const useStyles = makeStyles(theme => ({
   root: {
     height: '100vh',
   },
   image: {
-    backgroundImage:
-      'url(https://images.unsplash.com/photo-1509198397868-475647b2a1e5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=598&q=80)',
+    backgroundImage: 'url(https://wallpaperbro.com/img/509496.jpg)',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center',

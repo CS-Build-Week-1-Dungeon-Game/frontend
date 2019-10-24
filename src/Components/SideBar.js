@@ -4,9 +4,9 @@ import Player from './Player'
 import Room from './Room'
 import { positionRooms } from '../utils'
 import Jack from './jack.svg'
+import ItemList from './ItemList'
 
 export const StyledRooms = styled.div`
-  background: transparent;
   position: relative;
   left: ${props => props.left && `${props.left}px`};
   top: ${props => props.top && `${props.top}px`};
@@ -19,15 +19,16 @@ const StyledAside = styled.aside`
   grid-column: 10 / span 3;
   grid-row: 1 / span 12;
 `
-
 const MiniMap = styled.div`
-  width: 18rem;
-  height: 14rem;
-  background: black;
-  border-radius: 25px;
+  width: 20rem;
+  height: 16rem;
+  background-color: rgb(26, 26, 26, 0.85);
+  border: 5px rgb(27, 27, 27, 0.85) inset;
+  border-radius: 1.5rem;
+  box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
+  color: #fafafa;
   position: relative;
   overflow: hidden;
-  border: 2px solid orange;
 `
 const PlayerInfo = styled.div`
   display: flex;
@@ -35,7 +36,6 @@ const PlayerInfo = styled.div`
   align-items: center;
   color: white;
 `
-
 const Username = styled.h1`
   color: orange;
   display: flex;
@@ -44,16 +44,24 @@ const Username = styled.h1`
 
 const Inventory = styled.h1`
   color: white;
-  margin-bottom: 40px;
+  margin-bottom: 1.5rem;
 `
-
 const JackImg = styled.img`
-height: 2rem;
-margin-right: 1rem;
+  height: 2rem;
+  margin-right: 1rem;
+`
+const InventoryArea = styled.div`
+  text-align: center;
+`
+const InventoryText = styled.p`
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+  height: 2rem;
+  margin-right: 1rem;
 `
 
 class Sidebar extends React.Component {
-  dimension = 20
+  dimension = 30
   constructor(props) {
     super(props)
     this.state = {
@@ -110,7 +118,10 @@ class Sidebar extends React.Component {
       <>
         <StyledAside>
           <PlayerInfo>
-          <Username><JackImg src={Jack} />{this.props.user}</Username>
+            <Username>
+              <JackImg src={Jack} />
+              {this.props.user}
+            </Username>
             <MiniMap id="mini-map">
               <StyledRooms left={this.state.center.x} top={this.state.center.y}>
                 {this.state.playerRoom && (
@@ -135,7 +146,16 @@ class Sidebar extends React.Component {
             </MiniMap>
 
             <Inventory>Inventory:</Inventory>
-            
+            <InventoryArea>
+              {/* {this.props.playerInventory && this.props.playerInventory.map(item => 
+                <InventoryItem key={item}>{item}</InventoryItem>
+            )} */}
+              <ItemList
+                items={this.props.playerInventory}
+                clickHandler={this.props.clickHandler}
+              />
+              <InventoryText>Click on an item to drop it</InventoryText>
+            </InventoryArea>
           </PlayerInfo>
         </StyledAside>
       </>
