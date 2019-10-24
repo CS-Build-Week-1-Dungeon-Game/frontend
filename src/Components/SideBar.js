@@ -116,7 +116,6 @@ class Sidebar extends React.Component {
       this.props.playerRoom &&
       prevProps.playerRoom.title !== this.props.playerRoom.title
     ) {
-      console.log('here')
       const playerRoom = this.state.roomDict[this.props.playerRoom.title]
       this.setState({
         playerRoom,
@@ -128,7 +127,6 @@ class Sidebar extends React.Component {
     }
   }
   render() {
-    console.log(this.state)
     return (
       <>
         <StyledAside>

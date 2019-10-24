@@ -87,7 +87,6 @@ class WorldPage extends React.Component {
       },
     })
       .then(res => {
-        console.log(this.state)
         let currentRoom = this.state.roomDict[res.data.title]
         this.setState({
           currentRoomTitle: res.data.title,
@@ -103,7 +102,6 @@ class WorldPage extends React.Component {
   }
 
   move = direction => {
-    const directions = { n: 'n_to', s: 's_to', e: 'e_to', w: 'w_to' }
     const token = localStorage.getItem('token')
     axios({
       url: `https://mud-cs22.herokuapp.com/api/adv/move`,
@@ -127,7 +125,6 @@ class WorldPage extends React.Component {
       })
   }
   render() {
-    console.log(this.state)
     if (!this.state.rooms || !this.state.currentRoomTitle) {
       return <FullPageLoader />
     }

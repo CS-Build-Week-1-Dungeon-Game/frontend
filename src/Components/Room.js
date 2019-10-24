@@ -13,14 +13,6 @@ const StyledRoom = styled.div`
     pointer-events: none;
   }
 `
-const Player = styled.div`
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background: red;
-  display: inline-block;
-`
-
 const Door = styled.div`
     position: absolute;
     background: #2e7d32;

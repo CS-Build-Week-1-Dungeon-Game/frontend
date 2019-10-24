@@ -54,7 +54,6 @@ export default function Login(props) {
 
   function submitHandler(event) {
     event.preventDefault()
-    console.log(user)
     axios
       .post(`https://mud-cs22.herokuapp.com/api/login/`, user)
       .then(res => {
