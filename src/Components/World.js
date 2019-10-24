@@ -55,13 +55,12 @@ const Compass = styled.img`
 `
 
 const CompassBox = styled.div`
-  width: 14rem;
-  height: 14rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 2rem;
-  margin-left: 1rem;
+width: 14rem;
+height: 14rem;
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-left: 1rem;
 `
 
 const MiddleRow = styled.div`

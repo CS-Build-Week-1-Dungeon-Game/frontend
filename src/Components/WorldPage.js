@@ -3,11 +3,14 @@ import React from 'react'
 import axios from 'axios'
 
 import styled from 'styled-components'
+import {toast, ToastContainer} from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css'
 
 import Menu from './Menu'
 import Sidebar from './SideBar'
 import World from './World'
 import FullPageLoader from './FullPageLoader'
+import LinkToast from "./LinkToast"
 
 import { positionRooms } from '../utils'
 
@@ -20,9 +23,15 @@ export const StyledMain = styled.main`
   grid-template-columns: repeat(12, 1fr);
   grid-template-columns: repeat(12, 1fr);
 `
+toast.configure({
+    autoClose: 10000,
+    draggable: false,
+    closeOnClick: false
+})
+
 
 class WorldPage extends React.Component {
-  dimension = 150
+  dimension = 280
   constructor() {
     super()
     this.state = {
@@ -72,9 +81,11 @@ class WorldPage extends React.Component {
           roomDict: roomDict,
           rawRooms: res.data,
         })
-        console.log(this.state)
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+          toast.info(({ closeToast }) => <LinkToast />)
+          console.log(err)
+        })
   }
   start = () => {
     // initialize the player
@@ -87,7 +98,6 @@ class WorldPage extends React.Component {
       },
     })
       .then(res => {
-        console.log(this.state)
         let currentRoom = this.state.roomDict[res.data.title]
         this.setState({
           currentRoomTitle: res.data.title,
@@ -98,12 +108,12 @@ class WorldPage extends React.Component {
         })
       })
       .catch(err => {
+        toast.info(({ closeToast }) => <LinkToast />)
         console.log(err)
       })
   }
 
   move = direction => {
-    const directions = { n: 'n_to', s: 's_to', e: 'e_to', w: 'w_to' }
     const token = localStorage.getItem('token')
     axios({
       url: `https://mud-cs22.herokuapp.com/api/adv/move`,
@@ -127,13 +137,19 @@ class WorldPage extends React.Component {
       })
   }
   render() {
-    console.log(this.state)
     if (!this.state.rooms || !this.state.currentRoomTitle) {
-      return <FullPageLoader />
+      return (
+      <>
+      <ToastContainer />
+      <FullPageLoader />
+      </>
+      )
     }
     return (
       <StyledMain>
         <Menu></Menu>
+        <ToastContainer/>
+        {/* <LinkToast /> */}
         <World
           rooms={this.state.rooms}
           playerRoom={this.state.playerRoom}
