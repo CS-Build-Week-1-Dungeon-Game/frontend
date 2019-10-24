@@ -158,6 +158,15 @@ class Sidebar extends React.Component {
             <ItemList items={this.props.playerInventory}/>
             <InventoryText>Click on an item to drop it</InventoryText>
             </InventoryArea>
+
+            <Inventory>Room Inventory:</Inventory>
+            <InventoryArea>
+            {/* {this.props.playerInventory && this.props.playerInventory.map(item => 
+                <InventoryItem key={item}>{item}</InventoryItem>
+            )} */}
+            <ItemList items={this.props.roomItems}/>
+            <InventoryText>Click on an item to drop it</InventoryText>
+            </InventoryArea>
           </PlayerInfo>
         </StyledAside>
       </>

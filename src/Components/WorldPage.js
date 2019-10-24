@@ -132,6 +132,7 @@ class WorldPage extends React.Component {
     })
       .then(res => {
         this.setState({
+        // playerInventory: res.data.inventory,
           currentRoomTitle: res.data.title,
           currentDesc: res.data.description,
           playerRoom: this.state.roomDict[res.data.title],
@@ -140,6 +141,7 @@ class WorldPage extends React.Component {
       .catch(err => {
         console.log('errors', err.response)
       })
+      this.start()
   }
   render() {
     if (!this.state.rooms || !this.state.currentRoomTitle) {
@@ -178,6 +180,7 @@ class WorldPage extends React.Component {
           user={this.state.user}
           rawRooms={this.state.rawRooms}
           playerInventory={this.state.playerInventory}
+          roomItems={this.state.roomItems}
         ></Sidebar>
       </StyledMain>
     )
