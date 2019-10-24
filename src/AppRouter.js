@@ -1,8 +1,9 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import PrivateRoute from "./Components/PrivateRoute"
 import Login from './Components/Login';
 import Register from './Components/Register';
-import World from './Components/World';
+import WorldPage from "./Components/WorldPage";
 
 
 export default function AppRouter() {
@@ -11,7 +12,7 @@ export default function AppRouter() {
         <Switch>
             <Route path='/register' component={Register}/>
             <Route exact path='/' component={Login}/>
-            <Route path='/world' component={World}/>
+            <PrivateRoute path='/world' component={WorldPage}/>
         </Switch>
     </div>
 }
