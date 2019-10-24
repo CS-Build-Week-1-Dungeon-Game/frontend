@@ -20,21 +20,24 @@ const Container = styled.div`
 `
 
 const GameArea = styled.div`
-  background: black;
+background-color: rgb(26, 26, 26, 0.85);
+box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
+border: 5px rgb(27, 27, 27, 0.85) inset;
+border-radius: 1.5rem;
   width: 90%;
   height: 30rem;
   margin: 2rem auto;
-  border-radius: 25px;
+  margin-bottom: 0rem;  
 
   overflow: hidden;
-  border: 2px solid orange;
+
 `
 
 const Title = styled.h1`
   width: 55rem;
   margin-left: 2rem;
   font-size: 39px;
-  color: white;
+  color: grey;
 `
 
 const WorldNav = styled.div`
@@ -46,12 +49,13 @@ const WorldNav = styled.div`
 const Desc = styled.header`
   margin-left: 2rem;
   font-size: 19px;
-  color: white;
+  color: grey;
 `
 
 const Compass = styled.img`
   height: 4rem;
   margin: 10px;
+  
 `
 
 const CompassBox = styled.div`
@@ -61,7 +65,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 
-margin-left: 1rem;
+margin: 1rem;
 `
 
 const Username = styled.h1`
@@ -85,15 +89,17 @@ const MiddleRow = styled.div`
 const Button = styled.button`
   width: 30px;
   height: 30px;
-  background: black;
+
   color: red;
   border-radius: 25px;
-  border: 2px solid red;
+  box-shadow: inset 3px 9px 50px -1px rgb(14, 14, 14);
+border: 2px solid black;
   outline: none;
   :hover {
     color: green;
     cursor: pointer;
-    border: 2px solid green;
+    box-shadow: inset 3px 9px 40px -1px rgb(14, 14, 14);
+border: 2px solid black;
   }
 `
 

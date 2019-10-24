@@ -22,7 +22,7 @@ export const StyledMain = styled.main`
 `
 
 class WorldPage extends React.Component {
-  dimension = 280
+  dimension = 300
   constructor() {
     super()
     this.state = {
