@@ -17,6 +17,8 @@ export const StyledRooms = styled.div`
 const Container = styled.div`
 background-image: url("https://wallpaperbro.com/img/509496.jpg");
 background-size: cover;
+height: 730px;
+margin-bottom: -100px;
   grid-column: 1/ 10;
   grid-row: 1 / 12;
 `
