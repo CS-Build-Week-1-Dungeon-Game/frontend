@@ -14,8 +14,9 @@ export const StyledRooms = styled.div`
   transition-delay: 0.5s;
 `
 const StyledAside = styled.aside`
-  background: #212121;
-  border-left: 2px solid white;
+background-image: url("http://avante.biz/wp-content/uploads/Brushed-Steel-Wallpapers/Brushed-Steel-Wallpapers-002.jpg");
+  height: 730px;
+  border-left: 2px solid black;
   grid-column: 10 / span 3;
   grid-row: 1 / span 12;
 `
