@@ -15,7 +15,8 @@ export const StyledRooms = styled.div`
 `
 
 const Container = styled.div`
-
+background-image: url("https://wallpaperbro.com/img/509496.jpg");
+background-size: cover;
   grid-column: 1/ 10;
   grid-row: 1 / 12;
 `
@@ -25,9 +26,10 @@ background-color: rgb(26, 26, 26, 0.85);
 box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
 border: 5px rgb(27, 27, 27, 0.85) inset;
 border-radius: 1.5rem;
-  width: 90%;
-  height: 30rem;
-  margin: 2rem auto;
+  width: 63%;
+  height: 25rem;
+  margin: 2rem;
+  margin-left: 3rem;
   margin-bottom: 0rem;  
 
   overflow: hidden;
@@ -60,13 +62,18 @@ const Compass = styled.img`
 `
 
 const CompassBox = styled.div`
+background-color: rgb(26, 26, 26, 0.85);
+box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
+border: 5px rgb(27, 27, 27, 0.85) inset;
+border-radius: 1.5rem;
 width: 14rem;
-height: 14rem;
+height: 9rem;
 display: flex;
 flex-direction: column;
 align-items: center;
 
 margin: 1rem;
+margin-top: 3rem;
 `
 
 const Username = styled.h1`
@@ -105,7 +112,13 @@ border: 2px solid black;
 `
 
 const MapInfo = styled.div`
-  width: 75%;
+background-color: rgb(26, 26, 26, 0.85);
+box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
+border: 5px rgb(27, 27, 27, 0.85) inset;
+border-radius: 1.5rem;
+  width: 70%;
+  height: 15rem;
+  margin-top: 2rem;
 `
 
 class World extends React.Component {
