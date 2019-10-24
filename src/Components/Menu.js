@@ -2,7 +2,7 @@ import React from 'react'
 import { Menu as MUIMenu, MenuItem, IconButton } from '@material-ui/core'
 import { Menu as MenuIcon } from '@material-ui/icons'
 import { styled } from '@material-ui/styles'
-import {withRouter} from "react-router-dom"
+import { withRouter } from 'react-router-dom'
 
 export const StyledIconButton = styled(IconButton)({
   position: 'absolute',
@@ -12,7 +12,7 @@ export const StyledIconButton = styled(IconButton)({
   'z-index': 999,
 })
 
-const Menu = (props) => {
+const Menu = props => {
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   const handleClick = event => {
@@ -21,29 +21,31 @@ const Menu = (props) => {
   const handleClose = () => {
     setAnchorEl(null)
   }
-  const logout = (e) => {
+  const logout = e => {
     localStorage.removeItem('token')
     props.history.push('/')
     handleClose()
   }
-  
 
-    return (
-        <div>
-        <StyledIconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-            <MenuIcon fontSize="large"/>
-        </StyledIconButton>
-        <MUIMenu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-        >
-
-            <MenuItem onClick={logout}>Logout</MenuItem>
-        </MUIMenu>
-        </div>
-  );
+  return (
+    <div>
+      <StyledIconButton
+        aria-controls="simple-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        <MenuIcon fontSize="large" />
+      </StyledIconButton>
+      <MUIMenu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={logout}>Logout</MenuItem>
+      </MUIMenu>
+    </div>
+  )
 }
 export default withRouter(Menu)

@@ -5,7 +5,7 @@ import compass from './compass.svg'
 import Room from './Room'
 import Player from './Player'
 
-import ItemList from "./ItemList"
+import ItemList from './ItemList'
 
 export const StyledRooms = styled.div`
   background: transparent;
@@ -17,25 +17,24 @@ export const StyledRooms = styled.div`
 `
 
 const Container = styled.div`
-background-image: url("https://wallpaperbro.com/img/509496.jpg");
-background-size: cover;
+  background-image: url('https://wallpaperbro.com/img/509496.jpg');
+  background-size: cover;
   grid-column: 1/ 10;
   grid-row: 1 / 12;
 `
 
 const GameArea = styled.div`
-background-color: rgb(26, 26, 26, 0.85);
-box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
-border: 5px rgb(27, 27, 27, 0.85) inset;
-border-radius: 1.5rem;
+  background-color: rgb(26, 26, 26, 0.85);
+  box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
+  border: 5px rgb(27, 27, 27, 0.85) inset;
+  border-radius: 1.5rem;
   width: 63%;
   height: 25rem;
   margin: 2rem;
   margin-left: 3rem;
-  margin-bottom: 0rem;  
+  margin-bottom: 0rem;
 
   overflow: hidden;
-
 `
 
 const Title = styled.h1`
@@ -60,22 +59,21 @@ const Desc = styled.header`
 const Compass = styled.img`
   height: 4rem;
   margin: 10px;
-  
 `
 
 const CompassBox = styled.div`
-background-color: rgb(26, 26, 26, 0.85);
-box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
-border: 5px rgb(27, 27, 27, 0.85) inset;
-border-radius: 1.5rem;
-width: 14rem;
-height: 9rem;
-display: flex;
-flex-direction: column;
-align-items: center;
+  background-color: rgb(26, 26, 26, 0.85);
+  box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
+  border: 5px rgb(27, 27, 27, 0.85) inset;
+  border-radius: 1.5rem;
+  width: 14rem;
+  height: 9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-margin: 1rem;
-margin-top: 3rem;
+  margin: 1rem;
+  margin-top: 3rem;
 `
 
 const MiddleRow = styled.div`
@@ -91,21 +89,21 @@ const Button = styled.button`
   color: red;
   border-radius: 25px;
   box-shadow: inset 3px 9px 50px -1px rgb(14, 14, 14);
-border: 2px solid black;
+  border: 2px solid black;
   outline: none;
   :hover {
     color: green;
     cursor: pointer;
     box-shadow: inset 3px 9px 40px -1px rgb(14, 14, 14);
-border: 2px solid black;
+    border: 2px solid black;
   }
 `
 
 const MapInfo = styled.div`
-background-color: rgb(26, 26, 26, 0.85);
-box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
-border: 5px rgb(27, 27, 27, 0.85) inset;
-border-radius: 1.5rem;
+  background-color: rgb(26, 26, 26, 0.85);
+  box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
+  border: 5px rgb(27, 27, 27, 0.85) inset;
+  border-radius: 1.5rem;
   width: 70%;
   height: 15rem;
   margin-top: 2rem;
@@ -119,10 +117,10 @@ const ItemDiv = styled.div`
   margin: 2rem;
 `
 const ItemTitle = styled.h1`
-  color:white;
+  color: white;
 `
 const ItemText = styled.p`
-  color:white;
+  color: white;
   font-size: 1.2rem;
   text-align: center;
 `
@@ -168,30 +166,32 @@ class World extends React.Component {
   render() {
     return (
       <Container>
-          <FlexDiv>
-        <GameArea id="game-area">
-          <StyledRooms left={this.state.center.x} top={this.state.center.y}>
-            <Player
-              dimension={this.props.dimension}
-              playerRoom={this.props.playerRoom}
-              user={this.props.user}
-              playerColor={this.props.playerColor}
+        <FlexDiv>
+          <GameArea id="game-area">
+            <StyledRooms left={this.state.center.x} top={this.state.center.y}>
+              <Player
+                dimension={this.props.dimension}
+                playerRoom={this.props.playerRoom}
+                user={this.props.user}
+                playerColor={this.props.playerColor}
+              />
+              {this.props.rooms &&
+                this.props.rooms.map(room => (
+                  <Room
+                    room={room}
+                    key={room.pk}
+                    dimension={this.props.dimension}
+                    playerRoom={this.props.playerRoom}
+                  />
+                ))}
+            </StyledRooms>
+          </GameArea>
+          <ItemDiv>
+            <ItemTitle>Room Items</ItemTitle>
+            <ItemList
+              items={this.props.roomItems}
+              clickHandler={this.props.clickHandler}
             />
-            {this.props.rooms &&
-              this.props.rooms.map(room => (
-                <Room
-                  room={room}
-                  key={room.pk}
-                  dimension={this.props.dimension}
-                  playerRoom={this.props.playerRoom}
-                />
-              ))}
-          </StyledRooms>
-          
-        </GameArea>
-        <ItemDiv>
-                <ItemTitle>Room Items</ItemTitle>
-            <ItemList items={this.props.roomItems} clickHandler={this.props.clickHandler}/>
             <ItemText>Click on an item to pick it up</ItemText>
           </ItemDiv>
         </FlexDiv>

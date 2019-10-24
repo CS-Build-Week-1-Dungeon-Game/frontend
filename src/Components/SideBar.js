@@ -4,10 +4,9 @@ import Player from './Player'
 import Room from './Room'
 import { positionRooms } from '../utils'
 import Jack from './jack.svg'
-import ItemList from "./ItemList"
+import ItemList from './ItemList'
 
 export const StyledRooms = styled.div`
-  
   position: relative;
   left: ${props => props.left && `${props.left}px`};
   top: ${props => props.top && `${props.top}px`};
@@ -30,7 +29,6 @@ const MiniMap = styled.div`
   color: #fafafa;
   position: relative;
   overflow: hidden;
-
 `
 const PlayerInfo = styled.div`
   display: flex;
@@ -49,15 +47,15 @@ const Inventory = styled.h1`
   margin-bottom: 1.5rem;
 `
 const JackImg = styled.img`
-    height: 2rem;
-    margin-right: 1rem;
+  height: 2rem;
+  margin-right: 1rem;
 `
 const InventoryArea = styled.div`
-    text-align: center;
+  text-align: center;
 `
 const InventoryText = styled.p`
-    font-size: 1.2rem;
-    margin-top: 0.5rem;
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
   height: 2rem;
   margin-right: 1rem;
 `
@@ -120,7 +118,10 @@ class Sidebar extends React.Component {
       <>
         <StyledAside>
           <PlayerInfo>
-          <Username><JackImg src={Jack} />{this.props.user}</Username>
+            <Username>
+              <JackImg src={Jack} />
+              {this.props.user}
+            </Username>
             <MiniMap id="mini-map">
               <StyledRooms left={this.state.center.x} top={this.state.center.y}>
                 {this.state.playerRoom && (
@@ -146,11 +147,14 @@ class Sidebar extends React.Component {
 
             <Inventory>Inventory:</Inventory>
             <InventoryArea>
-            {/* {this.props.playerInventory && this.props.playerInventory.map(item => 
+              {/* {this.props.playerInventory && this.props.playerInventory.map(item => 
                 <InventoryItem key={item}>{item}</InventoryItem>
             )} */}
-            <ItemList items={this.props.playerInventory} clickHandler={this.props.clickHandler}/>
-            <InventoryText>Click on an item to drop it</InventoryText>
+              <ItemList
+                items={this.props.playerInventory}
+                clickHandler={this.props.clickHandler}
+              />
+              <InventoryText>Click on an item to drop it</InventoryText>
             </InventoryArea>
           </PlayerInfo>
         </StyledAside>
