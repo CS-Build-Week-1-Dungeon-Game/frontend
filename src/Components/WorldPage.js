@@ -35,13 +35,16 @@ class WorldPage extends React.Component {
         }
     }
     componentDidMount() {
-        this.start();
+        const asyncHelper = async() => {
+            await this.getRooms();
+            await this.start();
+        }
+        asyncHelper()
     }
-
-    start = () => {
+    getRooms = () => {
         // Get and parse the rooms
-        axios
-            .get(`https://mud-cs22-the-second.herokuapp.com/api/adv/rooms/`)
+        return axios
+            .get(`https://mud-cs22.herokuapp.com/api/adv/rooms/`)
             .then(res => {
                 const rooms = positionRooms(JSON.parse(res.data), this.dimension)
                 const roomDict = {}
@@ -51,19 +54,22 @@ class WorldPage extends React.Component {
                 this.setState({
                     ...this.state, rooms: rooms, roomDict: roomDict
                 })
+                console.log(this.state)
             })
             .catch(err => console.log(err))
-
+    }
+    start = () => {
         // initialize the player
         const token = localStorage.getItem('token');
-        axios({
-            url: `https://mud-cs22-the-second.herokuapp.com/api/adv/init/`,
+        return axios({
+            url: `https://mud-cs22.herokuapp.com/api/adv/init/`,
             method: "GET",
             headers: {
                 Authorization: token
             }
         })
             .then(res => {
+                console.log(this.state)
                 let currentRoom = this.state.roomDict[res.data.title]
                 this.setState({
                     currentRoomTitle: res.data.title,
@@ -83,7 +89,7 @@ class WorldPage extends React.Component {
         const directions = { 'n': 'n_to', 's': 's_to', 'e': 'e_to', 'w': 'w_to' }
         const token = localStorage.getItem('token');
         axios({
-            url: `https://mud-cs22-the-second.herokuapp.com/api/adv/move`,
+            url: `https://mud-cs22.herokuapp.com/api/adv/move`,
             method: "POST",
             headers: {
                 Authorization: token

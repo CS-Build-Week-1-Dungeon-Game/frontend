@@ -49,7 +49,7 @@ export default function Register(props) {
     const [inputs, setInputs] = useState({ password1:'', password2:'', username: ''});
 
     const registerUser = (newUser) => {
-        axios.post(`https://mud-cs22-the-second.herokuapp.com/api/registration/`, newUser)
+        axios.post(`https://mud-cs22.herokuapp.com/api/registration/`, newUser)
         .then(res => {
           const token = res.data.key
           localStorage.setItem('token', `Token ${token}`)
