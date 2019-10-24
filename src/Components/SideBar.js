@@ -26,6 +26,7 @@ const MiniMap = styled.div`
   border-radius: 25px;
   position: relative;
   overflow: hidden;
+  border: 2px solid orange;
 `
 const PlayerInfo = styled.div`
   display: flex;
