@@ -41,7 +41,7 @@ class WorldPage extends React.Component {
     start = () => {
         // Get and parse the rooms
         axios
-            .get(`https://mud-cs22.herokuapp.com/api/adv/rooms/`)
+            .get(`https://mud-cs22-the-second.herokuapp.com/api/adv/rooms/`)
             .then(res => {
                 const rooms = positionRooms(JSON.parse(res.data), this.dimension)
                 const roomDict = {}
@@ -57,7 +57,7 @@ class WorldPage extends React.Component {
         // initialize the player
         const token = localStorage.getItem('token');
         axios({
-            url: `https://mud-cs22.herokuapp.com/api/adv/init/`,
+            url: `https://mud-cs22-the-second.herokuapp.com/api/adv/init/`,
             method: "GET",
             headers: {
                 Authorization: token
@@ -83,7 +83,7 @@ class WorldPage extends React.Component {
         const directions = { 'n': 'n_to', 's': 's_to', 'e': 'e_to', 'w': 'w_to' }
         const token = localStorage.getItem('token');
         axios({
-            url: `https://mud-cs22.herokuapp.com/api/adv/move`,
+            url: `https://mud-cs22-the-second.herokuapp.com/api/adv/move`,
             method: "POST",
             headers: {
                 Authorization: token
