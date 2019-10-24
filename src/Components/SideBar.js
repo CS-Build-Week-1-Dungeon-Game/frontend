@@ -6,7 +6,7 @@ import { positionRooms } from '../utils'
 import Jack from './jack.svg'
 
 export const StyledRooms = styled.div`
-  background: transparent;
+  
   position: relative;
   left: ${props => props.left && `${props.left}px`};
   top: ${props => props.top && `${props.top}px`};

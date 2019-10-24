@@ -15,6 +15,7 @@ export const StyledRooms = styled.div`
 `
 
 const Container = styled.div`
+
   grid-column: 1/ 10;
   grid-row: 1 / 12;
 `
