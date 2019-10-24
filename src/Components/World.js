@@ -121,9 +121,8 @@ class World extends React.Component {
         return (
             <Container>
                 <GameArea id="game-area">
-                    
                     <StyledRooms left={this.state.center.x} top={this.state.center.y}>
-                    <Player  dimension={this.props.dimension} playerRoom={this.props.playerRoom} user={this.props.user}/>
+                    <Player  dimension={this.props.dimension} playerRoom={this.props.playerRoom} user={this.props.user} playerColor={this.props.playerColor}/>
                         {this.props.rooms && this.props.rooms.map(room => <Room room={room} key={room.pk} dimension={this.props.dimension} playerRoom={this.props.playerRoom} />)}
                     </StyledRooms>
                 </GameArea>

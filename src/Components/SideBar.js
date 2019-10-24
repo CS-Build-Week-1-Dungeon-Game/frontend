@@ -1,7 +1,18 @@
 import React from 'react'
 import styled from "styled-components"
+import Player from "./Player"
+import Room from "./Room"
+import {positionRooms} from "../utils"
 
-
+export const StyledRooms = styled.div`
+    background: transparent;
+    position: relative;
+    border: 1px solid red;
+    left: ${props => props.left && `${props.left}px`};
+    top: ${props => props.top && `${props.top}px`};
+    transition: left 0.3s, top 0.3s;
+    transition-delay: 0.5s;
+`
 const StyledAside = styled.aside`
 background: #212121;
 border-left: 2px solid white;
@@ -12,8 +23,9 @@ grid-row: 1 / span 12;
 const MiniMap = styled.div`
 width: 18rem;
 height: 14rem;
-background: green;
+background: black;
 border-radius: 25px;
+position: relative;
 `
 const PlayerInfo = styled.div`
 display: flex;
@@ -66,31 +78,65 @@ margin-left: 1rem;
 `
 
 class Sidebar extends React.Component {
+    dimension = 30
+    constructor(props) {
+        super(props);
+        this.state = {
+            center: { x: null, y: null },
+            rooms: [],
+            roomDict: {}
+        }
+    }
+    componentDidMount() {
+        // we have to get the positioned rooms with a new dimension!
+        // iterate over the existing rooms and reset their x and y and isSet properties
+        console.log(this.props.playerRoom)
+        const roomDict = {}
+        const rooms = JSON.parse(this.props.rawRooms)
+        const miniMapRooms = positionRooms(rooms, this.dimension)
+        for (let i = 0; i < miniMapRooms.length; i++) {
+            roomDict[miniMapRooms[i].title] = miniMapRooms[i]
+        }
+        this.setState({rooms: miniMapRooms, roomDict})
+        const gameArea = document.querySelector('#mini-map')
+        let height = gameArea.offsetHeight;
+        let width = gameArea.offsetWidth;
+        let playerRoom = roomDict[this.props.playerRoom.title]
+        console.log(width, height, playerRoom.x)
+        if (this.props.playerRoom) {
+            this.setState({ center: { x: (width / 2), y: (height / 2) } })
+        }
+    }
+    render(){
+        console.log(this.state)
+        return (
+            <>
+                <StyledAside>
+                    <PlayerInfo>
+                        <Username>Player15043</Username>
+                        <MiniMap id="mini-map">
+                        <StyledRooms left={this.state.center.x} top={this.state.center.y}>
+                        <Player  dimension={this.dimension} playerRoom={this.props.playerRoom} user={this.props.user} hideName={true} playerColor={this.props.playerColor}/>
+                            {this.state.rooms && this.state.rooms.map(room => <Room room={room} key={room.pk} dimension={this.dimension} playerRoom={this.props.playerRoom}/>)}
+                        </StyledRooms>
 
-render(){
-    return (
-        <>
+                        </MiniMap>
+                        <Health>1020 HP</Health>
+                        <Inventory>Inventory: Sword, Coins</Inventory>
+                        <Chat>
+                            <Message>Player15043: Hey Everyone!</Message>
+                            <Message>Gamer376: Hello Player15043</Message>
+                            <Message>Player15043: Come to the Foyer</Message>
+                            <Message>D&D1997: How do I get there?</Message>
+                            <Message>Player15043: North from the Xave Entrance</Message>
+                            
+                        </Chat>
+                        <ChatInput>**Cave</ChatInput>    
+                    </PlayerInfo>
+                </StyledAside>
 
-            <StyledAside>
-                <PlayerInfo>
-                    <Username>Player15043</Username>
-                    <MiniMap></MiniMap>
-                    <Health>1020 HP</Health>
-                    <Inventory>Inventory: Sword, Coins</Inventory>
-                    <Chat>
-                        <Message>Player15043: Hey Everyone!</Message>
-                        <Message>Gamer376: Hello Player15043</Message>
-                        <Message>Player15043: Come to the Foyer</Message>
-                        <Message>D&D1997: How do I get there?</Message>
-                        <Message>Player15043: North from the Xave Entrance</Message>
-                        
-                    </Chat>
-                    <ChatInput>**Cave</ChatInput>    
-                </PlayerInfo>
-            </StyledAside>
-
-        </>
-        )
+            </>
+            )
 }}
 
 export default Sidebar

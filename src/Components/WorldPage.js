@@ -31,15 +31,23 @@ class WorldPage extends React.Component {
             currentDesc: "",
             rooms: null,
             roomDict: null,
-            user: null
+            user: null,
+            rawRooms: [],
+            playerColor: null
         }
     }
     componentDidMount() {
-        const asyncHelper = async() => {
+        const asyncHelper = async () => {
             await this.getRooms();
             await this.start();
         }
         asyncHelper()
+        this.setPlayerColor()
+    }
+    setPlayerColor = () => {
+        const colors = ['#7f0000', '#4a148c', '#0d47a1', '#e65100' , '#004d40', '#1565c0']
+        const random = Math.floor(Math.random() * (colors.length - 1))
+        this.setState({playerColor: colors[random]})
     }
     getRooms = () => {
         // Get and parse the rooms
@@ -52,7 +60,7 @@ class WorldPage extends React.Component {
                     roomDict[rooms[i].title] = rooms[i]
                 }
                 this.setState({
-                    ...this.state, rooms: rooms, roomDict: roomDict
+                    ...this.state, rooms: rooms, roomDict: roomDict, rawRooms: res.data
                 })
                 console.log(this.state)
             })
@@ -110,15 +118,17 @@ class WorldPage extends React.Component {
             });
     };
     render() {
+        console.log(this.state)
         if (!this.state.rooms || !this.state.currentRoomTitle) {
             return <FullPageLoader />
         }
         return (
             <StyledMain>
                 <Menu></Menu>
-                <World rooms={this.state.rooms} playerRoom={this.state.playerRoom} move={this.move} dimension={this.dimension} currentRoomTitle={this.state.currentRoomTitle}
-                    currentDesc={this.state.currentDesc} user={this.state.user}/>}
-            <Sidebar></Sidebar>
+                <World rooms={this.state.rooms} playerRoom={this.state.playerRoom} move={this.move} dimension={this.dimension} currentRoomTitle={this.state.currentRoomTitle} playerColor={this.state.playerColor}
+                    currentDesc={this.state.currentDesc} user={this.state.user} />}
+                <Sidebar rooms={this.state.rooms} playerRoom={this.state.playerRoom} move={this.move} dimension={this.dimension} currentRoomTitle={this.state.currentRoomTitle} playerColor={this.state.playerColor}
+                    currentDesc={this.state.currentDesc} user={this.state.user} rawRooms={this.state.rawRooms}></Sidebar>
             </StyledMain>
         )
 
