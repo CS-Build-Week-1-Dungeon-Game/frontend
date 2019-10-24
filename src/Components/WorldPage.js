@@ -143,10 +143,29 @@ class WorldPage extends React.Component {
       })
       this.start()
   }
-  pickup = () => {
-    console.log('here')
+  pickup = (e) => {
+    const token = localStorage.getItem('token')
+    axios({
+      url: `https://mud-cs22.herokuapp.com/api/adv/take`,
+      method: 'POST',
+      headers: {
+        Authorization: token,
+      },
+      data: {
+        item: e.target.innerText,
+      },
+    })
+      .then(res => {
+        this.setState({
+          playerInventory: res.data.inventory,
+          roomItems: res.data.room_items
+        })
+      })
+      .catch(err => {
+        console.log('errors', err.response)
+      })
   }
-  drop = () => {
+  drop = (e) => {
     console.log('herere!')
   }
   render() {
@@ -173,7 +192,7 @@ class WorldPage extends React.Component {
           currentDesc={this.state.currentDesc}
           user={this.state.user}
           roomItems={this.state.roomItems}
-          clickHandler={this.drop}
+          clickHandler={this.pickup}
         />
         }
         <Sidebar
@@ -187,7 +206,7 @@ class WorldPage extends React.Component {
           user={this.state.user}
           rawRooms={this.state.rawRooms}
           playerInventory={this.state.playerInventory}
-          clickHandler={this.pickup}
+          clickHandler={this.drop}
         ></Sidebar>
       </StyledMain>
     )
