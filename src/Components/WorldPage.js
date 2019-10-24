@@ -180,7 +180,6 @@ class WorldPage extends React.Component {
           user={this.state.user}
           rawRooms={this.state.rawRooms}
           playerInventory={this.state.playerInventory}
-          roomItems={this.state.roomItems}
         ></Sidebar>
       </StyledMain>
     )

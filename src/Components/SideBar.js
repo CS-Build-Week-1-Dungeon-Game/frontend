@@ -55,14 +55,6 @@ const JackImg = styled.img`
 const InventoryArea = styled.div`
     text-align: center;
 `
-const InventoryItem = styled.p`
-    font-size: 1.4rem;
-    cursor: pointer;
-    margin: 0;
-    &:hover {
-        color: #2e7d32;
-    }
-`
 const InventoryText = styled.p`
     font-size: 1.2rem;
     margin-top: 0.5rem;
@@ -158,15 +150,6 @@ class Sidebar extends React.Component {
                 <InventoryItem key={item}>{item}</InventoryItem>
             )} */}
             <ItemList items={this.props.playerInventory}/>
-            <InventoryText>Click on an item to drop it</InventoryText>
-            </InventoryArea>
-
-            <Inventory>Room Inventory:</Inventory>
-            <InventoryArea>
-            {/* {this.props.playerInventory && this.props.playerInventory.map(item => 
-                <InventoryItem key={item}>{item}</InventoryItem>
-            )} */}
-            <ItemList items={this.props.roomItems}/>
             <InventoryText>Click on an item to drop it</InventoryText>
             </InventoryArea>
           </PlayerInfo>

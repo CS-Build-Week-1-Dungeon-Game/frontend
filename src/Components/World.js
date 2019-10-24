@@ -5,6 +5,8 @@ import compass from './compass.svg'
 import Room from './Room'
 import Player from './Player'
 
+import ItemList from "./ItemList"
+
 export const StyledRooms = styled.div`
   background: transparent;
   position: relative;
@@ -109,6 +111,17 @@ border-radius: 1.5rem;
   margin-top: 2rem;
 `
 
+const FlexDiv = styled.div`
+  display: flex;
+  width: 100%;
+`
+const ItemDiv = styled.div`
+  margin: 2rem;
+`
+const ItemTitle = styled.h1`
+  color:white;
+`
+
 class World extends React.Component {
   constructor(props) {
     super(props)
@@ -150,6 +163,7 @@ class World extends React.Component {
   render() {
     return (
       <Container>
+          <FlexDiv>
         <GameArea id="game-area">
           <StyledRooms left={this.state.center.x} top={this.state.center.y}>
             <Player
@@ -168,7 +182,13 @@ class World extends React.Component {
                 />
               ))}
           </StyledRooms>
+          
         </GameArea>
+        <ItemDiv>
+                <ItemTitle>Room Items</ItemTitle>
+            <ItemList items={this.props.roomItems} />
+          </ItemDiv>
+        </FlexDiv>
         <WorldNav>
           <MapInfo>
             <Title> You are at the {this.props.currentRoomTitle}</Title>

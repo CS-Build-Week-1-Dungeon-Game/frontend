@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.grey.A700,
     position: 'relative',
     overflow: 'auto',
-    maxHeight: 150,
+    maxHeight: 250,
   },
   listSection: {
     backgroundColor: 'inherit',
@@ -21,6 +21,7 @@ const useStyles = makeStyles(theme => ({
     padding: 0,
   },
   li: {
+      color:'white',
       cursor:'pointer',
       '&:hover':{
           backgroundColor: '#2e7d32'
