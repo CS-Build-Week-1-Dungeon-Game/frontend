@@ -36,7 +36,7 @@ const Room = ({room, playerRoom, dimension}) => {
     return ( 
         <>
         {!!room.n_to && <Door left={room.x + (dimension / 2 - doorWidth / 2)} top={room.y - doorWidth / 2 + 2} dimension={dimension} width={doorWidth}/>}
-        {!!room.w_to && <Door left={room.x - doorWidth / 2 - 2} top={room.y + (dimension / 2 - doorWidth / 2)} dimension={dimension} width={doorWidth}/>}
+        {!!room.w_to && <Door left={room.x - doorWidth / 2 } top={room.y + (dimension / 2 - doorWidth / 2)} dimension={dimension} width={doorWidth}/>}
         <StyledRoom  x={room.x} y={room.y} dimension={dimension} id={room.pk}>
                 
                 {/* {

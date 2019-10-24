@@ -7,7 +7,6 @@ import {positionRooms} from "../utils"
 export const StyledRooms = styled.div`
     background: transparent;
     position: relative;
-    border: 1px solid red;
     left: ${props => props.left && `${props.left}px`};
     top: ${props => props.top && `${props.top}px`};
     transition: left 0.3s, top 0.3s;
@@ -26,6 +25,7 @@ height: 14rem;
 background: black;
 border-radius: 25px;
 position: relative;
+overflow: hidden;
 `
 const PlayerInfo = styled.div`
 display: flex;
@@ -84,13 +84,13 @@ class Sidebar extends React.Component {
         this.state = {
             center: { x: null, y: null },
             rooms: [],
-            roomDict: {}
+            roomDict: {},
+            playerRoom: null
         }
     }
     componentDidMount() {
         // we have to get the positioned rooms with a new dimension!
         // iterate over the existing rooms and reset their x and y and isSet properties
-        console.log(this.props.playerRoom)
         const roomDict = {}
         const rooms = JSON.parse(this.props.rawRooms)
         const miniMapRooms = positionRooms(rooms, this.dimension)
@@ -102,9 +102,18 @@ class Sidebar extends React.Component {
         let height = gameArea.offsetHeight;
         let width = gameArea.offsetWidth;
         let playerRoom = roomDict[this.props.playerRoom.title]
-        console.log(width, height, playerRoom.x)
-        if (this.props.playerRoom) {
-            this.setState({ center: { x: (width / 2), y: (height / 2) } })
+        if (playerRoom) {
+            this.setState({ playerRoom: playerRoom, center: { x: (width / 2) -(playerRoom.x + this.dimension / 2), y: (height / 2) - playerRoom.y - this.dimension / 2 }})
+        }
+    }
+    componentDidUpdate(prevProps) {
+        const gameArea = document.querySelector('#mini-map')
+        let height = gameArea.offsetHeight;
+        let width = gameArea.offsetWidth;
+        if (this.props.playerRoom && prevProps.playerRoom.title !== this.props.playerRoom.title) {
+            console.log('here')
+            const playerRoom = this.state.roomDict[this.props.playerRoom.title]
+            this.setState({playerRoom, center: { x: (width / 2) - (playerRoom.x + this.dimension / 2), y: (height / 2) - playerRoom.y - this.dimension / 2}})
         }
     }
     render(){
@@ -116,7 +125,8 @@ class Sidebar extends React.Component {
                         <Username>Player15043</Username>
                         <MiniMap id="mini-map">
                         <StyledRooms left={this.state.center.x} top={this.state.center.y}>
-                        <Player  dimension={this.dimension} playerRoom={this.props.playerRoom} user={this.props.user} hideName={true} playerColor={this.props.playerColor}/>
+                            {this.state.playerRoom &&
+                        <Player  dimension={this.dimension} playerRoom={this.state.playerRoom} user={this.props.user} hideName={true} playerColor={this.props.playerColor}/>}
                             {this.state.rooms && this.state.rooms.map(room => <Room room={room} key={room.pk} dimension={this.dimension} playerRoom={this.props.playerRoom}/>)}
                         </StyledRooms>
 
