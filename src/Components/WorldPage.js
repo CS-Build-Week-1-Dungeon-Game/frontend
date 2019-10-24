@@ -131,7 +131,8 @@ class WorldPage extends React.Component {
     })
       .then(res => {
         this.setState({
-          // playerInventory: res.data.inventory,
+          playerInventory: res.data.inventory,
+          roomItems: res.data.room_items,
           currentRoomTitle: res.data.title,
           currentDesc: res.data.description,
           playerRoom: this.state.roomDict[res.data.title],
@@ -140,7 +141,6 @@ class WorldPage extends React.Component {
       .catch(err => {
         console.log('errors', err.response)
       })
-    this.start()
   }
   pickup = e => {
     const token = localStorage.getItem('token')
