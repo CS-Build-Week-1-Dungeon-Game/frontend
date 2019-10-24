@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Player from './Player'
 import Room from './Room'
 import { positionRooms } from '../utils'
+import Jack from './jack.svg'
 
 export const StyledRooms = styled.div`
   background: transparent;
@@ -36,7 +37,9 @@ const PlayerInfo = styled.div`
 `
 
 const Username = styled.h1`
-  color: white;
+  color: orange;
+  display: flex;
+  align-items: center;
 `
 
 const Health = styled.h1`
@@ -45,26 +48,13 @@ const Health = styled.h1`
 
 const Inventory = styled.h1`
   color: white;
-  margin-top: -20px;
+
   margin-bottom: 40px;
 `
 
-const Chat = styled.div`
-  width: 18rem;
-  height: 14rem;
-  background: grey;
-  border-radius: 10px;
-`
-
-const ChatInput = styled.div`
-  width: 18rem;
-  height: 2rem;
-  background: darkgrey;
-  border-radius: 10px;
-  border-top: 1px solid black;
-  color: black;
-  padding: 5px;
-  margin-top: 5px;
+const JackImg = styled.img`
+height: 2rem;
+margin-right: 1rem;
 `
 
 const Message = styled.h1`
@@ -74,7 +64,7 @@ const Message = styled.h1`
 `
 
 class Sidebar extends React.Component {
-  dimension = 30
+  dimension = 20
   constructor(props) {
     super(props)
     this.state = {
@@ -131,7 +121,7 @@ class Sidebar extends React.Component {
       <>
         <StyledAside>
           <PlayerInfo>
-            <Username>Player15043</Username>
+          <Username><JackImg src={Jack} />{this.props.user}</Username>
             <MiniMap id="mini-map">
               <StyledRooms left={this.state.center.x} top={this.state.center.y}>
                 {this.state.playerRoom && (
@@ -154,16 +144,9 @@ class Sidebar extends React.Component {
                   ))}
               </StyledRooms>
             </MiniMap>
-            <Health>1020 HP</Health>
-            <Inventory>Inventory: Sword, Coins</Inventory>
-            <Chat>
-              <Message>Player15043: Hey Everyone!</Message>
-              <Message>Gamer376: Hello Player15043</Message>
-              <Message>Player15043: Come to the Foyer</Message>
-              <Message>D&D1997: How do I get there?</Message>
-              <Message>Player15043: North from the Xave Entrance</Message>
-            </Chat>
-            <ChatInput>**Cave</ChatInput>
+
+            <Inventory>Inventory:</Inventory>
+            
           </PlayerInfo>
         </StyledAside>
       </>

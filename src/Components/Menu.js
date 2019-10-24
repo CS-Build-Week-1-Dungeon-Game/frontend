@@ -22,27 +22,22 @@ const Menu = () => {
     setAnchorEl(null)
   }
 
-  return (
-    <div>
-      <StyledIconButton
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        <MenuIcon fontSize="large" />
-      </StyledIconButton>
-      <MUIMenu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
-      </MUIMenu>
-    </div>
-  )
+    return (
+        <div>
+        <StyledIconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+            <MenuIcon fontSize="large"/>
+        </StyledIconButton>
+        <MUIMenu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+        >
+
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+        </MUIMenu>
+        </div>
+  );
 }
 export default Menu
