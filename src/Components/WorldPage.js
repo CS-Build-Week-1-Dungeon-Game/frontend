@@ -43,6 +43,8 @@ class WorldPage extends React.Component {
       user: null,
       rawRooms: [],
       playerColor: null,
+      playerInventory: null,
+      roomItems: null
     }
   }
   componentDidMount() {
@@ -98,6 +100,7 @@ class WorldPage extends React.Component {
       },
     })
       .then(res => {
+          console.log(res.data)
         let currentRoom = this.state.roomDict[res.data.title]
         this.setState({
           currentRoomTitle: res.data.title,
@@ -105,6 +108,8 @@ class WorldPage extends React.Component {
           currentDesc: res.data.description,
           playerRoom: currentRoom,
           user: res.data.name,
+          playerInventory: res.data.inventory,
+          roomItems: res.data.room_items
         })
       })
       .catch(err => {
@@ -159,6 +164,7 @@ class WorldPage extends React.Component {
           playerColor={this.state.playerColor}
           currentDesc={this.state.currentDesc}
           user={this.state.user}
+          roomItems={this.state.roomItems}
         />
         }
         <Sidebar
@@ -171,6 +177,7 @@ class WorldPage extends React.Component {
           currentDesc={this.state.currentDesc}
           user={this.state.user}
           rawRooms={this.state.rawRooms}
+          playerInventory={this.state.playerInventory}
         ></Sidebar>
       </StyledMain>
     )
