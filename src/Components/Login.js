@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid'
 import CodeIcon from '@material-ui/icons/Code'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
+import {toast, ToastContainer} from "react-toastify"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -64,11 +65,17 @@ export default function Login(props) {
         }
       })
       .catch(err => {
-        if (err) console.log(err)
+        if (err) console.dir(err)
+        if (err.response.data) {
+          for (let key of Object.keys(err.response.data)) {
+            toast.error(`${key}: ${err.response.data[key]}`)
+          }
+        }
       })
   }
   return (
     <Grid container component="main" className={classes.root}>
+      <ToastContainer />
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
