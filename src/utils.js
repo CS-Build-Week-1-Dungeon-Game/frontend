@@ -1,4 +1,5 @@
 export const positionRooms = (rooms, dimension) => {
+    console.log(dimension)
     const roomDict = {}
     // load our array of rooms into a much more usable dictionary
     for (let i = 0; i < rooms.length; i++) {
