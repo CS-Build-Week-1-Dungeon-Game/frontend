@@ -166,7 +166,26 @@ class WorldPage extends React.Component {
       })
   }
   drop = (e) => {
-    console.log('herere!')
+    const token = localStorage.getItem('token')
+    axios({
+      url: `https://mud-cs22.herokuapp.com/api/adv/drop`,
+      method: 'POST',
+      headers: {
+        Authorization: token,
+      },
+      data: {
+        item: e.target.innerText,
+      },
+    })
+      .then(res => {
+        this.setState({
+          playerInventory: res.data.inventory,
+          roomItems: res.data.room_items
+        })
+      })
+      .catch(err => {
+        console.log('errors', err.response)
+      })
   }
   render() {
     if (!this.state.rooms || !this.state.currentRoomTitle) {
