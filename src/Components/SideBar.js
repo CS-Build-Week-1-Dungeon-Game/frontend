@@ -4,6 +4,7 @@ import Player from './Player'
 import Room from './Room'
 import { positionRooms } from '../utils'
 import Jack from './jack.svg'
+import ItemList from "./ItemList"
 
 export const StyledRooms = styled.div`
   background: transparent;
@@ -44,7 +45,7 @@ const Username = styled.h1`
 
 const Inventory = styled.h1`
   color: white;
-  margin-bottom: 40px;
+  margin-bottom: 1.5rem;
 `
 
 const JackImg = styled.img`
@@ -151,9 +152,10 @@ class Sidebar extends React.Component {
 
             <Inventory>Inventory:</Inventory>
             <InventoryArea>
-            {this.props.playerInventory && this.props.playerInventory.map(item => 
+            {/* {this.props.playerInventory && this.props.playerInventory.map(item => 
                 <InventoryItem key={item}>{item}</InventoryItem>
-            )}
+            )} */}
+            <ItemList items={this.props.playerInventory}/>
             <InventoryText>Click on an item to drop it</InventoryText>
             </InventoryArea>
           </PlayerInfo>
