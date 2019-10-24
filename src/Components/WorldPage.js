@@ -72,7 +72,6 @@ class WorldPage extends React.Component {
           roomDict: roomDict,
           rawRooms: res.data,
         })
-        console.log(this.state)
       })
       .catch(err => console.log(err))
   }
