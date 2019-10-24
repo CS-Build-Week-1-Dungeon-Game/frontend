@@ -15,26 +15,32 @@ export const StyledRooms = styled.div`
 `
 
 const Container = styled.div`
+background-image: url("https://wallpaperbro.com/img/509496.jpg");
+background-size: cover;
   grid-column: 1/ 10;
   grid-row: 1 / 12;
 `
 
 const GameArea = styled.div`
-  background: black;
-  width: 90%;
-  height: 30rem;
-  margin: 2rem auto;
-  border-radius: 25px;
+background-color: rgb(26, 26, 26, 0.85);
+box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
+border: 5px rgb(27, 27, 27, 0.85) inset;
+border-radius: 1.5rem;
+  width: 63%;
+  height: 25rem;
+  margin: 2rem;
+  margin-left: 3rem;
+  margin-bottom: 0rem;  
 
   overflow: hidden;
-  border: 2px solid orange;
+
 `
 
 const Title = styled.h1`
   width: 55rem;
   margin-left: 2rem;
   font-size: 39px;
-  color: white;
+  color: grey;
 `
 
 const WorldNav = styled.div`
@@ -46,21 +52,28 @@ const WorldNav = styled.div`
 const Desc = styled.header`
   margin-left: 2rem;
   font-size: 19px;
-  color: white;
+  color: grey;
 `
 
 const Compass = styled.img`
   height: 4rem;
   margin: 10px;
+  
 `
 
 const CompassBox = styled.div`
+background-color: rgb(26, 26, 26, 0.85);
+box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
+border: 5px rgb(27, 27, 27, 0.85) inset;
+border-radius: 1.5rem;
 width: 14rem;
-height: 14rem;
+height: 9rem;
 display: flex;
 flex-direction: column;
 align-items: center;
-margin-left: 1rem;
+
+margin: 1rem;
+margin-top: 3rem;
 `
 
 const MiddleRow = styled.div`
@@ -72,20 +85,28 @@ const MiddleRow = styled.div`
 const Button = styled.button`
   width: 30px;
   height: 30px;
-  background: black;
+
   color: red;
   border-radius: 25px;
-  border: 2px solid red;
+  box-shadow: inset 3px 9px 50px -1px rgb(14, 14, 14);
+border: 2px solid black;
   outline: none;
   :hover {
     color: green;
     cursor: pointer;
-    border: 2px solid green;
+    box-shadow: inset 3px 9px 40px -1px rgb(14, 14, 14);
+border: 2px solid black;
   }
 `
 
 const MapInfo = styled.div`
-  width: 75%;
+background-color: rgb(26, 26, 26, 0.85);
+box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
+border: 5px rgb(27, 27, 27, 0.85) inset;
+border-radius: 1.5rem;
+  width: 70%;
+  height: 15rem;
+  margin-top: 2rem;
 `
 
 class World extends React.Component {

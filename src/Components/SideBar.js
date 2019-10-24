@@ -7,7 +7,7 @@ import Jack from './jack.svg'
 import ItemList from "./ItemList"
 
 export const StyledRooms = styled.div`
-  background: transparent;
+  
   position: relative;
   left: ${props => props.left && `${props.left}px`};
   top: ${props => props.top && `${props.top}px`};
@@ -20,15 +20,17 @@ const StyledAside = styled.aside`
   grid-column: 10 / span 3;
   grid-row: 1 / span 12;
 `
-
 const MiniMap = styled.div`
-  width: 18rem;
-  height: 14rem;
-  background: black;
-  border-radius: 25px;
+  width: 20rem;
+  height: 16rem;
+  background-color: rgb(26, 26, 26, 0.85);
+  border: 5px rgb(27, 27, 27, 0.85) inset;
+  border-radius: 1.5rem;
+  box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
+  color: #fafafa;
   position: relative;
   overflow: hidden;
-  border: 2px solid orange;
+
 `
 const PlayerInfo = styled.div`
   display: flex;
@@ -36,7 +38,6 @@ const PlayerInfo = styled.div`
   align-items: center;
   color: white;
 `
-
 const Username = styled.h1`
   color: orange;
   display: flex;
@@ -47,7 +48,6 @@ const Inventory = styled.h1`
   color: white;
   margin-bottom: 1.5rem;
 `
-
 const JackImg = styled.img`
     height: 2rem;
     margin-right: 1rem;
@@ -66,10 +66,12 @@ const InventoryItem = styled.p`
 const InventoryText = styled.p`
     font-size: 1.2rem;
     margin-top: 0.5rem;
+  height: 2rem;
+  margin-right: 1rem;
 `
 
 class Sidebar extends React.Component {
-  dimension = 20
+  dimension = 30
   constructor(props) {
     super(props)
     this.state = {
