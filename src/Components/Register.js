@@ -12,7 +12,7 @@ import Grid from '@material-ui/core/Grid'
 import CodeIcon from '@material-ui/icons/Code'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
-import {toast, ToastContainer} from "react-toastify"
+import {toast} from "react-toastify"
 
 const useStyles = makeStyles(theme => ({
   root: {

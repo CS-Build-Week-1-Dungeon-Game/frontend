@@ -42,25 +42,14 @@ const Username = styled.h1`
   align-items: center;
 `
 
-const Health = styled.h1`
-  color: white;
-`
-
 const Inventory = styled.h1`
   color: white;
-
   margin-bottom: 40px;
 `
 
 const JackImg = styled.img`
 height: 2rem;
 margin-right: 1rem;
-`
-
-const Message = styled.h1`
-  color: black;
-  font-size: 16px;
-  margin-left: 1rem;
 `
 
 class Sidebar extends React.Component {

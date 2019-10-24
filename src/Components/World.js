@@ -60,20 +60,7 @@ height: 14rem;
 display: flex;
 flex-direction: column;
 align-items: center;
-
 margin-left: 1rem;
-`
-
-const Username = styled.h1`
-height: 4rem;
-margin: 10px;
-color: orange;
-`
-
-const UserPic = styled.img`
-height: 4rem;
-margin: 10px;
-color: orange;
 `
 
 const MiddleRow = styled.div`
