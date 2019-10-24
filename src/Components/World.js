@@ -121,6 +121,11 @@ const ItemDiv = styled.div`
 const ItemTitle = styled.h1`
   color:white;
 `
+const ItemText = styled.p`
+  color:white;
+  font-size: 1.2rem;
+  text-align: center;
+`
 
 class World extends React.Component {
   constructor(props) {
@@ -187,6 +192,7 @@ class World extends React.Component {
         <ItemDiv>
                 <ItemTitle>Room Items</ItemTitle>
             <ItemList items={this.props.roomItems} />
+            <ItemText>Click on an item to pick it up</ItemText>
           </ItemDiv>
         </FlexDiv>
         <WorldNav>
