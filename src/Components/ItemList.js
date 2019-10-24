@@ -36,7 +36,7 @@ export default function ItemList(props) {
     <List className={classes.root}>
           <ul className={classes.ul}>
             {props.items.map(item => (
-              <ListItem key={item} className={classes.li}>
+              <ListItem key={item} className={classes.li} onClick={props.clickHandler}>
                 <ListItemText primary={`${item}`} />
               </ListItem>
             ))}

@@ -143,6 +143,12 @@ class WorldPage extends React.Component {
       })
       this.start()
   }
+  pickup = () => {
+    console.log('here')
+  }
+  drop = () => {
+    console.log('herere!')
+  }
   render() {
     if (!this.state.rooms || !this.state.currentRoomTitle) {
       return (
@@ -167,6 +173,7 @@ class WorldPage extends React.Component {
           currentDesc={this.state.currentDesc}
           user={this.state.user}
           roomItems={this.state.roomItems}
+          clickHandler={this.drop}
         />
         }
         <Sidebar
@@ -180,6 +187,7 @@ class WorldPage extends React.Component {
           user={this.state.user}
           rawRooms={this.state.rawRooms}
           playerInventory={this.state.playerInventory}
+          clickHandler={this.pickup}
         ></Sidebar>
       </StyledMain>
     )

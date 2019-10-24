@@ -191,7 +191,7 @@ class World extends React.Component {
         </GameArea>
         <ItemDiv>
                 <ItemTitle>Room Items</ItemTitle>
-            <ItemList items={this.props.roomItems} />
+            <ItemList items={this.props.roomItems} clickHandler={this.props.clickHandler}/>
             <ItemText>Click on an item to pick it up</ItemText>
           </ItemDiv>
         </FlexDiv>
