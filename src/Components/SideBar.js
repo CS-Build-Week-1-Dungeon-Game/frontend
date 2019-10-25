@@ -7,57 +7,70 @@ import Jack from './jack.svg'
 import ItemList from './ItemList'
 
 export const StyledRooms = styled.div`
-  position: relative;
-  left: ${props => props.left && `${props.left}px`};
-  top: ${props => props.top && `${props.top}px`};
-  transition: left 0.3s, top 0.3s;
-  transition-delay: 0.5s;
+position: relative;
+left: ${props => props.left && `${props.left}px`};
+top: ${props => props.top && `${props.top}px`};
+transition: left 0.3s, top 0.3s;
+transition-delay: 0.5s;
 `
 const StyledAside = styled.aside`
-  background: #212121;
-  border-left: 2px solid white;
-  grid-column: 10 / span 3;
-  grid-row: 1 / span 12;
+background-image: url("http://avante.biz/wp-content/uploads/Brushed-Steel-Wallpapers/Brushed-Steel-Wallpapers-002.jpg");
+max-height: 730px;
+border-left: 2px solid black;
+
 `
 const MiniMap = styled.div`
-  width: 20rem;
-  height: 16rem;
-  background-color: rgb(26, 26, 26, 0.85);
-  border: 5px rgb(27, 27, 27, 0.85) inset;
-  border-radius: 1.5rem;
-  box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
-  color: #fafafa;
-  position: relative;
-  overflow: hidden;
+width: 15rem;
+height: 16rem;
+background-color: rgb(26, 26, 26, 0.85);
+border: 5px rgb(27, 27, 27, 0.85) inset;
+border-radius: 1.5rem;
+box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
+color: #fafafa;
+position: relative;
+overflow: hidden;
+margin: 1rem;
 `
 const PlayerInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: white;
+display: flex;
+flex-direction: column;
+align-items: center;
+color: white;
 `
 const Username = styled.h1`
-  color: orange;
-  display: flex;
-  align-items: center;
+color: orange;
+display: flex;
+align-items: center;
+margin-left: -2rem;
 `
-
+const Health = styled.h1`
+color: white;
+`
 const Inventory = styled.h1`
-  color: white;
-  margin-bottom: 1.5rem;
+color: white;
+
 `
 const JackImg = styled.img`
-  height: 2rem;
-  margin-right: 1rem;
+height: 2rem;
+margin-right: 1rem;
 `
 const InventoryArea = styled.div`
+background-color: rgb(26, 26, 26, 0.85);
+border: 5px rgb(27, 27, 27, 0.85) inset;
+border-radius: 1.5rem;
+box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
   text-align: center;
+  max-width: 14rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  
 `
 const InventoryText = styled.p`
   font-size: 1.2rem;
   margin-top: 0.5rem;
-  height: 2rem;
+  height: 1rem;
   margin-right: 1rem;
+  max-height: 1rem;
 `
 
 class Sidebar extends React.Component {
@@ -145,8 +158,9 @@ class Sidebar extends React.Component {
               </StyledRooms>
             </MiniMap>
 
-            <Inventory>Inventory:</Inventory>
+           
             <InventoryArea>
+            Inventory
               {/* {this.props.playerInventory && this.props.playerInventory.map(item => 
                 <InventoryItem key={item}>{item}</InventoryItem>
             )} */}
@@ -154,7 +168,7 @@ class Sidebar extends React.Component {
                 items={this.props.playerInventory}
                 clickHandler={this.props.clickHandler}
               />
-              <InventoryText>Click on an item to drop it</InventoryText>
+              <InventoryText>Click item to drop</InventoryText>
             </InventoryArea>
           </PlayerInfo>
         </StyledAside>

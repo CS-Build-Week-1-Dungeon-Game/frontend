@@ -13,14 +13,15 @@ export const StyledRooms = styled.div`
   left: ${props => props.left && `${props.left}px`};
   top: ${props => props.top && `${props.top}px`};
   transition: left 0.3s, top 0.3s;
-  transition-delay: 0.5s;
+  transition-delay: 0.25s;
 `
 
 const Container = styled.div`
   background-image: url('https://wallpaperbro.com/img/509496.jpg');
+
   background-size: cover;
-  grid-column: 1/ 10;
-  grid-row: 1 / 12;
+  // grid-column: 1/ 10;
+  // grid-row: 1 / 12;
 `
 
 const GameArea = styled.div`
@@ -28,11 +29,11 @@ const GameArea = styled.div`
   box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
   border: 5px rgb(27, 27, 27, 0.85) inset;
   border-radius: 1.5rem;
-  width: 63%;
+  width: 73%;
   height: 25rem;
   margin: 2rem;
-  margin-left: 3rem;
-  margin-bottom: 0rem;
+  
+
 
   overflow: hidden;
 `
@@ -65,15 +66,20 @@ const CompassBox = styled.div`
   background-color: rgb(26, 26, 26, 0.85);
   box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
   border: 5px rgb(27, 27, 27, 0.85) inset;
-  border-radius: 1.5rem;
-  width: 14rem;
-  height: 9rem;
+  border-radius: 50%;
+  width: 16rem;
+  height: 11rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 1rem;
+margin-left: 2.5rem;
+margin-right: 2rem;
+margin-top: -1rem;
 
-  margin: 1rem;
-  margin-top: 3rem;
+
+
+
 `
 
 const MiddleRow = styled.div`
@@ -104,17 +110,24 @@ const MapInfo = styled.div`
   box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
   border: 5px rgb(27, 27, 27, 0.85) inset;
   border-radius: 1.5rem;
-  width: 70%;
-  height: 15rem;
-  margin-top: 2rem;
+  max-height: 15rem;
+  width: 72%;
+  margin-top: -3rem;
+  margin-left: -1rem;
 `
 
 const FlexDiv = styled.div`
   display: flex;
-  width: 100%;
 `
 const ItemDiv = styled.div`
+background-color: rgb(26, 26, 26, 0.85);
+border: 5px rgb(27, 27, 27, 0.85) inset;
+border-radius: 1.5rem;
+box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
+padding: 1rem;
   margin: 2rem;
+  width: 25%;
+  min-height: 26rem;
 `
 const ItemTitle = styled.h1`
   color: white;
