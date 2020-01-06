@@ -20,8 +20,14 @@ const Container = styled.div`
   background-image: url("https://wallpaperbro.com/img/509496.jpg");
 
   background-size: cover;
-  // grid-column: 1/ 10;
-  // grid-row: 1 / 12;
+  grid-column: 1 / 11;
+  grid-row: 1 / 12;
+  @media (max-width: 1200px) {
+    grid-column: 1 / 10;
+  }
+  @media (max-width: 768px) {
+    grid-column: 1 / 9;
+  }
 `;
 
 const GameArea = styled.div`
@@ -37,7 +43,6 @@ const GameArea = styled.div`
 `;
 
 const Title = styled.h1`
-  width: 55rem;
   margin-left: 2rem;
   font-size: 39px;
   color: grey;

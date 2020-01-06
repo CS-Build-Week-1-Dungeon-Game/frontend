@@ -15,11 +15,23 @@ export const StyledRooms = styled.div`
 `;
 const StyledAside = styled.aside`
   background-image: url("http://avante.biz/wp-content/uploads/Brushed-Steel-Wallpapers/Brushed-Steel-Wallpapers-002.jpg");
-  max-height: 730px;
+  background-size: cover;
+  // max-height: 730px;
   border-left: 2px solid black;
+  grid-column: 11 / 13;
+  grid-row: 1 / 12;
+
+  @media (max-width: 1200px) {
+    grid-column: 10 / 13;
+  }
+  @media (max-width: 768px) {
+    grid-column: 9 / 13;
+  }
 `;
 const MiniMap = styled.div`
-  width: 15rem;
+  // width: 15rem;
+  // height: 16rem;
+  width: 90%;
   height: 16rem;
   background-color: rgb(26, 26, 26, 0.85);
   border: 5px rgb(27, 27, 27, 0.85) inset;
@@ -28,7 +40,7 @@ const MiniMap = styled.div`
   color: #fafafa;
   position: relative;
   overflow: hidden;
-  margin: 1rem;
+  margin: 1rem auto;
 `;
 const PlayerInfo = styled.div`
   display: flex;

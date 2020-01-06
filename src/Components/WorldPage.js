@@ -13,8 +13,9 @@ import LinkToast from "./LinkToast";
 import { positionRooms, requestWithAuth } from "../utils";
 
 export const StyledMain = styled.main`
-  margin: 0;
+  margin: 0 auto;
   min-height: 100vh;
+  max-width: 2000px;
   display: grid;
   background: #212121;
   position: relative;
@@ -169,7 +170,7 @@ class WorldPage extends React.Component {
       <StyledMain>
         <Menu></Menu>
         <ToastContainer />
-        {/* <LinkToast /> */}
+
         <World
           rooms={this.state.rooms}
           playerRoom={this.state.playerRoom}
@@ -182,7 +183,6 @@ class WorldPage extends React.Component {
           roomItems={this.state.roomItems}
           clickHandler={this.pickup}
         />
-        }
         <Sidebar
           rooms={this.state.rooms}
           playerRoom={this.state.playerRoom}
