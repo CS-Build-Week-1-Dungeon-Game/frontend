@@ -18,6 +18,7 @@ export const gridParent = css`
 `;
 
 export const gridChild = css`
+  ${props => props.raised && raisedEffect}
   grid-column: ${props => props.column};
   grid-row: ${props => props.row};
   @media (max-width: ${large}) {
@@ -44,6 +45,7 @@ export const raisedEffect = css`
   background-color: ${translucentDark};
   box-shadow: inset 3px 9px 25px -1px ${solidDark};
   border: 5px ${translucentDark} inset;
+  border-radius: ${props => props.raised};
 `;
 
 // components

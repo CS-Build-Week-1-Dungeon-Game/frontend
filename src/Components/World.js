@@ -4,7 +4,6 @@ import compass from "../assets/compass.svg";
 
 import Room from "./Room";
 import Player from "./Player";
-
 import ItemList from "./ItemList";
 
 import { gridParent, gridChild, raisedEffect } from "./styles";
@@ -26,8 +25,6 @@ const Container = styled.div`
 `;
 
 const GameArea = styled.div`
-  ${raisedEffect};
-  border-radius: 1.5rem;
   ${gridChild};
   overflow: hidden;
 `;
@@ -37,10 +34,10 @@ const Title = styled.h1`
   font-size: 39px;
   color: grey;
 `;
-
+const ItemDiv = styled.div`
+  ${gridChild}
+`;
 const WorldNav = styled.div`
-  ${raisedEffect};
-  border-radius: 1.5rem;
   ${gridChild};
   overflow: auto;
 `;
@@ -57,9 +54,7 @@ const Compass = styled.img`
 `;
 
 const CompassBox = styled.div`
-  ${raisedEffect};
   ${gridChild};
-  border-radius: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -88,21 +83,13 @@ const Button = styled.button`
   }
 `;
 
-const FlexDiv = styled.div`
-  display: flex;
-`;
-const ItemDiv = styled.div`
-  ${gridChild};
-  ${raisedEffect};
-  border-radius: 1.5rem;
-`;
 const ItemTitle = styled.h1`
-  color: white;
+  // color: white;
 `;
 const ItemText = styled.p`
-  color: white;
-  font-size: 1.2rem;
-  text-align: center;
+  // color: white;
+  // font-size: 1.2rem;
+  // text-align: center;
 `;
 
 class World extends React.Component {
@@ -145,7 +132,7 @@ class World extends React.Component {
   render() {
     return (
       <Container row="1/13" column="1/11" largeColumn="1/10" mediumColumn="1/9">
-        <GameArea id="game-area" row="2/8" column="2/8">
+        <GameArea raised="1.5rem" id="game-area" row="2/8" column="2/8">
           <StyledRooms left={this.state.center.x} top={this.state.center.y}>
             <Player
               dimension={this.props.dimension}
@@ -164,19 +151,17 @@ class World extends React.Component {
               ))}
           </StyledRooms>
         </GameArea>
-        <ItemDiv row="2/8" column="9/12">
-          <ItemTitle>Room Items</ItemTitle>
+        <ItemDiv raised="1.5rem" row="2/8" column="9/12">
           <ItemList
             items={this.props.roomItems}
             clickHandler={this.props.clickHandler}
           />
-          <ItemText>Click on an item to pick it up</ItemText>
         </ItemDiv>
-        <WorldNav row="9/12" column="2/8">
+        <WorldNav raised="1.5rem" row="9/12" column="2/8">
           <Title> You are at the {this.props.currentRoomTitle}</Title>
           <Desc>{this.props.currentDesc}</Desc>
         </WorldNav>
-        <CompassBox row="9/12" column="9/12">
+        <CompassBox raised="50%" row="9/12" column="9/12">
           <Button type="button" onClick={() => this.props.move("n")}>
             N
           </Button>

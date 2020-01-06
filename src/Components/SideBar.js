@@ -50,12 +50,6 @@ const Username = styled.h1`
   align-items: center;
   margin-left: -2rem;
 `;
-const Health = styled.h1`
-  color: white;
-`;
-const Inventory = styled.h1`
-  color: white;
-`;
 const JackImg = styled.img`
   height: 2rem;
   margin-right: 1rem;
@@ -69,13 +63,6 @@ const InventoryArea = styled.div`
   max-width: 14rem;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
-`;
-const InventoryText = styled.p`
-  font-size: 1.2rem;
-  margin-top: 0.5rem;
-  height: 1rem;
-  margin-right: 1rem;
-  max-height: 1rem;
 `;
 
 class Sidebar extends React.Component {
@@ -162,17 +149,11 @@ class Sidebar extends React.Component {
                   ))}
               </StyledRooms>
             </MiniMap>
-
             <InventoryArea>
-              Inventory
-              {/* {this.props.playerInventory && this.props.playerInventory.map(item => 
-                <InventoryItem key={item}>{item}</InventoryItem>
-            )} */}
               <ItemList
                 items={this.props.playerInventory}
                 clickHandler={this.props.clickHandler}
               />
-              <InventoryText>Click item to drop</InventoryText>
             </InventoryArea>
           </PlayerInfo>
         </StyledAside>
