@@ -7,6 +7,8 @@ import Player from "./Player";
 
 import ItemList from "./ItemList";
 
+import { gridParent, gridChild, raisedEffect } from "./styles";
+
 export const StyledRooms = styled.div`
   background: transparent;
   position: relative;
@@ -18,27 +20,15 @@ export const StyledRooms = styled.div`
 
 const Container = styled.div`
   background-image: url("https://wallpaperbro.com/img/509496.jpg");
-
+  ${gridParent};
   background-size: cover;
-  grid-column: 1 / 11;
-  grid-row: 1 / 12;
-  @media (max-width: 1200px) {
-    grid-column: 1 / 10;
-  }
-  @media (max-width: 768px) {
-    grid-column: 1 / 9;
-  }
+  ${gridChild};
 `;
 
 const GameArea = styled.div`
-  background-color: rgb(26, 26, 26, 0.85);
-  box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
-  border: 5px rgb(27, 27, 27, 0.85) inset;
+  ${raisedEffect};
   border-radius: 1.5rem;
-  width: 73%;
-  height: 25rem;
-  margin: 2rem;
-
+  ${gridChild};
   overflow: hidden;
 `;
 
@@ -49,15 +39,16 @@ const Title = styled.h1`
 `;
 
 const WorldNav = styled.div`
-  display: flex;
-  width: 90%;
-  margin: auto;
+  ${raisedEffect};
+  border-radius: 1.5rem;
+  ${gridChild};
+  overflow: auto;
 `;
 
 const Desc = styled.header`
-  margin-left: 2rem;
-  font-size: 19px;
-  color: grey;
+  // margin-left: 2rem;
+  // font-size: 19px;
+  // color: grey;
 `;
 
 const Compass = styled.img`
@@ -66,19 +57,13 @@ const Compass = styled.img`
 `;
 
 const CompassBox = styled.div`
-  background-color: rgb(26, 26, 26, 0.85);
-  box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
-  border: 5px rgb(27, 27, 27, 0.85) inset;
+  ${raisedEffect};
+  ${gridChild};
   border-radius: 50%;
-  width: 16rem;
-  height: 11rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding-top: 1rem;
-  margin-left: 2.5rem;
-  margin-right: 2rem;
-  margin-top: -1rem;
 `;
 
 const MiddleRow = styled.div`
@@ -90,7 +75,6 @@ const MiddleRow = styled.div`
 const Button = styled.button`
   width: 30px;
   height: 30px;
-
   color: red;
   border-radius: 25px;
   box-shadow: inset 3px 9px 50px -1px rgb(14, 14, 14);
@@ -104,29 +88,13 @@ const Button = styled.button`
   }
 `;
 
-const MapInfo = styled.div`
-  background-color: rgb(26, 26, 26, 0.85);
-  box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
-  border: 5px rgb(27, 27, 27, 0.85) inset;
-  border-radius: 1.5rem;
-  max-height: 15rem;
-  width: 72%;
-  margin-top: -3rem;
-  margin-left: -1rem;
-`;
-
 const FlexDiv = styled.div`
   display: flex;
 `;
 const ItemDiv = styled.div`
-  background-color: rgb(26, 26, 26, 0.85);
-  border: 5px rgb(27, 27, 27, 0.85) inset;
+  ${gridChild};
+  ${raisedEffect};
   border-radius: 1.5rem;
-  box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
-  padding: 1rem;
-  margin: 2rem;
-  width: 25%;
-  min-height: 26rem;
 `;
 const ItemTitle = styled.h1`
   color: white;
@@ -174,65 +142,59 @@ class World extends React.Component {
       });
     }
   }
-
   render() {
     return (
-      <Container>
-        <FlexDiv>
-          <GameArea id="game-area">
-            <StyledRooms left={this.state.center.x} top={this.state.center.y}>
-              <Player
-                dimension={this.props.dimension}
-                playerRoom={this.props.playerRoom}
-                user={this.props.user}
-                playerColor={this.props.playerColor}
-              />
-              {this.props.rooms &&
-                this.props.rooms.map(room => (
-                  <Room
-                    room={room}
-                    key={room.pk}
-                    dimension={this.props.dimension}
-                    playerRoom={this.props.playerRoom}
-                  />
-                ))}
-            </StyledRooms>
-          </GameArea>
-          <ItemDiv>
-            <ItemTitle>Room Items</ItemTitle>
-            <ItemList
-              items={this.props.roomItems}
-              clickHandler={this.props.clickHandler}
+      <Container row="1/13" column="1/11" largeColumn="1/10" mediumColumn="1/9">
+        <GameArea id="game-area" row="2/8" column="2/8">
+          <StyledRooms left={this.state.center.x} top={this.state.center.y}>
+            <Player
+              dimension={this.props.dimension}
+              playerRoom={this.props.playerRoom}
+              user={this.props.user}
+              playerColor={this.props.playerColor}
             />
-            <ItemText>Click on an item to pick it up</ItemText>
-          </ItemDiv>
-        </FlexDiv>
-        <WorldNav>
-          <MapInfo>
-            <Title> You are at the {this.props.currentRoomTitle}</Title>
-            <Desc>{this.props.currentDesc}</Desc>
-          </MapInfo>
-
-          <CompassBox>
-            <Button type="button" onClick={() => this.props.move("n")}>
-              N
-            </Button>
-
-            <MiddleRow>
-              <Button type="button" onClick={() => this.props.move("w")}>
-                W
-              </Button>
-              <Compass src={compass} alt="compass" />
-              <Button type="button" onClick={() => this.props.move("e")}>
-                E
-              </Button>
-            </MiddleRow>
-
-            <Button type="button" onClick={() => this.props.move("s")}>
-              S
-            </Button>
-          </CompassBox>
+            {this.props.rooms &&
+              this.props.rooms.map(room => (
+                <Room
+                  room={room}
+                  key={room.pk}
+                  dimension={this.props.dimension}
+                  playerRoom={this.props.playerRoom}
+                />
+              ))}
+          </StyledRooms>
+        </GameArea>
+        <ItemDiv row="2/8" column="9/12">
+          <ItemTitle>Room Items</ItemTitle>
+          <ItemList
+            items={this.props.roomItems}
+            clickHandler={this.props.clickHandler}
+          />
+          <ItemText>Click on an item to pick it up</ItemText>
+        </ItemDiv>
+        <WorldNav row="9/12" column="2/8">
+          <Title> You are at the {this.props.currentRoomTitle}</Title>
+          <Desc>{this.props.currentDesc}</Desc>
         </WorldNav>
+        <CompassBox row="9/12" column="9/12">
+          <Button type="button" onClick={() => this.props.move("n")}>
+            N
+          </Button>
+
+          <MiddleRow>
+            <Button type="button" onClick={() => this.props.move("w")}>
+              W
+            </Button>
+            <Compass src={compass} alt="compass" />
+            <Button type="button" onClick={() => this.props.move("e")}>
+              E
+            </Button>
+          </MiddleRow>
+
+          <Button type="button" onClick={() => this.props.move("s")}>
+            S
+          </Button>
+        </CompassBox>
       </Container>
     );
   }

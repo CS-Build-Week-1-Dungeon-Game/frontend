@@ -11,17 +11,17 @@ import FullPageLoader from "./FullPageLoader";
 import LinkToast from "./LinkToast";
 
 import { positionRooms, requestWithAuth } from "../utils";
+import { gridParent } from "./styles";
 
 export const StyledMain = styled.main`
   margin: 0 auto;
   min-height: 100vh;
   max-width: 2000px;
-  display: grid;
   background: #212121;
   position: relative;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-columns: repeat(12, 1fr);
+  ${gridParent}
 `;
+
 toast.configure({
   autoClose: 10000,
   draggable: false,
