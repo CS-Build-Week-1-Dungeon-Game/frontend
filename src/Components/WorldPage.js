@@ -1,18 +1,18 @@
-import React from 'react'
+import React from "react";
 
-import axios from 'axios'
+import axios from "axios";
 
-import styled from 'styled-components'
-import { toast, ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import styled from "styled-components";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import Menu from './Menu'
-import Sidebar from './SideBar'
-import World from './World'
-import FullPageLoader from './FullPageLoader'
-import LinkToast from './LinkToast'
+import Menu from "./Menu";
+import Sidebar from "./SideBar";
+import World from "./World";
+import FullPageLoader from "./FullPageLoader";
+import LinkToast from "./LinkToast";
 
-import { positionRooms } from '../utils'
+import { positionRooms, requestWithAuth } from "../utils";
 
 export const StyledMain = styled.main`
   margin: 0;
@@ -22,85 +22,80 @@ export const StyledMain = styled.main`
   position: relative;
   grid-template-columns: repeat(12, 1fr);
   grid-template-columns: repeat(12, 1fr);
-`
+`;
 toast.configure({
   autoClose: 10000,
   draggable: false,
-  closeOnClick: false,
-})
+  closeOnClick: false
+});
 
 class WorldPage extends React.Component {
-  dimension = 300
+  dimension = 300;
   constructor() {
-    super()
+    super();
     this.state = {
       playerRoom: null,
-      currentRoomTitle: '',
-      currentDesc: '',
+      currentRoomTitle: "",
+      currentDesc: "",
       rooms: null,
       roomDict: null,
       user: null,
       rawRooms: [],
       playerColor: null,
       playerInventory: null,
-      roomItems: null,
-    }
+      roomItems: null
+    };
   }
   componentDidMount() {
     const asyncHelper = async () => {
-      await this.getRooms()
-      await this.start()
-    }
-    asyncHelper()
-    this.setPlayerColor()
+      await this.getRooms();
+      await this.start();
+    };
+    asyncHelper();
+    this.setPlayerColor();
   }
   setPlayerColor = () => {
     const colors = [
-      '#7f0000',
-      '#4a148c',
-      '#0d47a1',
-      '#e65100',
-      '#004d40',
-      '#1565c0',
-    ]
-    const random = Math.floor(Math.random() * (colors.length - 1))
-    this.setState({ playerColor: colors[random] })
-  }
+      "#7f0000",
+      "#4a148c",
+      "#0d47a1",
+      "#e65100",
+      "#004d40",
+      "#1565c0"
+    ];
+    const random = Math.floor(Math.random() * (colors.length - 1));
+    this.setState({ playerColor: colors[random] });
+  };
   getRooms = () => {
     // Get and parse the rooms
-    return axios
-      .get(`https://mud-cs22.herokuapp.com/api/adv/rooms/`)
+    return requestWithAuth()
+      .get(`api/adv/rooms/`)
       .then(res => {
-        const rooms = positionRooms(JSON.parse(res.data), this.dimension)
-        const roomDict = {}
+        const rooms = positionRooms(JSON.parse(res.data), this.dimension);
+        const roomDict = {};
         for (let i = 0; i < rooms.length; i++) {
-          roomDict[rooms[i].title] = rooms[i]
+          roomDict[rooms[i].title] = rooms[i];
         }
         this.setState({
           ...this.state,
           rooms: rooms,
           roomDict: roomDict,
-          rawRooms: res.data,
-        })
+          rawRooms: res.data
+        });
       })
       .catch(err => {
-        toast.info(({ closeToast }) => <LinkToast />)
-        console.log(err)
-      })
-  }
+        toast.info(({ closeToast }) => <LinkToast />);
+        console.log(err);
+      });
+  };
   start = () => {
     // initialize the player
-    const token = localStorage.getItem('token')
-    return axios({
-      url: `https://mud-cs22.herokuapp.com/api/adv/init/`,
-      method: 'GET',
-      headers: {
-        Authorization: token,
-      },
-    })
+    const token = localStorage.getItem("token");
+    return requestWithAuth(token)
+      .get(`/api/adv/init/`)
       .then(res => {
-        console.log(res.data)
-        let currentRoom = this.state.roomDict[res.data.title]
+        console.log(res.data);
+        let currentRoom = this.state.roomDict[res.data.title];
         this.setState({
           currentRoomTitle: res.data.title,
           userID: res.data.uuid,
@@ -108,84 +103,61 @@ class WorldPage extends React.Component {
           playerRoom: currentRoom,
           user: res.data.name,
           playerInventory: res.data.inventory,
-          roomItems: res.data.room_items,
-        })
+          roomItems: res.data.room_items
+        });
       })
       .catch(err => {
-        toast.info(({ closeToast }) => <LinkToast />)
-        console.log(err)
-      })
-  }
+        toast.info(({ closeToast }) => <LinkToast />);
+        console.log(err);
+      });
+  };
 
   move = direction => {
-    const token = localStorage.getItem('token')
-    axios({
-      url: `https://mud-cs22.herokuapp.com/api/adv/move`,
-      method: 'POST',
-      headers: {
-        Authorization: token,
-      },
-      data: {
-        direction: direction,
-      },
-    })
+    const token = localStorage.getItem("token");
+    requestWithAuth(token)
+      .post(`api/adv/move`, { direction })
       .then(res => {
         this.setState({
           playerInventory: res.data.inventory,
           roomItems: res.data.room_items,
           currentRoomTitle: res.data.title,
           currentDesc: res.data.description,
-          playerRoom: this.state.roomDict[res.data.title],
-        })
+          playerRoom: this.state.roomDict[res.data.title]
+        });
       })
       .catch(err => {
-        console.log('errors', err.response)
-      })
-  }
+        console.log("errors", err.response);
+      });
+  };
   pickup = e => {
-    const token = localStorage.getItem('token')
-    axios({
-      url: `https://mud-cs22.herokuapp.com/api/adv/take`,
-      method: 'POST',
-      headers: {
-        Authorization: token,
-      },
-      data: {
-        item: e.target.innerText,
-      },
-    })
+    const token = localStorage.getItem("token");
+    console.log(e.target.innerText);
+    requestWithAuth(token)
+      .post(`api/adv/take`, { item: e.target.innerText })
       .then(res => {
         this.setState({
           playerInventory: res.data.inventory,
-          roomItems: res.data.room_items,
-        })
+          roomItems: res.data.room_items
+        });
       })
       .catch(err => {
-        console.log('errors', err.response)
-      })
-  }
+        console.log("errors", err.response);
+      });
+  };
   drop = e => {
-    const token = localStorage.getItem('token')
-    axios({
-      url: `https://mud-cs22.herokuapp.com/api/adv/drop`,
-      method: 'POST',
-      headers: {
-        Authorization: token,
-      },
-      data: {
-        item: e.target.innerText,
-      },
-    })
+    const token = localStorage.getItem("token");
+    requestWithAuth(token)
+      .post(`api/adv/drop`, { item: e.target.innerText })
       .then(res => {
         this.setState({
           playerInventory: res.data.inventory,
-          roomItems: res.data.room_items,
-        })
+          roomItems: res.data.room_items
+        });
       })
       .catch(err => {
-        console.log('errors', err.response)
-      })
-  }
+        console.log("errors", err.response);
+      });
+  };
   render() {
     if (!this.state.rooms || !this.state.currentRoomTitle) {
       return (
@@ -193,7 +165,7 @@ class WorldPage extends React.Component {
           <ToastContainer />
           <FullPageLoader />
         </>
-      )
+      );
     }
     return (
       <StyledMain>
@@ -227,8 +199,8 @@ class WorldPage extends React.Component {
           clickHandler={this.drop}
         ></Sidebar>
       </StyledMain>
-    )
+    );
   }
 }
 
-export default WorldPage
+export default WorldPage;
