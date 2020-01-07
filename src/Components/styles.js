@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import { css } from "styled-components";
+import styled, { css } from "styled-components";
 
 // colors
 export const solidDark = `rgb(14, 14, 14)`;
@@ -13,8 +12,8 @@ export const large = "1200px";
 // mixins
 export const gridParent = css`
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(12, 1fr);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: repeat(12, minmax(0, 1fr));
 `;
 
 export const gridChild = css`
@@ -36,7 +35,7 @@ export const gridChild = css`
 `;
 
 export const backgroundImage = css`
-  background-image: url ${props => props.imageUrl};
+  background-image: url(${props => props.imageUrl});
   background-size: cover;
   background-repeat: no-repeat;
 `;
@@ -46,14 +45,4 @@ export const raisedEffect = css`
   box-shadow: inset 3px 9px 25px -1px ${solidDark};
   border: 5px ${translucentDark} inset;
   border-radius: ${props => props.raised};
-`;
-
-// components
-export const FlexDiv = styled.div`
-  display: flex;
-`;
-
-export const FlexCenterDiv = styled(FlexDiv)`
-  align-items: center;
-  justify-content: center;
 `;

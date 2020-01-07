@@ -19,7 +19,7 @@ export const StyledMain = styled.main`
   max-width: 2000px;
   background: #212121;
   position: relative;
-  ${gridParent}
+  ${gridParent};
 `;
 
 toast.configure({

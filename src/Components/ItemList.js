@@ -5,7 +5,6 @@ import { List, ListItem, ListItemText } from "@material-ui/core";
 
 const StyledList = styled(List)`
   width: 100%;
-  max-width: 360px;
   background-color: grey;
   position: relative;
   overflow: auto;

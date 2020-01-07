@@ -151,6 +151,8 @@ class Sidebar extends React.Component {
             </MiniMap>
             <InventoryArea>
               <ItemList
+                itemTitle="Player Inventory"
+                itemText="Click on an item to drop it"
                 items={this.props.playerInventory}
                 clickHandler={this.props.clickHandler}
               />

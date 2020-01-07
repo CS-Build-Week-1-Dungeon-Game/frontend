@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 const StyledRoom = styled.div`
   border: 2px solid #3e2723;
@@ -12,7 +12,7 @@ const StyledRoom = styled.div`
   & * {
     pointer-events: none;
   }
-`
+`;
 const Door = styled.div`
     position: absolute;
     background: #2e7d32;
@@ -21,10 +21,10 @@ const Door = styled.div`
     width: ${props => props.dimension && `${props.width}px`};
     height: ${props => props.dimension && `${props.width}px`};
     z-index: 998;
-`
+`;
 
 const Room = ({ room, playerRoom, dimension }) => {
-  const doorWidth = dimension / 4
+  const doorWidth = dimension / 4;
   return (
     <>
       {!!room.n_to && (
@@ -43,13 +43,14 @@ const Room = ({ room, playerRoom, dimension }) => {
           width={doorWidth}
         />
       )}
-      <StyledRoom x={room.x} y={room.y} dimension={dimension} id={room.pk}>
-        {/* {
-                    (playerRoom && room && playerRoom.title === room.title) && <Player></Player>
-                } */}
-      </StyledRoom>
+      <StyledRoom
+        x={room.x}
+        y={room.y}
+        dimension={dimension}
+        id={room.pk}
+      ></StyledRoom>
     </>
-  )
-}
+  );
+};
 
-export default Room
+export default Room;

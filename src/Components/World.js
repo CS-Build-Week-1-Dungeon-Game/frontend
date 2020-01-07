@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import compass from "../assets/compass.svg";
 
 import Room from "./Room";
 import Player from "./Player";
 import ItemList from "./ItemList";
+import Compass from "./Compass";
 
-import { gridParent, gridChild, raisedEffect } from "./styles";
+import { Typography } from "@material-ui/core";
+
+import { gridParent, gridChild, backgroundImage } from "./styles";
 
 export const StyledRooms = styled.div`
   background: transparent;
@@ -18,78 +20,27 @@ export const StyledRooms = styled.div`
 `;
 
 const Container = styled.div`
-  background-image: url("https://wallpaperbro.com/img/509496.jpg");
+  ${backgroundImage}
   ${gridParent};
-  background-size: cover;
   ${gridChild};
 `;
 
-const GameArea = styled.div`
+const GridChild = styled.div`
   ${gridChild};
-  overflow: hidden;
+  position: relative;
+  min-height: 0px;
+  overflow: ${props => props.overflow || "auto"};
 `;
 
-const Title = styled.h1`
-  margin-left: 2rem;
-  font-size: 39px;
-  color: grey;
-`;
-const ItemDiv = styled.div`
-  ${gridChild}
-`;
-const WorldNav = styled.div`
-  ${gridChild};
+const ScrollText = styled.div`
   overflow: auto;
-`;
-
-const Desc = styled.header`
-  // margin-left: 2rem;
-  // font-size: 19px;
-  // color: grey;
-`;
-
-const Compass = styled.img`
-  height: 4rem;
-  margin: 10px;
-`;
-
-const CompassBox = styled.div`
-  ${gridChild};
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const MiddleRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-const Button = styled.button`
-  width: 30px;
-  height: 30px;
-  color: red;
-  border-radius: 25px;
-  box-shadow: inset 3px 9px 50px -1px rgb(14, 14, 14);
-  border: 2px solid black;
-  outline: none;
-  :hover {
-    color: green;
-    cursor: pointer;
-    box-shadow: inset 3px 9px 40px -1px rgb(14, 14, 14);
-    border: 2px solid black;
+  height: 200px;
+  @media (max-width: 1200px) {
+    height: 120px;
   }
-`;
-
-const ItemTitle = styled.h1`
-  // color: white;
-`;
-const ItemText = styled.p`
-  // color: white;
-  // font-size: 1.2rem;
-  // text-align: center;
+  @media (max-width: 768px) {
+    height: 75px;
+  }
 `;
 
 class World extends React.Component {
@@ -131,8 +82,20 @@ class World extends React.Component {
   }
   render() {
     return (
-      <Container row="1/13" column="1/11" largeColumn="1/10" mediumColumn="1/9">
-        <GameArea raised="1.5rem" id="game-area" row="2/8" column="2/8">
+      <Container
+        row="1/13"
+        column="1/11"
+        largeColumn="1/10"
+        mediumColumn="1/9"
+        imageUrl="https://wallpaperbro.com/img/509496.jpg"
+      >
+        <GridChild
+          overflow="hidden"
+          raised="1.5rem"
+          id="game-area"
+          row="2/8"
+          column="2/8"
+        >
           <StyledRooms left={this.state.center.x} top={this.state.center.y}>
             <Player
               dimension={this.props.dimension}
@@ -150,36 +113,24 @@ class World extends React.Component {
                 />
               ))}
           </StyledRooms>
-        </GameArea>
-        <ItemDiv raised="1.5rem" row="2/8" column="9/12">
+        </GridChild>
+        <GridChild raised="1.5rem" row="2/8" column="9/12">
           <ItemList
+            itemTitle="Room Items"
+            itemText="Click on an item to pick it up"
             items={this.props.roomItems}
             clickHandler={this.props.clickHandler}
           />
-        </ItemDiv>
-        <WorldNav raised="1.5rem" row="9/12" column="2/8">
-          <Title> You are at the {this.props.currentRoomTitle}</Title>
-          <Desc>{this.props.currentDesc}</Desc>
-        </WorldNav>
-        <CompassBox raised="50%" row="9/12" column="9/12">
-          <Button type="button" onClick={() => this.props.move("n")}>
-            N
-          </Button>
-
-          <MiddleRow>
-            <Button type="button" onClick={() => this.props.move("w")}>
-              W
-            </Button>
-            <Compass src={compass} alt="compass" />
-            <Button type="button" onClick={() => this.props.move("e")}>
-              E
-            </Button>
-          </MiddleRow>
-
-          <Button type="button" onClick={() => this.props.move("s")}>
-            S
-          </Button>
-        </CompassBox>
+        </GridChild>
+        <GridChild raised="1.5rem" row="9/12" column="2/8">
+          <ScrollText>
+            <Typography gutterBottom variant="h2" component="h4">
+              You are at the {this.props.currentRoomTitle}
+            </Typography>
+            <Typography variant="body1">{this.props.currentDesc}</Typography>
+          </ScrollText>
+        </GridChild>
+        <Compass move={this.props.move} />
       </Container>
     );
   }
