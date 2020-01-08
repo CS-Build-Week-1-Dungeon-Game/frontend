@@ -11,7 +11,13 @@ function Button({ move, direction, children }) {
 
 export default function Compass({ move }) {
   return (
-    <CompassBox raised="50%" row="9/12" column="9/12">
+    <CompassBox
+      flex
+      flexDirection="column"
+      raised="50%"
+      row="9/12"
+      column="9/12"
+    >
       <Button move={move} direction="n">
         N
       </Button>
@@ -35,10 +41,6 @@ export default function Compass({ move }) {
 
 const CompassBox = styled.div`
   ${gridChild};
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;
 
 const CompassImg = styled.img`

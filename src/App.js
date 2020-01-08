@@ -2,6 +2,7 @@ import React from "react";
 import AppRouter from "../src/AppRouter";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
+
 const theme = createMuiTheme({
   typography: {
     fontFamily:
@@ -12,9 +13,7 @@ const theme = createMuiTheme({
   }
 });
 
-//  "fontFamily": ""\"Roboto\", \"Helvetica\", \"Arial\", sans-serif"",
 function App() {
-  console.log(theme);
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline>

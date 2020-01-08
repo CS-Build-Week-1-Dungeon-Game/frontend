@@ -8,7 +8,7 @@ import Compass from "./Compass";
 
 import { Typography } from "@material-ui/core";
 
-import { gridParent, gridChild, backgroundImage } from "./styles";
+import { gridParent, gridChild, backgroundImage, flexCenter } from "./styles";
 
 export const StyledRooms = styled.div`
   background: transparent;
@@ -122,7 +122,7 @@ class World extends React.Component {
             clickHandler={this.props.clickHandler}
           />
         </GridChild>
-        <GridChild raised="1.5rem" row="9/12" column="2/8">
+        <GridChild flex raised="1.5rem" row="9/12" column="2/8">
           <ScrollText>
             <Typography gutterBottom variant="h2" component="h4">
               You are at the {this.props.currentRoomTitle}

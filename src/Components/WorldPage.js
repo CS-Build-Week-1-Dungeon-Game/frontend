@@ -51,6 +51,7 @@ class WorldPage extends React.Component {
       await this.start();
     };
     asyncHelper();
+    console.log({ state: this.state });
     this.setPlayerColor();
   }
   setPlayerColor = () => {
@@ -70,6 +71,7 @@ class WorldPage extends React.Component {
     return requestWithAuth()
       .get(`api/adv/rooms/`)
       .then(res => {
+        console.log(res.data);
         const rooms = positionRooms(JSON.parse(res.data), this.dimension);
         const roomDict = {};
         for (let i = 0; i < rooms.length; i++) {
@@ -93,7 +95,7 @@ class WorldPage extends React.Component {
     return requestWithAuth(token)
       .get(`/api/adv/init/`)
       .then(res => {
-        console.log(res.data);
+        console.log(res);
         let currentRoom = this.state.roomDict[res.data.title];
         this.setState({
           currentRoomTitle: res.data.title,
@@ -158,6 +160,7 @@ class WorldPage extends React.Component {
       });
   };
   render() {
+    console.log(this.state);
     if (!this.state.rooms || !this.state.currentRoomTitle) {
       return (
         <>

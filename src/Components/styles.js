@@ -18,6 +18,7 @@ export const gridParent = css`
 
 export const gridChild = css`
   ${props => props.raised && raisedEffect}
+  ${props => props.flex && flexCenter}
   grid-column: ${props => props.column};
   grid-row: ${props => props.row};
   @media (max-width: ${large}) {
@@ -32,6 +33,13 @@ export const gridChild = css`
     grid-column: ${props => props.smallColumn || ""};
     grid-row: ${props => props.smallRow || ""};
   }
+`;
+
+export const flexCenter = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: ${props => props.flexDirection || "row"};
 `;
 
 export const backgroundImage = css`
