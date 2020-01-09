@@ -7,64 +7,7 @@ import Map from "./Map";
 
 import { usePositionFinder } from "../hooks";
 
-export const StyledRooms = styled.div`
-  position: relative;
-  left: ${props => props.left && `${props.left}px`};
-  top: ${props => props.top && `${props.top}px`};
-  transition: left 0.3s, top 0.3s;
-  transition-delay: 0.5s;
-`;
-const StyledAside = styled.aside`
-  background-image: url("http://avante.biz/wp-content/uploads/Brushed-Steel-Wallpapers/Brushed-Steel-Wallpapers-002.jpg");
-  background-size: cover;
-  border-left: 2px solid black;
-  grid-column: 11 / 13;
-  grid-row: 1 / 13;
-  @media (max-width: 1200px) {
-    grid-column: 10 / 13;
-  }
-  @media (max-width: 768px) {
-    grid-column: 9 / 13;
-  }
-`;
-const MiniMap = styled.div`
-  width: 90%;
-  height: 16rem;
-  background-color: rgb(26, 26, 26, 0.85);
-  border: 5px rgb(27, 27, 27, 0.85) inset;
-  border-radius: 1.5rem;
-  box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
-  color: #fafafa;
-  position: relative;
-  overflow: hidden;
-  margin: 1rem auto;
-`;
-const PlayerInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: white;
-`;
-const Username = styled.h1`
-  color: orange;
-  display: flex;
-  align-items: center;
-  margin-left: -2rem;
-`;
-const JackImg = styled.img`
-  height: 2rem;
-  margin-right: 1rem;
-`;
-const InventoryArea = styled.div`
-  background-color: rgb(26, 26, 26, 0.85);
-  border: 5px rgb(27, 27, 27, 0.85) inset;
-  border-radius: 1.5rem;
-  box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
-  text-align: center;
-  max-width: 14rem;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-`;
+import { mixins } from "./Layout";
 
 export default function Sidebar({
   player,
@@ -75,13 +18,19 @@ export default function Sidebar({
   let dimension = 30;
   let center = usePositionFinder(player, dimension, "#mini-map");
   return (
-    <StyledAside>
-      <PlayerInfo>
+    <StyledAside
+      imageUrl="http://avante.biz/wp-content/uploads/Brushed-Steel-Wallpapers/Brushed-Steel-Wallpapers-002.jpg"
+      column="11/13"
+      row="1/13"
+      largeColum="10/13"
+      mediumColumn="9/13"
+    >
+      <PlayerInfo flexDirection="column">
         <Username>
           <JackImg src={Jack} />
           {player.username}
         </Username>
-        <MiniMap id="mini-map">
+        <MiniMap id="mini-map" raised="1.5rem" overflow="hidden">
           <Map
             hideName={true}
             center={center}
@@ -91,7 +40,7 @@ export default function Sidebar({
             playerColor={playerColor}
           />
         </MiniMap>
-        <InventoryArea>
+        <InventoryArea raised="1.5rem">
           <ItemList
             action="drop"
             itemTitle="Player Inventory"
@@ -104,3 +53,36 @@ export default function Sidebar({
     </StyledAside>
   );
 }
+
+const StyledAside = styled.aside`
+  ${mixins.backgroundImage}
+  ${mixins.gridChild}
+              border-left: 2px solid black;
+`;
+const MiniMap = styled.div`
+  width: 90%;
+  height: 16rem;
+  ${mixins.raisedEffect}
+  color: #fafafa;
+  position: relative;
+  margin: 1rem auto;
+`;
+const PlayerInfo = styled.div`
+  ${mixins.flexCenter}
+  color: white;
+`;
+const Username = styled.h1`
+  color: orange;
+  ${mixins.flexCenter}
+`;
+const JackImg = styled.img`
+  height: 2rem;
+  margin-right: 1rem;
+`;
+const InventoryArea = styled.div`
+  ${mixins.raisedEffect}
+  text-align: center;
+  max-width: 14rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+`;

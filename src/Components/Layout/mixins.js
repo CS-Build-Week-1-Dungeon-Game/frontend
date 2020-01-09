@@ -19,7 +19,7 @@ export const gridParent = css`
 export const gridChild = css`
   ${props => props.raised && raisedEffect}
   ${props => props.flex && flexCenter}
-  overflow: ${props => props.overflow || "auto"}
+  
   grid-column: ${props => props.column};
   grid-row: ${props => props.row};
   @media (max-width: ${large}) {
@@ -50,6 +50,7 @@ export const backgroundImage = css`
 `;
 
 export const raisedEffect = css`
+  overflow: ${props => props.overflow || "auto"}
   background-color: ${translucentDark};
   box-shadow: inset 3px 9px 25px -1px ${solidDark};
   border: 5px ${translucentDark} inset;

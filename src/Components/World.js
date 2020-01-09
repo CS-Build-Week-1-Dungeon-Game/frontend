@@ -7,7 +7,7 @@ import Map from "./Map";
 
 import { Typography, Paper } from "@material-ui/core";
 
-import { mixins } from "./Layout";
+import { mixins, GridChild } from "./Layout";
 
 import { usePositionFinder } from "../hooks";
 
@@ -78,10 +78,6 @@ export const StyledRooms = styled.div`
 const Container = styled.div`
   ${mixins.backgroundImage}
   ${mixins.gridParent};
-  ${mixins.gridChild};
-`;
-
-const GridChild = styled.div`
   ${mixins.gridChild};
 `;
 
