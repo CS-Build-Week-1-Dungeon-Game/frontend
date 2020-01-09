@@ -16,14 +16,18 @@ const StyledRoom = styled.div.attrs(props => ({
     pointer-events: none;
   }
 `;
-const Door = styled.div`
-    position: absolute;
-    background: #2e7d32;
-    left: ${props => props.left && `${props.left}px`};
-    top: ${props => props.top && `${props.top}px`}
-    width: ${props => props.dimension && `${props.width}px`};
-    height: ${props => props.dimension && `${props.width}px`};
-    z-index: 998;
+
+const Door = styled.div.attrs(props => ({
+  style: {
+    left: props.left && `${props.left}px`,
+    top: props.top && `${props.top}px`,
+    width: props.dimension && `${props.width}px`,
+    height: props.dimension && `${props.width}px`
+  }
+}))`
+  position: absolute;
+  background: #2e7d32;
+  z-index: 998;
 `;
 
 const Room = ({ room, player, dimension, red }) => {
