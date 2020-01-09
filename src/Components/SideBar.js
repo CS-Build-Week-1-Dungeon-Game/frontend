@@ -1,180 +1,88 @@
-import React from 'react'
-import styled from 'styled-components'
-import Player from './Player'
-import Room from './Room'
-import { positionRooms } from '../utils'
-import Jack from './jack.svg'
-import ItemList from './ItemList'
+import React from "react";
+import styled from "styled-components";
+import Jack from "../assets/jack.svg";
 
-export const StyledRooms = styled.div`
-position: relative;
-left: ${props => props.left && `${props.left}px`};
-top: ${props => props.top && `${props.top}px`};
-transition: left 0.3s, top 0.3s;
-transition-delay: 0.5s;
-`
+import ItemList from "./ItemList";
+import Map from "./Map";
+
+import { usePositionFinder } from "../hooks";
+
+import { mixins } from "./Layout";
+
+export default function Sidebar({
+  player,
+  roomIndex,
+  clickHandler,
+  playerColor
+}) {
+  let dimension = 30;
+  let center = usePositionFinder(player, dimension, "#mini-map");
+  return (
+    <StyledAside
+      imageUrl="http://avante.biz/wp-content/uploads/Brushed-Steel-Wallpapers/Brushed-Steel-Wallpapers-002.jpg"
+      column="11/13"
+      row="1/13"
+      largeColum="10/13"
+      mediumColumn="9/13"
+    >
+      <PlayerInfo flexDirection="column">
+        <Username>
+          <JackImg src={Jack} />
+          {player.username}
+        </Username>
+        <MiniMap id="mini-map" raised="1.5rem" overflow="hidden">
+          <Map
+            hideName={true}
+            center={center}
+            roomIndex={roomIndex}
+            dimension={dimension}
+            player={player}
+            playerColor={playerColor}
+          />
+        </MiniMap>
+        <InventoryArea raised="1.5rem">
+          <ItemList
+            action="drop"
+            itemTitle="Player Inventory"
+            itemText="Click on an item to drop it"
+            items={player.inventory}
+            clickHandler={clickHandler}
+          />
+        </InventoryArea>
+      </PlayerInfo>
+    </StyledAside>
+  );
+}
+
 const StyledAside = styled.aside`
-background-image: url("http://avante.biz/wp-content/uploads/Brushed-Steel-Wallpapers/Brushed-Steel-Wallpapers-002.jpg");
-max-height: 730px;
-border-left: 2px solid black;
-
-`
+  ${mixins.backgroundImage}
+  ${mixins.gridChild}
+              border-left: 2px solid black;
+`;
 const MiniMap = styled.div`
-width: 15rem;
-height: 16rem;
-background-color: rgb(26, 26, 26, 0.85);
-border: 5px rgb(27, 27, 27, 0.85) inset;
-border-radius: 1.5rem;
-box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
-color: #fafafa;
-position: relative;
-overflow: hidden;
-margin: 1rem;
-`
+  width: 90%;
+  height: 16rem;
+  ${mixins.raisedEffect}
+  color: #fafafa;
+  position: relative;
+  margin: 1rem auto;
+`;
 const PlayerInfo = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-color: white;
-`
+  ${mixins.flexCenter}
+  color: white;
+`;
 const Username = styled.h1`
-color: orange;
-display: flex;
-align-items: center;
-margin-left: -2rem;
-`
-const Health = styled.h1`
-color: white;
-`
-const Inventory = styled.h1`
-color: white;
-
-`
+  color: orange;
+  ${mixins.flexCenter}
+`;
 const JackImg = styled.img`
-height: 2rem;
-margin-right: 1rem;
-`
+  height: 2rem;
+  margin-right: 1rem;
+`;
 const InventoryArea = styled.div`
-background-color: rgb(26, 26, 26, 0.85);
-border: 5px rgb(27, 27, 27, 0.85) inset;
-border-radius: 1.5rem;
-box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
+  ${mixins.raisedEffect}
   text-align: center;
   max-width: 14rem;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
-  
-`
-const InventoryText = styled.p`
-  font-size: 1.2rem;
-  margin-top: 0.5rem;
-  height: 1rem;
-  margin-right: 1rem;
-  max-height: 1rem;
-`
-
-class Sidebar extends React.Component {
-  dimension = 30
-  constructor(props) {
-    super(props)
-    this.state = {
-      center: { x: null, y: null },
-      rooms: [],
-      roomDict: {},
-      playerRoom: null,
-    }
-  }
-  componentDidMount() {
-    // we have to get the positioned rooms with a new dimension!
-    // iterate over the existing rooms and reset their x and y and isSet properties
-    const roomDict = {}
-    const rooms = JSON.parse(this.props.rawRooms)
-    const miniMapRooms = positionRooms(rooms, this.dimension)
-    for (let i = 0; i < miniMapRooms.length; i++) {
-      roomDict[miniMapRooms[i].title] = miniMapRooms[i]
-    }
-    this.setState({ rooms: miniMapRooms, roomDict })
-    const gameArea = document.querySelector('#mini-map')
-    let height = gameArea.offsetHeight
-    let width = gameArea.offsetWidth
-    let playerRoom = roomDict[this.props.playerRoom.title]
-    if (playerRoom) {
-      this.setState({
-        playerRoom: playerRoom,
-        center: {
-          x: width / 2 - (playerRoom.x + this.dimension / 2),
-          y: height / 2 - playerRoom.y - this.dimension / 2,
-        },
-      })
-    }
-  }
-  componentDidUpdate(prevProps) {
-    const gameArea = document.querySelector('#mini-map')
-    let height = gameArea.offsetHeight
-    let width = gameArea.offsetWidth
-    if (
-      this.props.playerRoom &&
-      prevProps.playerRoom.title !== this.props.playerRoom.title
-    ) {
-      const playerRoom = this.state.roomDict[this.props.playerRoom.title]
-      this.setState({
-        playerRoom,
-        center: {
-          x: width / 2 - (playerRoom.x + this.dimension / 2),
-          y: height / 2 - playerRoom.y - this.dimension / 2,
-        },
-      })
-    }
-  }
-  render() {
-    return (
-      <>
-        <StyledAside>
-          <PlayerInfo>
-            <Username>
-              <JackImg src={Jack} />
-              {this.props.user}
-            </Username>
-            <MiniMap id="mini-map">
-              <StyledRooms left={this.state.center.x} top={this.state.center.y}>
-                {this.state.playerRoom && (
-                  <Player
-                    dimension={this.dimension}
-                    playerRoom={this.state.playerRoom}
-                    user={this.props.user}
-                    hideName={true}
-                    playerColor={this.props.playerColor}
-                  />
-                )}
-                {this.state.rooms &&
-                  this.state.rooms.map(room => (
-                    <Room
-                      room={room}
-                      key={room.pk}
-                      dimension={this.dimension}
-                      playerRoom={this.props.playerRoom}
-                    />
-                  ))}
-              </StyledRooms>
-            </MiniMap>
-
-           
-            <InventoryArea>
-            Inventory
-              {/* {this.props.playerInventory && this.props.playerInventory.map(item => 
-                <InventoryItem key={item}>{item}</InventoryItem>
-            )} */}
-              <ItemList
-                items={this.props.playerInventory}
-                clickHandler={this.props.clickHandler}
-              />
-              <InventoryText>Click item to drop</InventoryText>
-            </InventoryArea>
-          </PlayerInfo>
-        </StyledAside>
-      </>
-    )
-  }
-}
-
-export default Sidebar
+`;
