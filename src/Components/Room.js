@@ -23,26 +23,26 @@ const Door = styled.div`
     z-index: 998;
 `;
 
-const Room = ({ room, playerRoom, dimension, red }) => {
+const Room = ({ room, player, dimension, red }) => {
   const doorWidth = dimension / 4;
   return (
     <>
-      {/* {!!room.n_to && (
+      {!!room.n_to && (
         <Door
-          left={room.x + (dimension / 2 - doorWidth / 2)}
-          top={room.y - doorWidth / 2 + 2}
+          left={room.x * dimension + (dimension / 2 - doorWidth / 2)}
+          top={room.y * dimension - doorWidth / 2}
           dimension={dimension}
           width={doorWidth}
         />
       )}
       {!!room.w_to && (
         <Door
-          left={room.x - doorWidth / 2}
-          top={room.y + (dimension / 2 - doorWidth / 2)}
+          left={room.x * dimension - doorWidth / 2}
+          top={room.y * dimension + (dimension / 2 - doorWidth / 2)}
           dimension={dimension}
           width={doorWidth}
         />
-      )} */}
+      )}
       <StyledRoom
         red={red}
         x={room.x * dimension}

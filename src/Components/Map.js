@@ -20,7 +20,7 @@ export default function Map({ center, roomIndex, dimension, player }) {
               room={roomIndex[room]}
               key={roomIndex[room].pk}
               dimension={dimension}
-              // playerRoom={this.props.playerRoom}
+              player={player}
             />
           );
         })}
