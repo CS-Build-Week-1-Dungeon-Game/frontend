@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import compass from "../assets/compass.svg";
-import { gridChild } from "./styles";
+import { mixins } from "./Layout";
 
 function Button({ move, direction, children }) {
   return (
@@ -40,7 +40,7 @@ export default function Compass({ move }) {
 }
 
 const CompassBox = styled.div`
-  ${gridChild};
+  ${mixins.gridChild};
 `;
 
 const CompassImg = styled.img`

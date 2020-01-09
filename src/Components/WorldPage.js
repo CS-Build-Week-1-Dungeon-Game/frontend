@@ -11,16 +11,7 @@ import FullPageLoader from "./FullPageLoader";
 import LinkToast from "./LinkToast";
 
 import { positionRooms, requestWithAuth } from "../utils";
-import { gridParent } from "./styles";
-
-export const StyledMain = styled.main`
-  margin: 0 auto;
-  min-height: 100vh;
-  max-width: 2000px;
-  background: #212121;
-  position: relative;
-  ${gridParent};
-`;
+import { mixins } from "./Layout";
 
 toast.configure({
   autoClose: 10000,
@@ -71,7 +62,7 @@ class WorldPage extends React.Component {
     return requestWithAuth()
       .get(`api/adv/rooms/`)
       .then(res => {
-        console.log(res.data);
+        console.log(JSON.parse(res.data));
         const rooms = positionRooms(JSON.parse(res.data), this.dimension);
         const roomDict = {};
         for (let i = 0; i < rooms.length; i++) {
@@ -95,7 +86,6 @@ class WorldPage extends React.Component {
     return requestWithAuth(token)
       .get(`/api/adv/init/`)
       .then(res => {
-        console.log(res);
         let currentRoom = this.state.roomDict[res.data.title];
         this.setState({
           currentRoomTitle: res.data.title,
@@ -160,7 +150,6 @@ class WorldPage extends React.Component {
       });
   };
   render() {
-    console.log(this.state);
     if (!this.state.rooms || !this.state.currentRoomTitle) {
       return (
         <>
@@ -205,3 +194,12 @@ class WorldPage extends React.Component {
 }
 
 export default WorldPage;
+
+export const StyledMain = styled.main`
+  margin: 0 auto;
+  min-height: 100vh;
+  max-width: 2000px;
+  background: #212121;
+  position: relative;
+  ${mixins.gridParent};
+`;

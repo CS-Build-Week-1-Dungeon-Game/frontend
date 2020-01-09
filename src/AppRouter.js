@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import PrivateRoute from "./Components/PrivateRoute";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
-import WorldPage from "./Components/WorldPage";
+import WorldPage from "./Components/Temp";
 
 export default function AppRouter() {
   return (

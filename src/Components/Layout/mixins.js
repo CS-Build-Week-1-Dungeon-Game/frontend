@@ -19,6 +19,7 @@ export const gridParent = css`
 export const gridChild = css`
   ${props => props.raised && raisedEffect}
   ${props => props.flex && flexCenter}
+  overflow: ${props => props.overflow || "auto"}
   grid-column: ${props => props.column};
   grid-row: ${props => props.row};
   @media (max-width: ${large}) {

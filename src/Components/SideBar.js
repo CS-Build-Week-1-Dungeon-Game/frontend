@@ -76,58 +76,59 @@ class Sidebar extends React.Component {
       playerRoom: null
     };
   }
-  componentDidMount() {
-    // we have to get the positioned rooms with a new dimension!
-    // iterate over the existing rooms and reset their x and y and isSet properties
-    const roomDict = {};
-    const rooms = JSON.parse(this.props.rawRooms);
-    const miniMapRooms = positionRooms(rooms, this.dimension);
-    for (let i = 0; i < miniMapRooms.length; i++) {
-      roomDict[miniMapRooms[i].title] = miniMapRooms[i];
-    }
-    this.setState({ rooms: miniMapRooms, roomDict });
-    const gameArea = document.querySelector("#mini-map");
-    let height = gameArea.offsetHeight;
-    let width = gameArea.offsetWidth;
-    let playerRoom = roomDict[this.props.playerRoom.title];
-    if (playerRoom) {
-      this.setState({
-        playerRoom: playerRoom,
-        center: {
-          x: width / 2 - (playerRoom.x + this.dimension / 2),
-          y: height / 2 - playerRoom.y - this.dimension / 2
-        }
-      });
-    }
-  }
-  componentDidUpdate(prevProps) {
-    const gameArea = document.querySelector("#mini-map");
-    let height = gameArea.offsetHeight;
-    let width = gameArea.offsetWidth;
-    if (
-      this.props.playerRoom &&
-      prevProps.playerRoom.title !== this.props.playerRoom.title
-    ) {
-      const playerRoom = this.state.roomDict[this.props.playerRoom.title];
-      this.setState({
-        playerRoom,
-        center: {
-          x: width / 2 - (playerRoom.x + this.dimension / 2),
-          y: height / 2 - playerRoom.y - this.dimension / 2
-        }
-      });
-    }
-  }
+  // componentDidMount() {
+  //   // we have to get the positioned rooms with a new dimension!
+  //   // iterate over the existing rooms and reset their x and y and isSet properties
+  //   const roomDict = {};
+  //   const rooms = JSON.parse(this.props.rawRooms);
+  //   const miniMapRooms = positionRooms(rooms, this.dimension);
+  //   for (let i = 0; i < miniMapRooms.length; i++) {
+  //     roomDict[miniMapRooms[i].title] = miniMapRooms[i];
+  //   }
+  //   this.setState({ rooms: miniMapRooms, roomDict });
+  //   const gameArea = document.querySelector("#mini-map");
+  //   let height = gameArea.offsetHeight;
+  //   let width = gameArea.offsetWidth;
+  //   let playerRoom = roomDict[this.props.playerRoom.title];
+  //   if (playerRoom) {
+  //     this.setState({
+  //       playerRoom: playerRoom,
+  //       center: {
+  //         x: width / 2 - (playerRoom.x + this.dimension / 2),
+  //         y: height / 2 - playerRoom.y - this.dimension / 2
+  //       }
+  //     });
+  //   }
+  // }
+  // componentDidUpdate(prevProps) {
+  //   const gameArea = document.querySelector("#mini-map");
+  //   let height = gameArea.offsetHeight;
+  //   let width = gameArea.offsetWidth;
+  //   if (
+  //     this.props.playerRoom &&
+  //     prevProps.playerRoom.title !== this.props.playerRoom.title
+  //   ) {
+  //     const playerRoom = this.state.roomDict[this.props.playerRoom.title];
+  //     this.setState({
+  //       playerRoom,
+  //       center: {
+  //         x: width / 2 - (playerRoom.x + this.dimension / 2),
+  //         y: height / 2 - playerRoom.y - this.dimension / 2
+  //       }
+  //     });
+  //   }
+  // }
   render() {
+    console.log(this.props);
     return (
       <>
         <StyledAside>
           <PlayerInfo>
             <Username>
               <JackImg src={Jack} />
-              {this.props.user}
+              {this.props.player.username}
             </Username>
-            <MiniMap id="mini-map">
+            {/* <MiniMap id="mini-map">
               <StyledRooms left={this.state.center.x} top={this.state.center.y}>
                 {this.state.playerRoom && (
                   <Player
@@ -148,12 +149,12 @@ class Sidebar extends React.Component {
                     />
                   ))}
               </StyledRooms>
-            </MiniMap>
+            </MiniMap> */}
             <InventoryArea>
               <ItemList
                 itemTitle="Player Inventory"
                 itemText="Click on an item to drop it"
-                items={this.props.playerInventory}
+                items={this.props.player.inventory}
                 clickHandler={this.props.clickHandler}
               />
             </InventoryArea>
