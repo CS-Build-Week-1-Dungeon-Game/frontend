@@ -1,14 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-const StyledRoom = styled.div`
+const StyledRoom = styled.div.attrs(props => ({
+  style: {
+    height: props.dimension && `${props.dimension}px`,
+    width: props.dimension && `${props.dimension}px`,
+    left: props.x && `${props.x}px`,
+    top: props.y && `${props.y}px`
+  }
+}))`
   border: 2px solid #3e2723;
   background: #2e7d32;
-  height: ${props => props.dimension && `${props.dimension}px`};
-  width: ${props => props.dimension && `${props.dimension}px`};
   position: absolute;
-  left: ${props => props.x && `${props.x}px`};
-  top: ${props => props.y && `${props.y}px`};
   & * {
     pointer-events: none;
   }

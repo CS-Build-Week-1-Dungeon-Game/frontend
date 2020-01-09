@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import { css } from "styled-components";
 
 // colors
 export const solidDark = `rgb(14, 14, 14)`;

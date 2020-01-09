@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import Jack from "../assets/jack.svg";
+
 import ItemList from "./ItemList";
-import { usePositionFinder } from "../hooks";
 import Map from "./Map";
+
+import { usePositionFinder } from "../hooks";
 
 export const StyledRooms = styled.div`
   position: relative;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export const usePositionFinder = (player, dimension, element) => {
   let [center, setCenter] = useState({ x: null, y: null });
@@ -13,7 +13,7 @@ export const usePositionFinder = (player, dimension, element) => {
         y: height / 2 - (player.room.y * dimension + dimension / 2)
       });
     }
-  }, [player.room, dimension]);
+  }, [player.room, dimension, element]);
 
   return center;
 };

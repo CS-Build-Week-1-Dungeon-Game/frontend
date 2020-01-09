@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 import { List, ListItem, ListItemText } from "@material-ui/core";
 
+import { uuid } from "uuidv4";
+
 const StyledList = styled(List)`
   width: 100%;
   background-color: grey;
@@ -32,7 +34,7 @@ export default function ItemList(props) {
         <StyledUl>
           {props.items.map(item => (
             <StyledLi
-              key={item}
+              key={uuid()}
               onClick={e => props.clickHandler(e, props.action)}
             >
               <ListItemText primary={`${item}`} />

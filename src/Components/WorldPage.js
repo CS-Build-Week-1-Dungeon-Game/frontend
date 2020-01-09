@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import styled from "styled-components";
 import { toast, ToastContainer } from "react-toastify";
@@ -23,13 +23,34 @@ toast.configure({
 export default function WorldPage() {
   let dimension = 200;
   let [player, setPlayer] = useState(null);
-  let [rooms, setRooms] = useState(null);
   let [roomIndex, setRoomIndex] = useState(null);
   let [playerColor, setPlayerColor] = useState(null);
 
+  const initialize = useCallback(() => {
+    const token = localStorage.getItem("token");
+    return requestWithAuth(token)
+      .get(`/api/adv/init/`)
+      .then(res => {
+        const roomDict = {};
+        for (let element of JSON.parse(res.data.rooms)) {
+          roomDict[element.fields.title] = {
+            ...element.fields,
+            pk: element.pk
+          };
+        }
+        setRoomIndex(roomDict);
+        setPlayer(res.data.player);
+        randomPlayerColor();
+      })
+      .catch(err => {
+        toast.info(({ closeToast }) => <LinkToast />);
+        console.log(err);
+      });
+  }, []);
+
   useEffect(() => {
     initialize();
-  }, []);
+  }, [initialize]);
 
   const randomPlayerColor = () => {
     const colors = [
@@ -42,33 +63,6 @@ export default function WorldPage() {
     ];
     const random = Math.floor(Math.random() * (colors.length - 1));
     setPlayerColor(colors[random]);
-  };
-
-  const initialize = () => {
-    const token = localStorage.getItem("token");
-    return requestWithAuth(token)
-      .get(`/api/adv/init/`)
-      .then(res => {
-        const roomDict = {};
-        const roomArr = [];
-        for (let element of JSON.parse(res.data.rooms)) {
-          roomArr.push({
-            ...element.fields,
-            pk: element.pk
-          });
-        }
-        for (let element of roomArr) {
-          roomDict[element.title] = element;
-        }
-        setRooms(roomArr);
-        setRoomIndex(roomDict);
-        setPlayer(res.data.player);
-        randomPlayerColor();
-      })
-      .catch(err => {
-        toast.info(({ closeToast }) => <LinkToast />);
-        console.log(err);
-      });
   };
 
   const move = direction => {

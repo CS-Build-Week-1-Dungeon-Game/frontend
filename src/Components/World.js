@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 
-import Room from "./Room";
-import Player from "./Player";
 import ItemList from "./ItemList";
 import Compass from "./Compass";
 import Map from "./Map";
