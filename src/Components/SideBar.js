@@ -64,7 +64,12 @@ const InventoryArea = styled.div`
   margin-right: 0.5rem;
 `;
 
-export default function Sidebar({ player, roomIndex, clickHandler }) {
+export default function Sidebar({
+  player,
+  roomIndex,
+  clickHandler,
+  playerColor
+}) {
   let dimension = 30;
   let center = usePositionFinder(player, dimension, "#mini-map");
   return (
@@ -76,10 +81,12 @@ export default function Sidebar({ player, roomIndex, clickHandler }) {
         </Username>
         <MiniMap id="mini-map">
           <Map
+            hideName={true}
             center={center}
             roomIndex={roomIndex}
             dimension={dimension}
             player={player}
+            playerColor={playerColor}
           />
         </MiniMap>
         <InventoryArea>

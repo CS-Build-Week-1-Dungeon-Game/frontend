@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const StyledRoom = styled.div`
   border: 2px solid #3e2723;
-  background: ${props => (props.red ? "red" : "#2e7d32")};
+  background: #2e7d32;
   height: ${props => props.dimension && `${props.dimension}px`};
   width: ${props => props.dimension && `${props.dimension}px`};
   position: absolute;
@@ -44,7 +44,6 @@ const Room = ({ room, player, dimension, red }) => {
         />
       )}
       <StyledRoom
-        red={red}
         x={room.x * dimension}
         y={room.y * dimension}
         dimension={dimension}

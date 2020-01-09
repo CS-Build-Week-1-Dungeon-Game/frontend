@@ -41,7 +41,7 @@ export default function WorldPage() {
       "#1565c0"
     ];
     const random = Math.floor(Math.random() * (colors.length - 1));
-    setPlayerColor(random);
+    setPlayerColor(colors[random]);
   };
 
   const initialize = () => {

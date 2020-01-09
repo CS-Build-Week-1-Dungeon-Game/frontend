@@ -18,7 +18,8 @@ export default function World({
   dimension,
   roomIndex,
   clickHandler,
-  move
+  move,
+  playerColor
 }) {
   let center = usePositionFinder(player, dimension, "#game-area");
   return (
@@ -37,10 +38,12 @@ export default function World({
         column="2/8"
       >
         <Map
+          hideName={false}
           player={player}
           center={center}
           roomIndex={roomIndex}
           dimension={dimension}
+          playerColor={playerColor}
         />
       </GridChild>
       <GridChild raised="1.5rem" row="2/8" column="9/12">

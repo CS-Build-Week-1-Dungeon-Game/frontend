@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 const StyledPlayer = styled.div`
   position: absolute;
@@ -17,12 +17,12 @@ const StyledPlayer = styled.div`
   align-items: center;
   color: white;
   font-weight: bold;
-`
+`;
 
-const Player = ({ user, dimension, playerRoom, hideName, playerColor }) => {
-  const playerWidth = dimension / 4
-  const left = playerRoom.x + dimension / 2 - playerWidth / 2
-  const top = playerRoom.y + dimension / 2 - playerWidth / 2
+const Player = ({ user, dimension, player, hideName, playerColor }) => {
+  const playerWidth = dimension / 4;
+  const left = player.room.x * dimension + (dimension / 2 - playerWidth / 2);
+  const top = player.room.y * dimension + (dimension / 2 - playerWidth / 2);
   return (
     <StyledPlayer
       background={playerColor}
@@ -30,9 +30,9 @@ const Player = ({ user, dimension, playerRoom, hideName, playerColor }) => {
       left={left}
       top={top}
     >
-      {!hideName && user[0].toUpperCase()}
+      {!hideName && player.username[0].toUpperCase()}
     </StyledPlayer>
-  )
-}
+  );
+};
 
-export default Player
+export default Player;

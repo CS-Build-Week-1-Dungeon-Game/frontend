@@ -1,17 +1,25 @@
 import React from "react";
 import styled from "styled-components";
+import Player from "./Player";
 
 import Room from "./Room";
 
-export default function Map({ center, roomIndex, dimension, player }) {
+export default function Map({
+  center,
+  roomIndex,
+  dimension,
+  player,
+  playerColor,
+  hideName
+}) {
   return (
     <StyledRooms left={center.x} top={center.y}>
-      {/* <Player
-            dimension={this.props.dimension}
-            playerRoom={this.props.playerRoom}
-            user={this.props.user}
-            playerColor={this.props.playerColor}
-          /> */}
+      <Player
+        dimension={dimension}
+        player={player}
+        playerColor={playerColor}
+        hideName={hideName}
+      />
       {roomIndex &&
         Object.keys(roomIndex).map(room => {
           return (
