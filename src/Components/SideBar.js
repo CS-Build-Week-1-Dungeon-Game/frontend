@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import Player from "./Player";
-import Room from "./Room";
-import { positionRooms } from "../utils";
 import Jack from "../assets/jack.svg";
 import ItemList from "./ItemList";
+import { usePositionFinder } from "../hooks";
+import Map from "./Map";
 
 export const StyledRooms = styled.div`
   position: relative;
@@ -65,104 +64,34 @@ const InventoryArea = styled.div`
   margin-right: 0.5rem;
 `;
 
-class Sidebar extends React.Component {
-  dimension = 30;
-  constructor(props) {
-    super(props);
-    this.state = {
-      center: { x: null, y: null },
-      rooms: [],
-      roomDict: {},
-      playerRoom: null
-    };
-  }
-  // componentDidMount() {
-  //   // we have to get the positioned rooms with a new dimension!
-  //   // iterate over the existing rooms and reset their x and y and isSet properties
-  //   const roomDict = {};
-  //   const rooms = JSON.parse(this.props.rawRooms);
-  //   const miniMapRooms = positionRooms(rooms, this.dimension);
-  //   for (let i = 0; i < miniMapRooms.length; i++) {
-  //     roomDict[miniMapRooms[i].title] = miniMapRooms[i];
-  //   }
-  //   this.setState({ rooms: miniMapRooms, roomDict });
-  //   const gameArea = document.querySelector("#mini-map");
-  //   let height = gameArea.offsetHeight;
-  //   let width = gameArea.offsetWidth;
-  //   let playerRoom = roomDict[this.props.playerRoom.title];
-  //   if (playerRoom) {
-  //     this.setState({
-  //       playerRoom: playerRoom,
-  //       center: {
-  //         x: width / 2 - (playerRoom.x + this.dimension / 2),
-  //         y: height / 2 - playerRoom.y - this.dimension / 2
-  //       }
-  //     });
-  //   }
-  // }
-  // componentDidUpdate(prevProps) {
-  //   const gameArea = document.querySelector("#mini-map");
-  //   let height = gameArea.offsetHeight;
-  //   let width = gameArea.offsetWidth;
-  //   if (
-  //     this.props.playerRoom &&
-  //     prevProps.playerRoom.title !== this.props.playerRoom.title
-  //   ) {
-  //     const playerRoom = this.state.roomDict[this.props.playerRoom.title];
-  //     this.setState({
-  //       playerRoom,
-  //       center: {
-  //         x: width / 2 - (playerRoom.x + this.dimension / 2),
-  //         y: height / 2 - playerRoom.y - this.dimension / 2
-  //       }
-  //     });
-  //   }
-  // }
-  render() {
-    console.log(this.props);
-    return (
-      <>
-        <StyledAside>
-          <PlayerInfo>
-            <Username>
-              <JackImg src={Jack} />
-              {this.props.player.username}
-            </Username>
-            {/* <MiniMap id="mini-map">
-              <StyledRooms left={this.state.center.x} top={this.state.center.y}>
-                {this.state.playerRoom && (
-                  <Player
-                    dimension={this.dimension}
-                    playerRoom={this.state.playerRoom}
-                    user={this.props.user}
-                    hideName={true}
-                    playerColor={this.props.playerColor}
-                  />
-                )}
-                {this.state.rooms &&
-                  this.state.rooms.map(room => (
-                    <Room
-                      room={room}
-                      key={room.pk}
-                      dimension={this.dimension}
-                      playerRoom={this.props.playerRoom}
-                    />
-                  ))}
-              </StyledRooms>
-            </MiniMap> */}
-            <InventoryArea>
-              <ItemList
-                itemTitle="Player Inventory"
-                itemText="Click on an item to drop it"
-                items={this.props.player.inventory}
-                clickHandler={this.props.clickHandler}
-              />
-            </InventoryArea>
-          </PlayerInfo>
-        </StyledAside>
-      </>
-    );
-  }
+export default function Sidebar({ player, roomIndex, clickHandler }) {
+  let dimension = 30;
+  let center = usePositionFinder(player, dimension, "#mini-map");
+  return (
+    <StyledAside>
+      <PlayerInfo>
+        <Username>
+          <JackImg src={Jack} />
+          {player.username}
+        </Username>
+        <MiniMap id="mini-map">
+          <Map
+            center={center}
+            roomIndex={roomIndex}
+            dimension={dimension}
+            player={player}
+          />
+        </MiniMap>
+        <InventoryArea>
+          <ItemList
+            action="drop"
+            itemTitle="Player Inventory"
+            itemText="Click on an item to drop it"
+            items={player.inventory}
+            clickHandler={clickHandler}
+          />
+        </InventoryArea>
+      </PlayerInfo>
+    </StyledAside>
+  );
 }
-
-export default Sidebar;

@@ -31,7 +31,10 @@ export default function ItemList(props) {
       <StyledList>
         <StyledUl>
           {props.items.map(item => (
-            <StyledLi key={item} onClick={props.clickHandler}>
+            <StyledLi
+              key={item}
+              onClick={e => props.clickHandler(e, props.action)}
+            >
               <ListItemText primary={`${item}`} />
             </StyledLi>
           ))}
