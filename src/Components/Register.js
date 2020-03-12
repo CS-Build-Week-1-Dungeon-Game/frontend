@@ -11,9 +11,8 @@ import Grid from "@material-ui/core/Grid";
 import CodeIcon from "@material-ui/icons/Code";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { toast } from "react-toastify";
 
-import { requestWithAuth } from "../utils";
+import { loginOrRegister } from "../utils";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,21 +52,7 @@ export default function Register(props) {
   });
 
   const registerUser = newUser => {
-    requestWithAuth()
-      .post(`api/registration/`, newUser)
-      .then(res => {
-        const token = res.data.key;
-        localStorage.setItem("token", `Token ${token}`);
-        props.history.push("/");
-      })
-      .catch(err => {
-        console.log(err);
-        if (err.response.data) {
-          for (let key of Object.keys(err.response.data)) {
-            toast.error(`${key}: ${err.response.data[key]}`);
-          }
-        }
-      });
+    loginOrRegister("/api/registration", newUser, props.history);
   };
 
   const handleSubmit = event => {

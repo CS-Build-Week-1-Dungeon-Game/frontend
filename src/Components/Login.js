@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Paper,
+  Box,
+  Grid,
+  Typography
+} from "@material-ui/core";
 import CodeIcon from "@material-ui/icons/Code";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
-import { requestWithAuth } from "../utils";
+import { loginOrRegister } from "../utils";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -55,23 +57,7 @@ export default function Login(props) {
 
   function submitHandler(event) {
     event.preventDefault();
-    requestWithAuth()
-      .post(`api/login/`, user)
-      .then(res => {
-        if (res.status === 200 && res.data) {
-          const token = res.data.key;
-          localStorage.setItem("token", `Token ${token}`);
-          props.history.push("/world");
-        }
-      })
-      .catch(err => {
-        if (err) console.dir(err);
-        if (err.response.data) {
-          for (let key of Object.keys(err.response.data)) {
-            toast.error(`${key}: ${err.response.data[key]}`);
-          }
-        }
-      });
+    loginOrRegister("/api/registration", user, props.history);
   }
   return (
     <Grid container component="main" className={classes.root}>
