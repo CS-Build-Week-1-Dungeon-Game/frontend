@@ -57,7 +57,7 @@ export default function World({
       </GridChild>
       <GridChild flex raised="1.5rem" row="9/12" column="2/8">
         <ScrollText>
-          <Typography gutterBottom variant="h2" component="h4">
+          <Typography gutterBottom variant="h4" component="h4">
             You are at the {player.room.title}
           </Typography>
           <Typography variant="body1">{player.room.description}</Typography>
@@ -83,13 +83,8 @@ const Container = styled.div`
   ${mixins.gridChild};
 `;
 
-const ScrollText = styled(Paper)`
+const ScrollText = styled.div`
   overflow: auto;
-  height: 200px;
-  @media (max-width: 1200px) {
-    height: 120px;
-  }
-  @media (max-width: 768px) {
-    height: 75px;
-  }
+  height: 90%;
+  width: 90%;
 `;
