@@ -103,7 +103,9 @@ export default function Register(props) {
             </Button>
             <Grid container>
               <Grid item>
-                <Link to="/">{"Already have an account? Sign In"}</Link>
+                <Link className={classes.link} to="/">
+                  {"Already have an account? Sign In"}
+                </Link>
               </Grid>
             </Grid>
             <Box mt={5}></Box>

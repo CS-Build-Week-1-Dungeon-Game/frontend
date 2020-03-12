@@ -1,17 +1,17 @@
 import { toast } from "react-toastify";
+import axios from "axios";
 import { requestWithAuth } from "./api-config";
 
 export const loginOrRegister = (path, body, history) => {
   requestWithAuth()
-    .post(`${path}`, body)
+    .post(`${path}/`, body)
     .then(res => {
       const token = res.data.key;
       localStorage.setItem("token", `Token ${token}`);
       history.push("/world");
     })
     .catch(err => {
-      console.log(err);
-      if (err.response && err.response.data) {
+      if (err.response && err.response.data && err.response.status === 400) {
         for (let key of Object.keys(err.response.data)) {
           toast.error(`${key}: ${err.response.data[key]}`);
         }

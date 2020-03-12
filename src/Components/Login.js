@@ -28,7 +28,7 @@ export default function Login(props) {
 
   function submitHandler(event) {
     event.preventDefault();
-    loginOrRegister("/api/registration", user, props.history);
+    loginOrRegister("/api/login", user, props.history);
   }
   return (
     <Grid container component="main" className={classes.root}>
@@ -81,7 +81,9 @@ export default function Login(props) {
             </Button>
             <Grid container>
               <Grid item>
-                <Link to="/register">{"Don't have an account? Sign Up"}</Link>
+                <Link className={classes.link} to="/register">
+                  Don't have an account? Sign Up
+                </Link>
               </Grid>
             </Grid>
             <Box mt={5}></Box>

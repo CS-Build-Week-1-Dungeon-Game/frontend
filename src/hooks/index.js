@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import castle from "../assets/castle.jpg";
 
 export const usePositionFinder = (player, dimension, element) => {
   let [center, setCenter] = useState({ x: null, y: null });
@@ -25,10 +26,10 @@ export const useFormStyles = () => {
       height: "100vh"
     },
     image: {
-      backgroundImage: "url(https://wallpaperbro.com/img/509496.jpg)",
+      backgroundImage: `url(${castle})`,
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
-      backgroundPosition: "center"
+      backgroundPosition: "right"
     },
     paper: {
       margin: theme.spacing(8, 4),
@@ -46,6 +47,10 @@ export const useFormStyles = () => {
     },
     submit: {
       margin: theme.spacing(3, 0, 2)
+    },
+    link: {
+      color: "#fff",
+      textDecoration: "none"
     }
   }));
   return useStyles();
