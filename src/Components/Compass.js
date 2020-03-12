@@ -41,6 +41,7 @@ export default function Compass({ move }) {
 
 const CompassBox = styled.div`
   ${mixins.gridChild};
+  ${mixins.fancyScrollbar};
 `;
 
 const CompassImg = styled.img`

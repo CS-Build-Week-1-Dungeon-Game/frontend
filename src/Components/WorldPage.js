@@ -78,11 +78,16 @@ export default function WorldPage() {
   };
 
   const move = direction => {
+    console.log(direction);
     const token = localStorage.getItem("token");
     requestWithAuth(token)
       .post(`api/adv/move`, { direction })
       .then(res => {
-        setPlayer(res.data.player);
+        if (res.data && res.data.error_msg.length > 0) {
+          toast.error(res.data.error_msg);
+        } else {
+          setPlayer(res.data.player);
+        }
       })
       .catch(err => {
         console.log("errors", err.response);

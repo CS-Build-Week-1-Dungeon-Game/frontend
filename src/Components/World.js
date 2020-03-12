@@ -85,6 +85,13 @@ const Container = styled.div`
 
 const ScrollText = styled.div`
   overflow: auto;
-  height: 90%;
   width: 90%;
+  height: 90%;
+  ${mixins.fancyScrollbar};
+  @media (max-width: ${mixins.large}) {
+    max-height: 175px;
+  }
+  @media (max-width: ${mixins.medium}) {
+    max-height: 150px;
+  }
 `;

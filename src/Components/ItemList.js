@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { List, ListItem, ListItemText } from "@material-ui/core";
 
 import { uuid } from "uuidv4";
+import { mixins } from "./Layout";
 
 const StyledList = styled(List)`
   width: 100%;
@@ -11,6 +12,7 @@ const StyledList = styled(List)`
   position: relative;
   overflow: auto;
   max-height: 250px;
+  ${mixins.fancyScrollbar};
 `;
 
 const StyledUl = styled.ul`
