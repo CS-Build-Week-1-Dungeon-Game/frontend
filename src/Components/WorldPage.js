@@ -78,7 +78,6 @@ export default function WorldPage() {
   };
 
   const move = direction => {
-    console.log(direction);
     const token = localStorage.getItem("token");
     requestWithAuth(token)
       .post(`api/adv/move`, { direction })
