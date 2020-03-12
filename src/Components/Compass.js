@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import compass from "../assets/compass.svg";
+import compass from "../assets/compass.png";
 import { mixins } from "./Layout";
 
 function Button({ move, direction, children }) {

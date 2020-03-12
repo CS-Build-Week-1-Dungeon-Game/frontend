@@ -11,6 +11,8 @@ import { mixins, GridChild } from "./Layout";
 
 import { usePositionFinder } from "../hooks";
 
+import castleInside from "../assets/castle-inside.jpg";
+
 export default function World({
   player,
   dimension,
@@ -26,7 +28,7 @@ export default function World({
       column="1/11"
       largeColumn="1/10"
       mediumColumn="1/9"
-      imageUrl="https://wallpaperbro.com/img/509496.jpg"
+      imageUrl={castleInside}
     >
       <GridChild
         overflow="hidden"
@@ -76,7 +78,7 @@ export const StyledRooms = styled.div`
 `;
 
 const Container = styled.div`
-  ${mixins.backgroundImage}
+  ${mixins.backgroundImage};
   ${mixins.gridParent};
   ${mixins.gridChild};
 `;
