@@ -5,11 +5,13 @@ import ItemList from "./ItemList";
 import Compass from "./Compass";
 import Map from "./Map";
 
-import { Typography, Paper } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
 import { mixins, GridChild } from "./Layout";
 
 import { usePositionFinder } from "../hooks";
+
+import castleInside from "../assets/castle-inside.jpg";
 
 export default function World({
   player,
@@ -26,7 +28,7 @@ export default function World({
       column="1/11"
       largeColumn="1/10"
       mediumColumn="1/9"
-      imageUrl="https://wallpaperbro.com/img/509496.jpg"
+      imageUrl={castleInside}
     >
       <GridChild
         overflow="hidden"
@@ -55,7 +57,7 @@ export default function World({
       </GridChild>
       <GridChild flex raised="1.5rem" row="9/12" column="2/8">
         <ScrollText>
-          <Typography gutterBottom variant="h2" component="h4">
+          <Typography gutterBottom variant="h4" component="h4">
             You are at the {player.room.title}
           </Typography>
           <Typography variant="body1">{player.room.description}</Typography>
@@ -76,18 +78,20 @@ export const StyledRooms = styled.div`
 `;
 
 const Container = styled.div`
-  ${mixins.backgroundImage}
+  ${mixins.backgroundImage};
   ${mixins.gridParent};
   ${mixins.gridChild};
 `;
 
-const ScrollText = styled(Paper)`
+const ScrollText = styled.div`
   overflow: auto;
-  height: 200px;
-  @media (max-width: 1200px) {
-    height: 120px;
+  width: 90%;
+  height: 90%;
+  ${mixins.fancyScrollbar};
+  @media (max-width: ${mixins.large}) {
+    max-height: 175px;
   }
-  @media (max-width: 768px) {
-    height: 75px;
+  @media (max-width: ${mixins.medium}) {
+    max-height: 150px;
   }
 `;

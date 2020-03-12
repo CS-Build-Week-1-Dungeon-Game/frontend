@@ -9,6 +9,7 @@ import Sidebar from "./SideBar";
 import World from "./World";
 import FullPageLoader from "./FullPageLoader";
 import LinkToast from "./LinkToast";
+import NoMobile from "./NoMobile";
 
 import { requestWithAuth } from "../utils";
 import { mixins } from "./Layout";
@@ -25,7 +26,7 @@ export default function WorldPage() {
   let [player, setPlayer] = useState(null);
   let [roomIndex, setRoomIndex] = useState(null);
   let [playerColor, setPlayerColor] = useState(null);
-
+  let [width, setWidth] = useState(null);
   const initialize = useCallback(() => {
     const token = localStorage.getItem("token");
     return requestWithAuth(token)
@@ -52,6 +53,17 @@ export default function WorldPage() {
     initialize();
   }, [initialize]);
 
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    const updateWindowWidth = e => {
+      setWidth(e.target.innerWidth);
+    };
+
+    window.addEventListener("resize", updateWindowWidth);
+    return () => {
+      window.removeEventListener("resize", updateWindowWidth);
+    };
+  }, []);
   const randomPlayerColor = () => {
     const colors = [
       "#7f0000",
@@ -66,11 +78,16 @@ export default function WorldPage() {
   };
 
   const move = direction => {
+    console.log(direction);
     const token = localStorage.getItem("token");
     requestWithAuth(token)
       .post(`api/adv/move`, { direction })
       .then(res => {
-        setPlayer(res.data.player);
+        if (res.data && res.data.error_msg.length > 0) {
+          toast.error(res.data.error_msg);
+        } else {
+          setPlayer(res.data.player);
+        }
       })
       .catch(err => {
         console.log("errors", err.response);
@@ -90,6 +107,9 @@ export default function WorldPage() {
         }
       });
   };
+  if (width < 768) {
+    return <NoMobile />;
+  }
   if (!roomIndex || !player) {
     return (
       <>

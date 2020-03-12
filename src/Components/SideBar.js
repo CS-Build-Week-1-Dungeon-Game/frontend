@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Jack from "../assets/jack.svg";
+import compass from "../assets/compass.png";
 
 import ItemList from "./ItemList";
 import Map from "./Map";
@@ -22,12 +22,12 @@ export default function Sidebar({
       imageUrl="http://avante.biz/wp-content/uploads/Brushed-Steel-Wallpapers/Brushed-Steel-Wallpapers-002.jpg"
       column="11/13"
       row="1/13"
-      largeColum="10/13"
+      largeColumn="10/13"
       mediumColumn="9/13"
     >
       <PlayerInfo flexDirection="column">
         <Username>
-          <JackImg src={Jack} />
+          <JackImg src={compass} />
           {player.username}
         </Username>
         <MiniMap id="mini-map" raised="1.5rem" overflow="hidden">
@@ -55,14 +55,14 @@ export default function Sidebar({
 }
 
 const StyledAside = styled.aside`
-  ${mixins.backgroundImage}
-  ${mixins.gridChild}
-              border-left: 2px solid black;
+  ${mixins.backgroundImage};
+  ${mixins.gridChild};
+  border-left: 2px solid black;
 `;
 const MiniMap = styled.div`
   width: 90%;
   height: 16rem;
-  ${mixins.raisedEffect}
+  ${mixins.raisedEffect};
   color: #fafafa;
   position: relative;
   margin: 1rem auto;
