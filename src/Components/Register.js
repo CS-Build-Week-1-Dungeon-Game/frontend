@@ -1,50 +1,23 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Paper,
+  Box,
+  Grid,
+  Typography
+} from "@material-ui/core";
 import CodeIcon from "@material-ui/icons/Code";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 
 import { loginOrRegister } from "../utils";
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    height: "100vh"
-  },
-  image: {
-    backgroundImage: "url(https://wallpaperbro.com/img/509496.jpg)",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    backgroundPosition: "center"
-  },
-  paper: {
-    margin: theme.spacing(8, 4),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main
-  },
-  form: {
-    width: "100%",
-    marginTop: theme.spacing(1)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
-}));
+import { useFormStyles } from "../hooks";
 
 export default function Register(props) {
-  const classes = useStyles();
+  const classes = useFormStyles();
   const [inputs, setInputs] = useState({
     password1: "",
     password2: "",
