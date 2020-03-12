@@ -9,6 +9,7 @@ import Sidebar from "./SideBar";
 import World from "./World";
 import FullPageLoader from "./FullPageLoader";
 import LinkToast from "./LinkToast";
+import NoMobile from "./NoMobile";
 
 import { requestWithAuth } from "../utils";
 import { mixins } from "./Layout";
@@ -25,7 +26,7 @@ export default function WorldPage() {
   let [player, setPlayer] = useState(null);
   let [roomIndex, setRoomIndex] = useState(null);
   let [playerColor, setPlayerColor] = useState(null);
-
+  let [width, setWidth] = useState(null);
   const initialize = useCallback(() => {
     const token = localStorage.getItem("token");
     return requestWithAuth(token)
@@ -52,6 +53,17 @@ export default function WorldPage() {
     initialize();
   }, [initialize]);
 
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    const updateWindowWidth = e => {
+      setWidth(e.target.innerWidth);
+    };
+
+    window.addEventListener("resize", updateWindowWidth);
+    return () => {
+      window.removeEventListener("resize", updateWindowWidth);
+    };
+  }, []);
   const randomPlayerColor = () => {
     const colors = [
       "#7f0000",
@@ -90,6 +102,9 @@ export default function WorldPage() {
         }
       });
   };
+  if (width < 768) {
+    return <NoMobile />;
+  }
   if (!roomIndex || !player) {
     return (
       <>

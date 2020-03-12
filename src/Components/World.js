@@ -5,7 +5,7 @@ import ItemList from "./ItemList";
 import Compass from "./Compass";
 import Map from "./Map";
 
-import { Typography, Paper } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
 import { mixins, GridChild } from "./Layout";
 
